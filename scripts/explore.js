@@ -1598,7 +1598,6 @@ document.addEventListener("contextmenu", e => {
         document.getElementById("tooltipMid").innerHTML = `Common Ability`
         if (ability[el.dataset.ability].rarity===2) document.getElementById("tooltipMid").innerHTML = `Uncommon Ability`
         if (ability[el.dataset.ability].rarity===3) document.getElementById("tooltipMid").innerHTML = `Rare Ability`
-        console.log(el.dataset.ability)
         document.getElementById("tooltipBottom").innerHTML = ability[el.dataset.ability].info()
         openTooltip()
     }
@@ -2522,7 +2521,7 @@ function exploreCombatPlayer() {
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.sheerForce.id && move[nextMoveWild].hitEffect)*/
 
 
-        if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability != ability.sheerForce.id && totalPower>0){
+        if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability != ability.sheerForce.id || (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.sheerForce.id && totalPower>0  )){
         if (move[nextMovePlayer].hitEffect && typeEffectiveness(move[nextMovePlayer].type, pkmn[saved.currentPkmn].type)!= 0) {
             move[nextMovePlayer].hitEffect("wild")
         }
