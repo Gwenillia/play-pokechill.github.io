@@ -224,6 +224,11 @@ body {
     100% { transform: translateY( -5%);}
 }
 
+@keyframes selectPoke{
+    0% { }
+    100% { scale: 0.9; filter: brightness(2);}
+}
+
 .explore-header-hpbox{
     background: var(--dark1);
     height: auto;
@@ -1708,6 +1713,11 @@ color: var(--dark2);
     overflow-y: scroll;
     z-index: 1;
     padding-top: 1.5rem;
+    transition: 0.1s;
+}
+
+#pokedex-list div:active{
+    scale: 0.9;
 }
 
 #pokedex-list div{
@@ -2047,6 +2057,13 @@ color: var(--dark2);
     outline: solid 1px #818CF8;
     padding: 0 0.3rem;
     font-size: 1.1rem;
+}
+
+.buff-tag svg{
+    height: 1.2rem !important;
+    width: 1.2rem !important;
+    color: #818CF8 !important;
+    margin-left: 0.2rem;
 }
 
 .team-buff-list{
@@ -3031,3 +3048,158 @@ color: var(--dark2);
     flex-shrink: 0;
     font-size: 0.9rem;
 }
+
+
+
+
+#shop-menu{
+    position: fixed;
+    height: 100%;
+    width: 50%;
+    background: 
+    
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='black' fill-opacity='0.1'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E")
+    ,rgb(201, 201, 201)
+    ;
+    background-size: 10%;
+    z-index: 150;
+    overflow: scroll;
+    overflow-x: hidden;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 3rem;
+    z-index: 30;
+    animation: bg-diagonal infinite 1500s linear;
+}
+
+@keyframes bg-diagonal {
+    0%{background-position-y: -2000%; background-position-x: -2000%;}
+    100%{background-position-y: 2000%; background-position-x: 2000%;}
+}
+
+@media (max-width: 1000px) {
+    #shop-menu {
+        width: 100%;
+    }
+}
+
+
+#shop-menu-header{
+    height: 8rem;
+    width: 100%;
+    background-image: url(img/bg/mall.png);
+    background-size: cover;
+    background-position:bottom left;
+    image-rendering: pixelated;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 5px 5px;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}
+
+
+#shop-menu-header span {
+    height: 3rem;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: var(--dark1);
+    color: var(--light2);
+    padding: 0 1rem;
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    box-shadow: rgba(0, 0, 0, 0.4) 0 5px 5px;
+    cursor: help;
+}
+
+#shop-menu-header span svg{
+    margin-left: 1rem;
+}
+
+#shop-listing{
+    height: auto;
+    margin-top: 0.1rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+
+}
+
+.shop-currency{
+    padding: 0 0.2rem;
+    border-radius: 0.2rem;
+    background: white;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--dark2);
+    width: 7rem;
+    outline: rgb(183, 183, 207) solid 2px;
+}
+
+#shop-listing div{
+    width: 100%;
+    height: 2rem;
+    border-radius: 0.2rem;
+    background: var(--dark2);
+    outline: white solid 2px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 2px 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: white;
+    cursor: help;
+    transition: 0.05s;
+}
+
+#shop-listing div:active{
+    scale: 0.95;
+}
+
+#shop-listing div:hover{
+    background: var(--dark1);
+}
+
+#shop-listing img{
+    background: white;
+    width: auto;
+    image-rendering: pixelated;
+    margin-right: 0.5rem;
+}
+
+#shop-listing strong{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background: white;
+    color: var(--dark2);
+    margin-left: auto;
+    border-radius: 0.2rem;
+    overflow: hidden;
+    padding-right: 0.5rem;
+    width: 4rem;
+}
+
+#shop-listing strong img{
+    margin: 0;
+}
+

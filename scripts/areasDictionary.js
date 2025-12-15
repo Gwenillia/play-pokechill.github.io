@@ -818,7 +818,7 @@ areas.sinnohUndergroundI = {
     },
     drops: {
         common : [item.nothing],
-        rare : [item.waterStone, item.thunderStone, item.sunStone, item.linkStone]
+        rare : [item.waterStone, item.thunderStone, item.sunStone, item.linkStone, item.dampRock]
     },
 }
 
@@ -906,7 +906,7 @@ areas.sinnohUndergroundII = {
     },
     drops: {
         common : [item.nothing],
-        rare : [item.ovalStone, item.moonStone, item.leafStone, item.iceStone]
+        rare : [item.ovalStone, item.moonStone, item.leafStone, item.iceStone, item.icyRock]
     },
 }
 
@@ -993,7 +993,7 @@ areas.sinnohUndergroundIII = {
     },
     drops: {
         common : [item.nothing],
-        rare : [item.fireStone, item.duskStone, item.dawnStone, item.shinyStone]
+        rare : [item.fireStone, item.duskStone, item.dawnStone, item.shinyStone, item.heatRock, item.smoothRock]
     },
 }
 
@@ -1556,7 +1556,7 @@ areas.vsYounsterBilly = {
         slot3 : pkmn.starly,
         slot3Moves : [move.peck.id],
     },
-    reward : [pkmn.chewtle]
+    reward : [pkmn.chewtle, item.bottleCap]
 }
 
 areas.vsAromaLadyCatherine = {
@@ -1576,7 +1576,7 @@ areas.vsAromaLadyCatherine = {
         slot4 : pkmn.happiny,
         slot4Moves : [move.fakeTears.id, move.disarmingVoice.id],
     },
-    reward : [pkmn.riolu]
+    reward : [pkmn.riolu, item.bottleCap]
 }
 
 areas.vsBugCatcherMilo = {
@@ -1598,7 +1598,7 @@ areas.vsBugCatcherMilo = {
         slot5 : pkmn.pinsir,
         slot5Moves : [move.twineedle.id, move.bugBuzz.id],
     },
-    reward : [item.chartiBerry]
+    reward : [item.chartiBerry, item.bottleCap]
 }
 
 areas.vsGymLeaderBrock = {
@@ -1622,7 +1622,7 @@ areas.vsGymLeaderBrock = {
         slot6 : pkmn.aerodactyl,
         slot6Moves : [move.smackDown.id, move.gust.id],
     },
-    reward : [item.hardStone]
+    reward : [item.hardStone, item.goldenBottleCap]
 }
 
 areas.vsBlackBeltRyan = {
@@ -1646,7 +1646,7 @@ areas.vsBlackBeltRyan = {
         slot6 : pkmn.machoke,
         slot6Moves : [move.rockSmash.id, move.brickBreak.id, move.machPunk.id],
     },
-    reward : [pkmn.makuhita]
+    reward : [pkmn.makuhita, item.bottleCap]
 }
 
 areas.vsSchoolKidAaron = {
@@ -1670,7 +1670,7 @@ areas.vsSchoolKidAaron = {
         slot6 : pkmn.kadabra,
         slot6Moves : [move.calmMind.id, move.psybeam.id, move.confusion.id],
     },
-    reward : [pkmn.abra]
+    reward : [pkmn.abra, item.bottleCap]
 }
 
 areas.vsRocketGrunt1 = {
@@ -1694,7 +1694,7 @@ areas.vsRocketGrunt1 = {
         slot6 : pkmn.haunter,
         slot6Moves : [move.hex.id, move.ominousWind.id, move.psychic.id],
     },
-    reward : [pkmn.gastly]
+    reward : [pkmn.gastly, item.bottleCap]
 }
 
 areas.vsGymLeaderMisty = {
@@ -1718,7 +1718,7 @@ areas.vsGymLeaderMisty = {
         slot6 : pkmn.starmie,
         slot6Moves : [move.psychic.id, move.auroraBeam.id, move.waterPulse.id],
     },
-    reward : [item.mysticWater]
+    reward : [item.mysticWater, item.goldenBottleCap]
 }
 
 areas.vsSwimmerDan = {
@@ -1742,7 +1742,7 @@ areas.vsSwimmerDan = {
         slot6 : pkmn.alolanRaichu,
         slot6Moves : [move.psychic.id, move.zenHeadbut.id, move.surf.id],
     },
-    reward : [pkmn.magikarp]
+    reward : [pkmn.magikarp, item.bottleCap]
 }
 
 areas.vsVeteranToshiro = {
@@ -1766,7 +1766,7 @@ areas.vsVeteranToshiro = {
         slot6 : pkmn.shiftry,
         slot6Moves : [move.leafage.id, move.leafBlade.id, move.pursuit.id],
     },
-    reward : [item.shucaBerry]
+    reward : [item.shucaBerry, item.bottleCap]
 }
 
 areas.vsClownDuck = {
@@ -1790,7 +1790,7 @@ areas.vsClownDuck = {
         slot6 : pkmn.sirfetchd,
         slot6Moves : [move.dizzyPunch.id, move.powerupPunch.id, move.metalClaw.id],
     },
-    reward : [pkmn.ducklett]
+    reward : [pkmn.ducklett, item.bottleCap]
 }
 
 areas.vsGymLeaderPhoebe = {
@@ -1814,7 +1814,7 @@ areas.vsGymLeaderPhoebe = {
         slot6 : pkmn.dragapult,
         slot6Moves : [move.dragonClaw.id, move.hex.id, move.shadowBall.id, move.dragonDance.id],
     },
-    reward : [item.spellTag]
+    reward : [item.spellTag, item.goldenBottleCap]
 }
 
 areas.vsTwinTrainersBellisse = {
@@ -1838,7 +1838,7 @@ areas.vsTwinTrainersBellisse = {
         slot6 : pkmn.wigglytuff,
         slot6Moves : [move.hyperVoice.id, move.moonblast.id, move.hyperBeam.id],
     },
-    reward : [pkmn.plusle]
+    reward : [pkmn.plusle, item.bottleCap]
 }
 
 areas.vsAceTrainerRicardo = {
@@ -1862,7 +1862,7 @@ areas.vsAceTrainerRicardo = {
         slot6 : pkmn.salamence,
         slot6Moves : [move.fireFang.id, move.dragonDance.id, move.dragonClaw.id],
     },
-    reward : [pkmn.charmander]
+    reward : [pkmn.charmander, item.bottleCap]
 }
 
 areas.vsAceTrainerLily = {
@@ -1886,7 +1886,7 @@ areas.vsAceTrainerLily = {
         slot6 : pkmn.tyranitar,
         slot6Moves : [move.crunch.id, move.hyperBeam.id, move.earthPower.id],
     },
-    reward : [pkmn.mudkip]
+    reward : [pkmn.mudkip, item.bottleCap]
 }
 
 areas.vsEliteTrainerCynthia = {
@@ -1911,7 +1911,7 @@ areas.vsEliteTrainerCynthia = {
         slot6 : pkmn.megaGarchomp,
         slot6Moves : [move.swordsDance.id, move.dragonTail.id, move.dragonRush.id, move.earthquake.id],
     },
-    reward : [item.dragonFang]
+    reward : [item.dragonFang, item.goldenBottleCap]
 }
 
 areas.vsEliteFourLorelei = {
@@ -1936,7 +1936,7 @@ areas.vsEliteFourLorelei = {
         slot6 : pkmn.articuno,
         slot6Moves : [move.iceBeam.id, move.blizzard.id, move.fly.id],
     },
-    reward : [pkmn.totodile]
+    reward : [pkmn.totodile, item.bottleCap]
 }
 
 areas.vsEliteFourFlint = {
@@ -1961,7 +1961,7 @@ areas.vsEliteFourFlint = {
         slot6 : pkmn.moltres,
         slot6Moves : [move.flamethrower.id, move.fireBlast.id, move.fly.id],
     },
-    reward : [pkmn.cyndaquil]
+    reward : [pkmn.cyndaquil, item.bottleCap]
 }
 
 areas.vsEliteFourPoppy = {
@@ -1986,7 +1986,7 @@ areas.vsEliteFourPoppy = {
         slot6 : pkmn.zapdos,
         slot6Moves : [move.thunderbolt.id, move.discharge.id, move.fly.id],
     },
-    reward : [pkmn.chikorita]
+    reward : [pkmn.chikorita, item.bottleCap]
 }
 
 areas.vsEliteFourLance = {
@@ -2011,7 +2011,7 @@ areas.vsEliteFourLance = {
         slot6 : pkmn.rayquaza,
         slot6Moves : [move.dragonDance.id, move.fly.id, move.fireBlast.id, move.dragonPulse.id],
     },
-    reward : [item.luckIncense]
+    reward : [item.luckIncense, item.goldenBottleCap]
 }
 
 

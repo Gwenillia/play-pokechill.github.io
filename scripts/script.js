@@ -19,8 +19,24 @@ function updateGameVersion() {
     saved.tutorialStep = "intro"
   }
 
+  if (saved.version<0.9) {
+    let bottlecapGot = 0
+    for (let i in areas){
+      if (areas[i].type!=="vs") continue
+      if (areas[i].defeated!=true) continue
+      bottlecapGot++
+    }
+    item.bottleCap.got += bottlecapGot
+    item.goldenBottleCap.got += parseInt((bottlecapGot/3).toFixed(0))
+    document.getElementById("tooltipTitle").innerHTML = `New items!`
+    document.getElementById("tooltipTop").style.display = "none"    
+    document.getElementById("tooltipMid").innerHTML = `Due to the vs rewards update you have been rewarded for your defeated trainers:`
+    document.getElementById("tooltipBottom").innerHTML = `x${bottlecapGot} Bottle Caps | x${(bottlecapGot/3).toFixed(0)} Golden Bottle Caps`
+    openTooltip()
+  }
 
-  saved.version = 0.8
+
+  saved.version = 0.9
   document.getElementById(`game-version`).innerHTML = `v${saved.version}`
 
 }
@@ -386,7 +402,12 @@ guide.battleFatigue = {
 
 guide.statusEffects = {
   name: `Battle: Status Effects`,
-  description: function() { return `Certain moves inflict status effects, such as ${tagConfused}, ${tagBurn}, ${tagPoisoned}, ${tagFreeze}, ${tagParalysis} or ${tagSleep}.<br><br>You can further check their effects by right click/long press` }
+  description: function() { return `Certain moves inflict status effects such as ${tagConfused}, ${tagBurn}, ${tagPoisoned}, ${tagFreeze}, ${tagParalysis} or ${tagSleep}.<br><br>You can further check their effects by right click/long press<br><br>Status effects, like temporal stat changes, will count down with turns` }
+}
+
+guide.weather = {
+  name: `Battle: Weather`,
+  description: function() { return `Certain moves can change the weather to altered ones such as ${tagSunny}, ${tagRainy}, ${tagSandstorm}, ${tagHail}, ${tagFoggy}, ${tagElectricTerrain}, ${tagGrassyTerrain} or ${tagMistyTerrain}<br><br>You can further check their effects by right click/long press<br><br>Altered weathers will last for 15 turns, and only can be changed after 30` }
 }
 
 guide.shiny = {

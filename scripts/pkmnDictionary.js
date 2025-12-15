@@ -5599,7 +5599,7 @@ pkmn.registeel = {
         def: 150,
         satk: 75,
         sdef: 150,
-        spe: 50,
+        spe: 20,
     }
 }
 

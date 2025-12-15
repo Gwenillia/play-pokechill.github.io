@@ -53,6 +53,7 @@ function voidAnimation(divName, animationName) {
 
 function format(input) {
     let str = String(input);
+    if (move[input]?.rename) str = String(move[input].rename);
 
     str = str.replace(/hisuian/gi, 'hsn. ');
     str = str.replace(/alolan/gi, 'aln. ');
@@ -479,15 +480,31 @@ function leaveCombat(){
     }
 
     //new pokemon
-    if (item.mysteryEgg.got>0 && areas[saved.currentArea].spawns!=undefined) {
 
-    
+
+    let rarePkmnChance = 0.01
+    let shinyPkmnChance = 1/400
+    let shinyPkmnChanceEncounter = 1/120
+    for (const slot in team) {
+
+        if (team[slot].pkmn === undefined ) continue
+        if (team[slot].item == item.pureIncense.id) rarePkmnChance += item.pureIncense.power()/100
+        if (team[slot].item == item.shinyCharm.id) shinyPkmnChance *= (item.shinyCharm.power() /100) +1
+        if (team[slot].item == item.shinyCharm.id) shinyPkmnChanceEncounter *= (item.shinyCharm.power() /100) +1
+        
+    }
+
+
+    if (item.mysteryEgg.got>0 && areas[saved.currentArea].spawns!=undefined) {//wild
+
 
     for (let i = 0; i < item.mysteryEgg.got; i++) {
     let hatchedPkmn ;
+
+
     if (areas[saved.currentArea].spawns.common) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.common).id
     if (areas[saved.currentArea].spawns.uncommon && rng(0.08)) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.uncommon).id
-    if (areas[saved.currentArea].spawns.rare && rng(0.01)) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
+    if (areas[saved.currentArea].spawns.rare && rng(rarePkmnChance)) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
 
     if (areas[saved.currentArea].spawns.common == undefined) hatchedPkmn = arrayPick(areas[saved.currentArea].spawns.rare).id
     
@@ -522,7 +539,7 @@ function leaveCombat(){
     } 
 
 
-    if (rng(1/400)){ //shiny
+    if (rng(shinyPkmnChance)){ //shiny
         pkmn[hatchedPkmn].shiny = true
         divTag = `<span>✦Shiny✦!</span>`
     }
@@ -577,7 +594,7 @@ function leaveCombat(){
     } 
 
 
-    if (rng(1/100)){ //shiny
+    if (rng(shinyPkmnChanceEncounter)){ //shiny
         pkmn[i].shiny = true
         divTag = `<span>✦Shiny✦!</span>`
     }
@@ -706,6 +723,9 @@ function updateWildPkmn(){
     if (wildLevel >= pkmn[ team[exploreActiveMember].pkmn.id ].level + 10) { expGained = baseExpGain*6 }
     if (wildLevel >= pkmn[ team[exploreActiveMember].pkmn.id ].level + 20) { expGained = baseExpGain*12 }
     if (pkmn[ team[exploreActiveMember].pkmn.id ].level==100) expGained = 0
+
+
+    if (team[exploreActiveMember].item==="luckyEgg") expGained *= (item.luckyEgg.power() /100) +1
     pkmn[ team[exploreActiveMember].pkmn.id ].exp += expGained
 
     for (const i in team) {
@@ -722,6 +742,8 @@ function updateWildPkmn(){
     if (wildLevel >= pkmn[ team[i].pkmn.id ].level + 40) { expGained = baseExpGain*64 }
     if (wildLevel >= pkmn[ team[i].pkmn.id ].level + 50) { expGained = baseExpGain*128 }
     if ( pkmn[ team[i].pkmn.id ].level == 100) expGained = 0
+
+    if (team[i].item==="luckyEgg") expGained *= (item.luckyEgg.power() /100) +1
 
     pkmn[ team[i].pkmn.id ].exp+= expGained/2
 
@@ -985,20 +1007,19 @@ for (const i in saved.currentPreviewTeam) {
 
     div.addEventListener("click", e => { //change team member
 
-         
         document.getElementById(`pokedex-menu`).style.display = "flex"
-            document.getElementById(`pokedex-menu`).style.zIndex = "200"
+        document.getElementById(`pokedex-menu`).style.zIndex = "200"
 
-            dexTeamSelect = i
+        dexTeamSelect = i
 
-            updatePokedex()
+        updatePokedex()
 
 
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to add to the team`
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to add to the team`
 //document.getElementById("menu-button-parent").style.display = "none"
 
-            document.getElementById(`team-menu`).style.display = "none"
+         document.getElementById(`team-menu`).style.display = "none"
         
     })
 
@@ -1235,6 +1256,9 @@ function setPkmnTeam(){
 
 
     div.addEventListener("click", e => { //change team member
+
+        if (team[exploreActiveMember].item == item.choiceSpecs.id) return
+        if (team[exploreActiveMember].item == item.choiceBand.id) return
 
         if (!div.classList.contains("member-inactive")) return;
         if (pkmn[ team[i].pkmn.id ].playerHp <= 0) return;
@@ -1669,6 +1693,19 @@ document.addEventListener("contextmenu", e => {
         if (el.dataset.buff==="freeze") document.getElementById("tooltipBottom").innerHTML = `Moves fail to deal damage`
         if (el.dataset.buff==="confused") document.getElementById("tooltipBottom").innerHTML = `50% chance for moves to fail to deal damage`
         if (el.dataset.buff==="paralysis") document.getElementById("tooltipBottom").innerHTML = `25% chance for moves to fail to deal damage and Speed is reduced by 100%`
+        
+        if (el.dataset.buff==="sunny") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Fire-Type moves by 50% and reduces the damage of Water-Type moves by 50%`
+        if (el.dataset.buff==="rainy") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Water-Type moves by 50% and reduces the damage of Fire-Type moves by 50%`
+        if (el.dataset.buff==="sandstorm") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Rock and Ground-Type moves by 50%`
+        if (el.dataset.buff==="hail") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Ice-Type moves by 50%`
+        if (el.dataset.buff==="foggy") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Dark and Ghost-Type moves by 50%`
+        if (el.dataset.buff==="electricTerrain") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Electric and Steel-Type moves by 50%`
+        if (el.dataset.buff==="grassyTerrain") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Grass and Bug-Type moves by 50%`
+        if (el.dataset.buff==="mistyTerrain") document.getElementById("tooltipBottom").innerHTML = `Increases the damage of Fairy and Psychic-Type moves by 50%`
+
+        
+        
+        
         openTooltip()
     }
 
@@ -1690,6 +1727,9 @@ document.addEventListener("contextmenu", e => {
 
         if (el.dataset.help === `Genetics`) document.getElementById("tooltipTitle").innerHTML = `Genetics`
         if (el.dataset.help === `Genetics`) document.getElementById("tooltipBottom").innerHTML = `With genetics, you can modify the parameters of a level 100 Pokemon (the host) and influence them based on another Pokemon (the sample)<br><br>Doing so, the level of the host will reset back to 1 while keeping all 4 of its currently selected moves, aswell as re-rolling its ability and a chance to increase its IV's<br><br>Genetics can also be influenced by using genetic-aiding items, which you can use at the end of the operation<br><br>You can find more information about the specifics of genetics in the guide section`
+
+        if (el.dataset.help === `Shop`) document.getElementById("tooltipTitle").innerHTML = `Poke-Mart`
+        if (el.dataset.help === `Shop`) document.getElementById("tooltipBottom").innerHTML = `You can buy items here with Bottle Caps. Yeah`
 
         openTooltip()
     }
@@ -2472,8 +2512,10 @@ function exploreCombatPlayer() {
 
 
 
-
         let movePower = move[nextMovePlayer].power
+
+
+        if (move[nextMovePlayer].powerMod) movePower *= move[nextMovePlayer].powerMod()
 
         //abilities
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.technician.id && movePower<60 ) movePower *= 1.5
@@ -2565,6 +2607,14 @@ function exploreCombatPlayer() {
         if (team[exploreActiveMember].item == item.twistedSpoon.id && move[nextMovePlayer].type == 'psychic') totalPower *= (item.twistedSpoon.power() /100) +1
                  
         if (team[exploreActiveMember].item == item.lightClay.id) totalPower *= (item.lightClay.power() /100) +1
+        
+        if (team[exploreActiveMember].item == item.flameOrb.id && move[nextMovePlayer].split == 'special') totalPower *= item.flameOrb.power()
+        if (team[exploreActiveMember].item == item.toxicOrb.id && move[nextMovePlayer].split == 'physical') totalPower *= item.toxicOrb.power()
+
+        if (team[exploreActiveMember].item == item.choiceSpecs.id && move[nextMovePlayer].split == 'special') totalPower *= item.choiceSpecs.power()
+        if (team[exploreActiveMember].item == item.choiceBand.id && move[nextMovePlayer].split == 'physical') totalPower *= item.choiceBand.power()
+        
+        if (team[exploreActiveMember].item == item.lifeOrb.id) totalPower *= item.lifeOrb.power()
 
         if (move[nextMovePlayer].power === 0) totalPower = 0
 
@@ -2601,25 +2651,54 @@ function exploreCombatPlayer() {
 
         if ( pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.rivalry.id && pkmn[saved.currentPkmn].type.some(t => pkmn[team[exploreActiveMember].pkmn.id].type.includes(t)) ) totalPower *= 1.3
         
-
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.sheerForce.id &&  move[nextMovePlayer].hitEffect) totalPower *= 1.2
+
+
+
+
+
+        //weather
+        if (saved.weatherTimer>0 && saved.weather=="sunny" && move[nextMovePlayer].type == 'fire') totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="sunny" && move[nextMovePlayer].type == 'water') totalPower /= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="rainy" && move[nextMovePlayer].type == 'water') totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="rainy" && move[nextMovePlayer].type == 'fairy') totalPower /= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="sandstorm" && (move[nextMovePlayer].type == 'rock' || move[nextMovePlayer].type == 'ground') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="hail" &&  move[nextMovePlayer].type == 'ice' ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="foggy" && (move[nextMovePlayer].type == 'ghost' || move[nextMovePlayer].type == 'dark') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="electricTerrain" && (move[nextMovePlayer].type == 'electric' || move[nextMovePlayer].type == 'steel') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="mistyTerrain" && (move[nextMovePlayer].type == 'fairy' || move[nextMovePlayer].type == 'psychic') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="grassyTerrain" && (move[nextMovePlayer].type == 'grass' || move[nextMovePlayer].type == 'bug') ) totalPower *= 1.5
+
+
+
 
 
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.shiny==true) totalPower *= 1.15
 
 
+        let multihit = 1
+        if (move[nextMovePlayer].multihit) multihit = random(move[nextMovePlayer].multihit[0], move[nextMovePlayer].multihit[1])
+        if (move[nextMovePlayer].multihit && pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.skillLink.id) multihit = move[nextMovePlayer].multihit[1]
+
+        
+        for (let i = 0; i < multihit; i++) {
+
         wildPkmnHp -= totalPower;
 
+        }
 
-         if ( pkmn[ team[exploreActiveMember].pkmn.id ]?.ability != ability.magicGuard.id ){
 
 
-        let dotDamage = 30
-        if (areas[saved.currentArea]?.trainer) dotDamage = 5
+
+        if ( pkmn[ team[exploreActiveMember].pkmn.id ]?.ability != ability.magicGuard.id ){
+
+
+        let dotDamage = 50
+        if (areas[saved.currentArea]?.trainer) dotDamage = 10
 
         if (team[exploreActiveMember].buffs?.burn>0 ) {pkmn[ team[exploreActiveMember].pkmn.id ].playerHp -=  pkmn[ team[exploreActiveMember].pkmn.id ].playerHpMax/dotDamage;}
         if (team[exploreActiveMember].buffs?.poisoned>0 ) {pkmn[ team[exploreActiveMember].pkmn.id ].playerHp -=  pkmn[ team[exploreActiveMember].pkmn.id ].playerHpMax/dotDamage;}
-
+        if (team[exploreActiveMember].item == item.lifeOrb.id) {pkmn[ team[exploreActiveMember].pkmn.id ].playerHp -=  pkmn[ team[exploreActiveMember].pkmn.id ].playerHpMax/10;}
 
         }
 
@@ -2628,9 +2707,12 @@ function exploreCombatPlayer() {
         for (const i in team[exploreActiveMember].buffs){
             if (team[exploreActiveMember].buffs[i]>0) team[exploreActiveMember].buffs[i] -= 1
         }
+
+        saved.weatherTimer--
+        saved.weatherCooldown--
             
 
-
+        for (let i = 0; i < multihit; i++) {
 
         if (!(team[exploreActiveMember].buffs?.freeze>0 || team[exploreActiveMember].buffs?.sleep>0)){
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability != ability.sheerForce.id || (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.sheerForce.id && totalPower==0  )){
@@ -2638,6 +2720,8 @@ function exploreCombatPlayer() {
             move[nextMovePlayer].hitEffect("wild")
         }
         }
+        }
+
         }
 
 
@@ -3110,6 +3194,17 @@ function exploreCombatWild() {
         if (pkmn[ team[exploreActiveMember].pkmn.id ]?.ability == ability.thickFat.id && (move[nextMoveWild].type==="fire" || move[nextMoveWild].type==="ice") ) totalPower /= 2
 
 
+        //weather
+        if (saved.weatherTimer>0 && saved.weather=="sunny" && move[nextMoveWild].type == 'fire') totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="sunny" && move[nextMoveWild].type == 'water') totalPower /= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="rainy" && move[nextMoveWild].type == 'water') totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="rainy" && move[nextMoveWild].type == 'fairy') totalPower /= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="sandstorm" && (move[nextMoveWild].type == 'rock' || move[nextMoveWild].type == 'ground') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="hail" &&  move[nextMoveWild].type == 'ice' ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="foggy" && (move[nextMoveWild].type == 'ghost' || move[nextMoveWild].type == 'dark') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="electricTerrain" && (move[nextMoveWild].type == 'electric' || move[nextMoveWild].type == 'steel') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="mistyTerrain" && (move[nextMoveWild].type == 'fairy' || move[nextMoveWild].type == 'psychic') ) totalPower *= 1.5
+        if (saved.weatherTimer>0 && saved.weather=="grassyTerrain" && (move[nextMoveWild].type == 'grass' || move[nextMoveWild].type == 'bug') ) totalPower *= 1.5
 
 
 
@@ -3522,6 +3617,50 @@ function updatePokedex(){
     document.getElementById("pokedex-filters-cancel").style.display = "none"
     document.getElementById("pokedex-filters-remove").style.display = "none"
 
+
+    if (dexTeamSelect != undefined) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-remove").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to add to the team`
+    }
+
+    if (tmToTeach != undefined) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to teach ${format(tmToTeach)}`
+    }
+
+    if (evoItemToUse != undefined) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to use the ${format(evoItemToUse)}`
+    }
+
+    if (vitaminToUse != undefined) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to use the ${format(vitaminToUse)}`
+    }
+
+    if (itemToUse != undefined) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to use the ${format(itemToUse)}`
+    }
+
+    if (dexHostSelect == true) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a host Pokemon`
+    }
+
+    if (dexSampleSelect == true) {
+        document.getElementById("pokedex-filters-title").style.display = "flex"
+        document.getElementById("pokedex-filters-cancel").style.display = "flex"
+        document.getElementById("pokedex-filters-title").innerHTML = `Select a sample Pokemon`
+    }
+
     for (const i in pkmn) {
 
         if (pkmn[i].ability == undefined) pkmn[i].ability = learnPkmnAbility(pkmn[i].id)   
@@ -3556,10 +3695,7 @@ function updatePokedex(){
 
         if (tmToTeach != undefined) {
 
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-cancel").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to teach ${format(tmToTeach)}`
-            
+
 
         //filter pokemon by being able to learn
         if (!move[tmToTeach].moveset.includes("all") &&  !move[tmToTeach].moveset.some(t => pkmn[i].type.includes(t))) continue;
@@ -3578,10 +3714,7 @@ function updatePokedex(){
         if (evoItemToUse != undefined) {
 
 
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-cancel").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to use the ${format(evoItemToUse)}`
-            
+
             let levelToEvolve = wildAreaLevel2
             if (evoItemToUse === "linkStone") levelToEvolve = wildAreaLevel4
  
@@ -3610,10 +3743,7 @@ function updatePokedex(){
 
         if (vitaminToUse != undefined) {
 
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-cancel").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to use the ${format(evoItemToUse)}`
-           
+            
             if (vitaminToUse === "hpUp" && pkmn[i].ivs.hp >= 6) continue
             if (vitaminToUse === "protein" && pkmn[i].ivs.atk >= 6) continue
             if (vitaminToUse === "iron" && pkmn[i].ivs.def >= 6) continue
@@ -3633,24 +3763,73 @@ function updatePokedex(){
 
                 pkmn[i].ivs[statToRise]++
                 item[vitaminToUse].got--
+
+                updatePokedex()
+                
+                if (item[vitaminToUse].got<=0){
                 updateItemBag()
                 exitTmTeaching()
+                }
+
          })
 
         
         }
 
+        if (itemToUse != undefined) {
 
+            
+            if (itemToUse == item.rareCandy.id){
+                if (pkmn[i].level >= 100) continue
+
+                div.addEventListener("click", e => { 
+
+                pkmn[i].level++
+                item.rareCandy.got--
+                updatePokedex()  
+
+
+                if (item.rareCandy.got<=0){
+                updateItemBag()
+                exitTmTeaching()
+                }
+                })
+                
+            }
+
+                
+            if (itemToUse == item.abilityPatch.id){
+                if (pkmn[i].level >= 100) continue
+
+                div.addEventListener("click", e => { 
+
+                const newAbility = learnPkmnAbility(i)
+                pkmn[i].ability = newAbility
+                
+                item.abilityPatch.got--
+                
+                document.getElementById("tooltipTitle").innerHTML = `New ability!`
+                document.getElementById("tooltipTop").style.display = "none"    
+                document.getElementById("tooltipMid").innerHTML = `<div class="genetics-overview-tags"><div style="filter:hue-rotate(0deg)">★ ${format(newAbility)}</div></div>`
+                if (ability[newAbility].rarity===2) document.getElementById("tooltipMid").innerHTML = `<div class="genetics-overview-tags"><div style="filter:hue-rotate(100deg)">★ ${format(newAbility)} (Uncommon!)</div></div>`
+                if (ability[newAbility].rarity===3) document.getElementById("tooltipMid").innerHTML = `<div class="genetics-overview-tags"><div style="filter:hue-rotate(200deg)">★ ${format(newAbility)} (Rare!)</div></div>`
+        
+                document.getElementById("tooltipBottom").style.display = "none" 
+                openTooltip()
+
+
+                if (item.abilityPatch.got<=0){
+                updateItemBag()
+                exitTmTeaching()
+                }
+                })
+                
+            }
+
+        
+        }
 
         if (dexTeamSelect != undefined) {
-
-
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-cancel").style.display = "flex"
-            document.getElementById("pokedex-filters-remove").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to add to the team`
-           
-
 
             if (saved.currentPreviewTeam.slot1.pkmn == pkmn[i].id) continue
             if (saved.currentPreviewTeam.slot2.pkmn == pkmn[i].id) continue
@@ -3688,11 +3867,6 @@ function updatePokedex(){
 
         if (dexHostSelect == true) {
 
-
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-cancel").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a host Pokemon`
-           
             if (pkmn[i].level!=100) continue
             if (i == "ditto") continue //gotcha
             if (pkmn[i].id == saved.geneticSample) continue
@@ -3719,10 +3893,7 @@ function updatePokedex(){
         if (dexSampleSelect == true) {
 
 
-            document.getElementById("pokedex-filters-title").style.display = "flex"
-            document.getElementById("pokedex-filters-cancel").style.display = "flex"
-            document.getElementById("pokedex-filters-title").innerHTML = `Select a sample Pokemon`
-           
+   
             if (pkmn[i].id == saved.geneticHost) continue
 
 
@@ -3753,10 +3924,11 @@ function updatePokedex(){
 
 function exitTmTeaching(mod){ //what a fucking disgrace of a code i wrote here
 
-                if (evoItemToUse || tmToTeach || vitaminToUse){
+                if (evoItemToUse || tmToTeach || vitaminToUse || itemToUse){
                 evoItemToUse = undefined
                 tmToTeach = undefined
                 vitaminToUse = undefined
+                itemToUse = undefined
                 document.getElementById("menu-button-parent").style.display = "flex"
 
                 
@@ -3865,6 +4037,7 @@ function switchMenu(id){
     document.getElementById(`settings-menu`).style.zIndex = "30"
     document.getElementById(`guide-menu`).style.zIndex = "30"
     document.getElementById(`genetics-menu`).style.zIndex = "30"
+    document.getElementById(`shop-menu`).style.zIndex = "30"
 
 
     if (id==="travel") {
@@ -3887,6 +4060,12 @@ function switchMenu(id){
         document.getElementById(`pokedex-menu`).style.display = "flex"
         document.getElementById(`pokedex-menu`).style.zIndex = "40"
         updatePokedex()
+    } 
+
+    if (id==="shop") {
+        document.getElementById(`shop-menu`).style.display = "flex"
+        document.getElementById(`shop-menu`).style.zIndex = "40"
+        updateItemShop()
     } 
 
     if (id==="genetics") {
@@ -3939,6 +4118,7 @@ function switchMenu(id){
     if (id!=="settings") document.getElementById(`settings-menu`).style.display = "none"    
     if (id!=="guide") document.getElementById(`guide-menu`).style.display = "none"    
     if (id!=="genetics") document.getElementById(`genetics-menu`).style.display = "none"    
+    if (id!=="shop") document.getElementById(`shop-menu`).style.display = "none"    
 
 
     openMenu()
@@ -3950,6 +4130,7 @@ let bagCategory = 'held'
 let tmToTeach = undefined
 let evoItemToUse = undefined
 let vitaminToUse = undefined
+let itemToUse = undefined
 
 function updateItemBag(){
 
@@ -4022,6 +4203,25 @@ function updateItemBag(){
             document.getElementById(`pokedex-menu`).style.zIndex = "40"
 
             vitaminToUse = item[i].id
+
+            updatePokedex()
+
+            document.getElementById("pokedex-filters-title").style.display = "flex"
+            document.getElementById("pokedex-filters-cancel").style.display = "flex"
+            document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to use the ${format(i)}`
+            document.getElementById("menu-button-parent").style.display = "none"
+            document.getElementById(`item-menu`).style.display = "none"
+
+            })
+        }
+
+
+        if (item[i].itemToUse && dexTeamSelect==undefined) {
+            div.addEventListener("click", e => { 
+            document.getElementById(`pokedex-menu`).style.display = "flex"
+            document.getElementById(`pokedex-menu`).style.zIndex = "40"
+
+            itemToUse = item[i].id
 
             updatePokedex()
 
@@ -4246,12 +4446,15 @@ function loop() {
 }
 
 
-
+saved.weather = undefined
+saved.weatherTimer = 0
+saved.weatherCooldown = 0
 
 function updateWildBuffs(){
 
 
     document.getElementById("wild-buff-list").innerHTML = ""
+
 
     for (const i in wildBuffs) {
 
@@ -4264,9 +4467,47 @@ function updateWildBuffs(){
         div.innerHTML = formatBuffs(i);
         document.getElementById("wild-buff-list").appendChild(div);
 
-
-
     };
+
+    if (saved.weather!==undefined && saved.weatherTimer>0){
+        const div = document.createElement("span");
+        div.className = "buff-tag";
+        let weatherIcon = ""
+        //if (saved.weather=="sunny"){ div.style.filter = `hue-rotate(130deg)`; weatherIcon = ``}
+        if (saved.weather=="sunny"){ div.style.filter = `hue-rotate(130deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M12 19a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1m6.364-2.05l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 1.414-1.414m-12.728 0a1 1 0 0 1 1.497 1.32l-.083.094l-.707.707a1 1 0 0 1-1.497-1.32l.083-.094zM12 6a6 6 0 1 1 0 12a6 6 0 0 1 0-12m-8 5a1 1 0 0 1 .117 1.993L4 13H3a1 1 0 0 1-.117-1.993L3 11zm17 0a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2zM4.929 4.929a1 1 0 0 1 1.32-.083l.094.083l.707.707a1 1 0 0 1-1.32 1.497l-.094-.083l-.707-.707a1 1 0 0 1 0-1.414m14.142 0a1 1 0 0 1 0 1.414l-.707.707a1 1 0 1 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0M12 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1"/></g></svg>`}
+        if (saved.weather=="rainy"){ div.style.filter = `hue-rotate(-20deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8"><path fill="currentColor" d="M4.5 0C3.29 0 2.23.86 2 2C.9 2 0 2.9 0 4c0 .53.2.99.53 1.34c.26-.22.6-.34.97-.34c.2 0 .39.05.56.13C2.23 4.49 2.8 4 3.5 4c.69 0 1.27.49 1.44 1.13c.17-.07.36-.13.56-.13c.63 0 1.15.39 1.38.94c.64-.17 1.13-.75 1.13-1.44c0-.65-.42-1.29-1-1.5v-.5A2.5 2.5 0 0 0 4.51 0zM3.34 5a.5.5 0 0 0-.34.5v2a.5.5 0 1 0 1 0v-2a.5.5 0 0 0-.59-.5h-.06zm-2 1a.5.5 0 0 0-.34.5v1a.5.5 0 1 0 1 0v-1a.5.5 0 0 0-.59-.5h-.06zm4 0a.5.5 0 0 0-.34.5v1a.5.5 0 1 0 1 0v-1a.5.5 0 0 0-.59-.5h-.06z"/></svg>`}
+        
+        if (saved.weather=="sandstorm"){ div.style.filter = `hue-rotate(140deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M5.268 5H4v1h3a2 2 0 1 0-1.732-1M3 6H2V5h1zm8.085 1H9v1h3.5a1.5 1.5 0 1 0-1.415-1M8 7v1H2V7zM6 9v1H2V9zm3.5 1H7V9h4.5a2.5 2.5 0 1 1-2 1" clip-rule="evenodd"/></svg>`}
+        if (saved.weather=="hail"){ div.style.filter = `hue-rotate(-50deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M13 3a1 1 0 1 0-2 0v.962l-.654-.346a1 1 0 1 0-.935 1.768l1.589.84v1.902a4 4 0 0 0-1.854 1.072l-1.648-.952l.067-1.796a1 1 0 0 0-1.999-.074l-.027.739l-.833-.48a1 1 0 1 0-1 1.731l.833.481l-.627.394a1 1 0 0 0 1.064 1.693l1.522-.956l1.647.951a4 4 0 0 0 0 2.142l-1.647.95l-1.522-.955a1 1 0 0 0-1.064 1.693l.627.394l-.833.48a1 1 0 1 0 1 1.733l.832-.481l.028.74a1 1 0 1 0 1.999-.075l-.067-1.796l1.648-.952A4 4 0 0 0 11 15.874v1.902l-1.589.84a1 1 0 0 0 .935 1.768l.654-.346V21a1 1 0 1 0 2 0v-.962l.654.346a1 1 0 0 0 .935-1.768L13 17.776v-1.902a4 4 0 0 0 1.854-1.071l1.648.951l-.067 1.796a1 1 0 1 0 1.999.075l.027-.74l.833.481a1 1 0 1 0 1-1.732l-.832-.48l.626-.394a1 1 0 0 0-1.064-1.694l-1.522.956l-1.647-.95a4 4 0 0 0 0-2.143l1.647-.951l1.522.956a1 1 0 0 0 1.064-1.694l-.627-.393l.833-.481a1 1 0 1 0-1-1.732l-.833.48l-.027-.739a1 1 0 1 0-1.999.075l.067 1.796l-1.648.951A4 4 0 0 0 13 8.126V6.224l1.589-.84a1 1 0 0 0-.935-1.768L13 3.962z"/></g></svg>`}
+        if (saved.weather=="electricTerrain"){ div.style.filter = `hue-rotate(180deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><path fill="currentColor" d="M848 359.3H627.7L825.8 109c4.1-5.3.4-13-6.3-13H436c-2.8 0-5.5 1.5-6.9 4L170 547.5c-3.1 5.3.7 12 6.9 12h174.4l-89.4 357.6c-1.9 7.8 7.5 13.3 13.3 7.7L853.5 373c5.2-4.9 1.7-13.7-5.5-13.7"/></svg>`}
+        if (saved.weather=="mistyTerrain"){ div.style.filter = `hue-rotate(50deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 12.057a1.9 1.9 0 0 0 .614.743c1.06.713 2.472.112 3.043-.919c.839-1.513-.022-3.368-1.525-4.08c-2-.95-4.371.154-5.24 2.086c-1.095 2.432.29 5.248 2.71 6.246c2.931 1.208 6.283-.418 7.438-3.255c1.36-3.343-.557-7.134-3.896-8.41c-3.855-1.474-8.2.68-9.636 4.422c-1.63 4.253.823 9.024 5.082 10.576c4.778 1.74 10.118-.941 11.833-5.59A9.4 9.4 0 0 0 21 11.063"/></svg>`}
+        if (saved.weather=="grassyTerrain"){ div.style.filter = `hue-rotate(220deg)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M6.356 3.235a1 1 0 0 1 1.168-.087c3.456 2.127 5.35 4.818 6.36 7.78c.25.733.445 1.48.596 2.236c1.029-1.73 2.673-3.102 5.149-4.092a1 1 0 0 1 1.329 1.215l-.181.604C19.417 15.419 19 16.806 19 20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1c0-3.864-.472-6.255-1.949-10.684a1 1 0 0 1 1.32-1.244c1.395.557 2.455 1.301 3.255 2.18a24 24 0 0 0-1.554-5.88a1 1 0 0 1 .284-1.137"/></g></svg>`}
+        if (saved.weather=="foggy"){ div.style.filter = `grayscale(1)`; weatherIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8 21.25a.75.75 0 0 0 0 1.5h8a.75.75 0 0 0 0-1.5z"/><path fill="currentColor" d="M12.476 2C9.32 2 6.762 4.528 6.762 7.647c0 .69.125 1.35.354 1.962a4.4 4.4 0 0 0-.83-.08C3.919 9.53 2 11.426 2 13.765c0 .522.096 1.023.271 1.485h18.92A5.57 5.57 0 0 0 22 12.353c0-2.472-1.607-4.573-3.845-5.338C17.837 4.194 15.415 2 12.476 2" opacity="0.5"/><path fill="currentColor" d="M2 15.249a.75.75 0 0 0 0 1.5h20a.75.75 0 0 0 0-1.5z"/><path fill="currentColor" d="M5 18.25a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 0-1.5z" opacity="0.5"/></svg>`}
+
+        div.innerHTML = format(saved.weather)+weatherIcon;
+        document.getElementById("wild-buff-list").appendChild(div);
+    }
+
+
+}
+
+
+function changeWeather(id,mod) {
+
+
+if (saved.weatherCooldown<=0 || mod=="force"){
+saved.weather = id
+let weatherTurns = 15
+if (id=="rainy" && team[exploreActiveMember].item == item.dampRock.id) weatherTurns += item.dampRock.power()
+if (id=="sunny" && team[exploreActiveMember].item == item.heatRock.id) weatherTurns += item.heatRock.power()
+if (id=="hail" && team[exploreActiveMember].item == item.icyRock.id) weatherTurns += item.icyRock.power()
+if (id=="sandstorm" && team[exploreActiveMember].item == item.smoothRock.id) weatherTurns += item.smoothRock.power()
+saved.weatherTimer = weatherTurns
+saved.weatherCooldown = 30
+updateWildBuffs()
+
+}
+
 
 
 }
@@ -4286,7 +4527,15 @@ function updateTeamBuffs(){
         
         for ( const i in team[slot].buffs) {
 
+        //items
+        if (team[slot].item == item.flameOrb.id) team[slot].buffs.burn = 3
+        if (team[slot].item == item.toxicOrb.id) team[slot].buffs.poisoned = 3
+
         if (team[slot].buffs[i] === 0) continue
+
+
+
+
 
         //abilities
         if (/burn|freeze|confused|paralysis|poisoned|sleep/.test(i) && team[slot].pkmn.ability == ability.marvelScale.id) team[slot].buffs.defup1 = 1
@@ -4305,6 +4554,20 @@ function updateTeamBuffs(){
         if (team[slot].pkmn.ability == ability.bigPecks.id && i == "defdown1" || i == "defdown2") {team[slot].buffs.defdown1 = 0; team[slot].buffs.defdown2 = 0; continue}
 
         if (team[slot].pkmn.ability == ability.synchronize.id && /burn|freeze|confused|paralysis|poisoned|sleep/.test(i) )  { wildBuffs[i] = 3; updateWildBuffs()}
+
+        if (team[slot].pkmn.ability == ability.chlorophyll.id && saved.weather == "sunny" && saved.weatherTimer>0) {team[slot].buffs.speup1 = 2;}
+        if (team[slot].pkmn.ability == ability.slushRush.id && saved.weather == "hail" && saved.weatherTimer>0) {team[slot].buffs.speup1 = 2;}
+        if (team[slot].pkmn.ability == ability.swiftSwim.id && saved.weather == "rainy" && saved.weatherTimer>0) {team[slot].buffs.speup1 = 2;}
+        if (team[slot].pkmn.ability == ability.sandRush.id && saved.weather == "sandstorm" && saved.weatherTimer>0) {team[slot].buffs.speup1 = 2;}
+
+        if (team[slot].pkmn.ability == ability.solarPower.id && saved.weather == "sunny" && saved.weatherTimer>0) {team[slot].buffs.satkup1 = 2;}
+        if (team[slot].pkmn.ability == ability.iceBody.id && saved.weather == "hail" && saved.weatherTimer>0) {team[slot].buffs.defup1 = 2;}
+        if (team[slot].pkmn.ability == ability.rainDish.id && saved.weather == "rainy" && saved.weatherTimer>0) {team[slot].buffs.satkup1 = 2;}
+        if (team[slot].pkmn.ability == ability.sandForce.id && saved.weather == "sandstorm" && saved.weatherTimer>0) {team[slot].buffs.atkup1 = 2;}
+
+
+
+
 
 
         const div = document.createElement("span");
@@ -4326,6 +4589,14 @@ const tagPoisoned = `<span data-buff="poisoned"><span  style="cursor:help;paddin
 const tagSleep = `<span data-buff="sleep"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("normal")}">Sleep</span></span>`
 const tagConfused = `<span data-buff="confused"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("psychic")}">Confused</span></span>`
 
+const tagSunny = `<span data-buff="sunny"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("fire")}">Sunny</span></span>`
+const tagRainy = `<span data-buff="rainy"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("water")}">Rainy</span></span>`
+const tagSandstorm = `<span data-buff="sandstorm"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("ground")}">Sandstorm</span></span>`
+const tagHail = `<span data-buff="hail"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("ice")}">Hail</span></span>`
+const tagFoggy = `<span data-buff="foggy"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("ghost")}">Foggy</span></span>`
+const tagElectricTerrain = `<span data-buff="electricTerrain"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("electric")}">Electric Terrain</span></span>`
+const tagGrassyTerrain = `<span data-buff="grassyTerrain"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("grass")}">Grassy Terrain</span></span>`
+const tagMistyTerrain = `<span data-buff="mistyTerrain"><span  style="cursor:help;padding: 0.1rem 0.7rem; border-radius: 0.2rem; font-size:1.1rem; width: auto; background: ${returnTypeColor("fairy")}">Misty Terrain</span></span>`
 
 const wildBuffs = {
   burn: 0,
@@ -4455,6 +4726,18 @@ function moveBuff(target,buff,mod){
         
         if (team[exploreActiveMember].item == item.lightClay.id && /atkup1|atkup2|defup1|defup2|stakup1|stakup2|sdefup1|sdefup2|speup1|speup2/.test(buff) ) affectedTurns++
         if (team[exploreActiveMember].item == item.mentalHerb.id && /atkdown1|atkdown2|defdown1|defdown2|stakdown1|stakdown2|sdefdown1|sdefdown2|spedown1|spedown2burn|freeze|confused|paralysis|poisoned|sleep/.test(buff) ) affectedTurns--
+
+        //if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.hydratation.id && saved.weather == "rainy" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep|defdown1|defdown2|atkdown1|atkdown2|sdefdown1|sdefdown2|satkdown1|satkdown2|spedown1|spedown2/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.hydratation.id && saved.weather == "rainy" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.sandVeil.id && saved.weather == "sandstorm" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.snowCloak.id && saved.weather == "hail" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep/.test(buff)) {return}
+
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.grassyPelt.id && saved.weather == "rainy" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep|defdown1|defdown2|atkdown1|atkdown2|sdefdown1|sdefdown2|satkdown1|satkdown2|spedown1|spedown2/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.sandyPelt.id && saved.weather == "sunny" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep|defdown1|defdown2|atkdown1|atkdown2|sdefdown1|sdefdown2|satkdown1|satkdown2|spedown1|spedown2/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.moistPelt.id && saved.weather == "sandstorm" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep|defdown1|defdown2|atkdown1|atkdown2|sdefdown1|sdefdown2|satkdown1|satkdown2|spedown1|spedown2/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.fieryPelt.id && saved.weather == "hail" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep|defdown1|defdown2|atkdown1|atkdown2|sdefdown1|sdefdown2|satkdown1|satkdown2|spedown1|spedown2/.test(buff)) {return}
+        if (pkmn[team[exploreActiveMember].pkmn.id].ability == ability.pixiePelt.id && saved.weather == "foggy" && saved.weatherTimer>0 && /burn|freeze|confused|paralysis|poisoned|sleep|defdown1|defdown2|atkdown1|atkdown2|sdefdown1|sdefdown2|satkdown1|satkdown2|spedown1|spedown2/.test(buff)) {return}
+
 
         team[exploreActiveMember].buffs[buff] = affectedTurns
         return
@@ -4598,7 +4881,7 @@ let geneticItemSelect = false
 
     document.getElementById("genetics-start").addEventListener("click", e => {
 
-        if (saved.geneticOperation == 0){
+        if (saved.geneticOperation <= 0){
             
             
 
@@ -4812,7 +5095,7 @@ if (saved.geneticOperation !== undefined){
     if (document.getElementById("genetics-host")) document.getElementById("genetics-host").style.animation = "none"
 }
 
-if (saved.geneticOperation == 0){
+if (saved.geneticOperation <= 0){
     document.getElementById("genetics-start").textContent = "Finish"
     document.getElementById("genetics-start").style.color = "lawngreen"
     document.getElementById("genetics-start").style.outlineColor = "lawngreen"
@@ -4828,8 +5111,16 @@ if (mod==="end"){
 
     if (rng(shinyChance)) {pkmn[saved.geneticHost].shiny = true; summaryTags += `<div style="filter:hue-rotate(100deg)">✦ Shiny Mutation!</div>` }
 
+    if (item == "destinyKnot"){ //ability swap
+    const hostAbility = pkmn[saved.geneticHost].ability
+    const sampleAbility = pkmn[saved.geneticSample].ability
+    pkmn[saved.geneticHost].ability = sampleAbility
+    pkmn[saved.geneticSample].ability = hostAbility
+    summaryTags += `<div style="filter:hue-rotate(-50deg)">★ Ability swapped!</div>`
+    } else {
     const newAbility = learnPkmnAbility(saved.geneticHost)
     if (item!=="everstone") {pkmn[saved.geneticHost].ability = newAbility; summaryTags += `<div style="filter:hue-rotate(-50deg)">★ New abiltiy: ${format(newAbility)}!</div>`}
+    }
 
     pkmn[saved.geneticHost].movepool = []
     if (pkmn[saved.geneticHost].moves.slot1 !== undefined )pkmn[saved.geneticHost].movepool.push(pkmn[saved.geneticHost].moves.slot1)
@@ -4955,6 +5246,290 @@ function getEvolutionFamily(base) {
 
 
 
+
+
+
+const shop = {}
+
+shop.exchange = {
+    icon: item.goldenBottleCap.id,
+    name: `Golden Bottle Cap Exchange`,
+    price: 10,
+    effect: function() {item.goldenBottleCap.got++}
+}
+
+shop.exchange1 = {
+    icon: item.bottleCap.id,
+    name: `Bottle Cap Exchange`,
+    price: 1,
+    currency: `gold`,
+    effect: function() {item.bottleCap.got+=10}
+}
+
+shop.rareCandy = {
+    icon: item.rareCandy.id,
+    price: 1,
+}
+
+shop.abilityPatch = {
+    icon: item.abilityPatch.id,
+    price: 5,
+}
+
+shop.blackBelt = {
+    icon: item.blackBelt.id,
+    price: 5,
+}
+
+shop.blackGlasses = {
+    icon: item.blackGlasses.id,
+    price: 5,
+}
+shop.charcoal = {
+    icon: item.charcoal.id,
+    price: 5,
+}
+shop.dragonFang = {
+    icon: item.dragonFang.id,
+    price: 5,
+}
+shop.fairyFeather = {
+    icon: item.fairyFeather.id,
+    price: 5,
+}
+shop.hardStone = {
+    icon: item.hardStone.id,
+    price: 5,
+}
+shop.magnet = {
+    icon: item.magnet.id,
+    price: 5,
+}
+shop.metalCoat = {
+    icon: item.metalCoat.id,
+    price: 5,
+}
+shop.miracleSeed = {
+    icon: item.miracleSeed.id,
+    price: 5,
+}
+shop.mysticWater = {
+    icon: item.mysticWater.id,
+    price: 5,
+}
+shop.neverMeltIce = {
+    icon: item.neverMeltIce.id,
+    price: 5,
+}
+shop.poisonBarb = {
+    icon: item.poisonBarb.id,
+    price: 5,
+}
+shop.sharpBeak = {
+    icon: item.sharpBeak.id,
+    price: 5,
+}
+shop.silkScarf = {
+    icon: item.silkScarf.id,
+    price: 5,
+}
+shop.silverPowder = {
+    icon: item.silverPowder.id,
+    price: 5,
+}
+shop.softSand = {
+    icon: item.softSand.id,
+    price: 5,
+}
+shop.spellTag = {
+    icon: item.spellTag.id,
+    price: 5,
+}
+
+shop.waterStone = {
+    icon: item.waterStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.thunderStone = {
+    icon: item.thunderStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.sunStone = {
+    icon: item.sunStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.linkStone = {
+    icon: item.linkStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.ovalStone = {
+    icon: item.ovalStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.moonStone = {
+    icon: item.moonStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.leafStone = {
+    icon: item.leafStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.iceStone = {
+    icon: item.iceStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.fireStone = {
+    icon: item.fireStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.duskStone = {
+    icon: item.duskStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.dawnStone = {
+    icon: item.dawnStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.shinyStone = {
+    icon: item.shinyStone.id,
+    price: 1,
+    currency: `gold`
+}
+shop.luckyEgg = {
+    icon: item.luckyEgg.id,
+    price: 2,
+    currency: `gold`
+}
+shop.flameOrb = {
+    icon: item.flameOrb.id,
+    price: 2,
+    currency: `gold`
+}
+shop.toxicOrb = {
+    icon: item.toxicOrb.id,
+    price: 2,
+    currency: `gold`
+}
+shop.luckIncense = {
+    icon: item.luckIncense.id,
+    price: 3,
+    currency: `gold`
+}
+shop.pureIncense = {
+    icon: item.pureIncense.id,
+    price: 3,
+    currency: `gold`
+}
+shop.choiceBand = {
+    icon: item.choiceBand.id,
+    price: 5,
+    currency: `gold`
+}
+shop.choiceSpecs = {
+    icon: item.choiceSpecs.id,
+    price: 5,
+    currency: `gold`
+}
+shop.lifeOrb = {
+    icon: item.lifeOrb.id,
+    price: 5,
+    currency: `gold`
+}
+shop.destinyKnot = {
+    icon: item.destinyKnot.id,
+    price: 5,
+    currency: `gold`
+}
+shop.shinyCharm = {
+    icon: item.shinyCharm.id,
+    price: 15,
+    currency: `gold`
+}
+
+function updateItemShop(){
+
+
+
+
+    document.getElementById("shop-currency").innerHTML = `<img src="img/items/bottleCap.png"> x${item.bottleCap.got}`
+    document.getElementById("shop-currency-gold").innerHTML = `<img src="img/items/goldenBottleCap.png"> x${item.goldenBottleCap.got}`
+
+    document.getElementById("shop-listing").innerHTML = ""
+
+    for (let i in shop){
+
+    let currency = `bottleCap`
+    if (shop[i].currency == "gold") currency = `goldenBottleCap`
+
+
+    let name = format(shop[i].icon)
+    if (shop[i].name) name = shop[i].name
+
+    const div = document.createElement("div");
+
+
+    div.addEventListener("click", e => { 
+
+        if (item[currency].got>=shop[i].price){
+
+            item[currency].got-=shop[i].price
+
+            if (shop[i].effect) shop[i].effect()
+            else {item[shop[i].icon].got++}
+
+            updateItemShop()
+        } else{
+            document.getElementById("tooltipTitle").innerHTML = "Cant afford";
+            document.getElementById("tooltipTop").style.display = "none"    
+            document.getElementById("tooltipTop").style.display = "none"    
+            document.getElementById("tooltipMid").style.display = "none"
+            document.getElementById("tooltipBottom").innerHTML = "You dont have enough Bottle Caps to purchase this"
+            openTooltip()
+        }
+
+    })
+
+    div.dataset.item = shop[i].icon
+
+    div.innerHTML = `
+    <img src="img/items/${shop[i].icon}.png">
+        <span>${name}</span>
+    <strong>
+        <img src="img/items/${currency}.png">
+        x${shop[i].price}
+    </strong>
+    `
+    document.getElementById("shop-listing").appendChild(div);
+
+    
+
+
+    }
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
 window.addEventListener('load', function() {
 
 
@@ -4971,7 +5546,7 @@ window.addEventListener('load', function() {
     //setPkmnTeam()
     //setWildPkmn()
 
-    setGeneticMenu()
+    updateItemShop()
     exploreCombatPlayer()
     exploreCombatWild()
 
@@ -4993,7 +5568,7 @@ window.addEventListener('load', function() {
 
     saved.lastExportReset ??= Date.now();
     saved.currentPreviewNumber ??= 1;
-
+    saved.weatherCooldown ??= 0
 
     applyOfflineProgress()
     requestAnimationFrame(loop);

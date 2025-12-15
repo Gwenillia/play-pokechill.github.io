@@ -216,17 +216,79 @@ item.luckIncense = {
     power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
 }
 
-item.pureIncense = {//todo
+item.pureIncense = {
     type: "held",
     info: function() {return `When held: Increases the weight of rare pokemon by ${this.power()}%`},
     power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
 }
 
-item.luckyEgg = {//todo
+item.luckyEgg = {
     type: "held",
     info: function() {return `When held: Increases the experience gained by the pokemon by ${this.power()}%`},
-    power : function() { return 0.5+(0.5*returnItemLevel(this.id))}
+    power : function() { return 40+(10*returnItemLevel(this.id))}
 }
+
+item.shinyCharm = {
+    type: "held",
+    info: function() {return `When held: Increases the chance of encountering a wild shiny pokemon by ${this.power()}%`},
+    power : function() { return 0+(10*returnItemLevel(this.id))}
+}
+
+item.dampRock = {
+    type: "held",
+    info: function() {return `When held: Increases the duration of ${tagRainy} weather by ${this.power()} turns`},
+    power : function() { return 2+(1*returnItemLevel(this.id))}
+}
+
+item.heatRock = {
+    type: "held",
+    info: function() {return `When held: Increases the duration of ${tagSunny} weather by ${this.power()} turns`},
+    power : function() { return 2+(1*returnItemLevel(this.id))}
+}
+
+item.icyRock = {
+    type: "held",
+    info: function() {return `When held: Increases the duration of ${tagHail} weather by ${this.power()} turns`},
+    power : function() { return 2+(1*returnItemLevel(this.id))}
+}
+
+item.smoothRock = {
+    type: "held",
+    info: function() {return `When held: Increases the duration of ${tagSandstorm} weather by ${this.power()} turns`},
+    power : function() { return 2+(1*returnItemLevel(this.id))}
+}
+
+item.flameOrb = {
+    type: "held",
+    info: function() {return `When held: Increases the Special Attack of the user by x${this.power()}, but inflicts ${tagBurn}`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.toxicOrb = {
+    type: "held",
+    info: function() {return `When held: Increases the Attack of the user by x${this.power()}, but inflicts ${tagPoisoned}`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.choiceBand = {
+    type: "held",
+    info: function() {return `When held: Increases the Attack of the user by x${this.power()}, but prevents them from switching`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.choiceSpecs = {
+    type: "held",
+    info: function() {return `When held: Increases the Special Attack of the user by x${this.power()}, but prevents them from switching`},
+    power : function() { return 1+(0.15*returnItemLevel(this.id))}
+}
+
+item.lifeOrb = {
+    type: "held",
+    info: function() {return `When held: Increases the damage of the user by x${this.power()}, but loses 1/10 of its max HP per turn`},
+    power : function() { return 1+(0.2*returnItemLevel(this.id))}
+}
+
+
 
 item.waterStone = {
     evo: true,
@@ -281,6 +343,17 @@ item.shinyStone = {
     info: function() {return `Evolve certain kinds of Pokemon (Must be level ${wildAreaLevel2}+)`},
 }
 
+item.rareCandy = {
+    type: 'key',
+    itemToUse: true,
+    info: function() {return `Increases the level of a Pokemon by 1`},
+}
+
+item.abilityPatch = {
+    type: 'key',
+    itemToUse: true,
+    info: function() {return `Re-rolls the ability of a Pokemon`},
+}
 
 item.hpUp = {
     type: 'key',
@@ -321,18 +394,14 @@ item.carbos = {
 
 item.bottleCap = {
     type: "key",
-    info: function() {return `Obtained when acquiring an exceeding number of items. Can be used in the Item Fabricator (not yet implemented!)`},
+    info: function() {return `Obtained when acquiring an exceeding number of items. Can be exchanged in the Poke-Mart`},
 }
 
 item.goldenBottleCap = {
     type: "key",
-    info: function() {return `Obtained in events and the Battle Tower. Can be used in the Item Fabricator (not yet implemented!)`},
+    info: function() {return `Obtained in the Battle Frontier. Can be exchanged in the Poke-Mart`},
 }
 
-item.goldenBottleCap = {
-    type: "key",
-    info: function() {return `Obtained in events and the Battle Tower. Can be used in the Item Fabricator (not yet implemented!)`},
-}
 
 
 
