@@ -1900,6 +1900,8 @@ color: var(--dark2);
     animation: pkmn-active 0.5s infinite;
 }
 
+
+
 #pokedex-filters{
     height: auto;
     width: 100%;
@@ -3418,6 +3420,7 @@ color: var(--dark2);
     outline: inset var(--light2) 2px;
     margin-bottom: 1rem;
 }
+
 
 .frontier-league span, .frontier-league div{
    border-radius: 0.3rem;

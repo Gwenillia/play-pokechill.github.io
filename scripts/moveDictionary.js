@@ -2226,7 +2226,7 @@ move.dualChop = { //new
 
 move.dragonBreath = {
     moveset: [`dragon`],
-    split: "physical",
+    split: "special",
     rarity: 2,
     type: "dragon",
     power: 60,

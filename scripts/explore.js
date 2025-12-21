@@ -85,6 +85,9 @@ function arrayPick(array, n = 1) {
 }
 
 
+
+
+
 function givePkmn(poke, level) {
     const finalLevel = level ?? 1;
 
@@ -828,7 +831,6 @@ function closePkmnEditor(){
     //setPkmnTeam()
     voidAnimation("pkmn-editor","tooltipBoxAppear 0.2s reverse 1 ease-in")
 
-  updatePokedex()
 
     setTimeout(() => {
     document.getElementById("pkmn-editor-movepool").innerHTML = ""
@@ -2859,7 +2861,6 @@ function exploreCombatPlayer() {
 
         wildPkmnHp -= totalPower;
         if (testAbility(`active`, ability.parentalBond.id)) wildPkmnHp -= totalPower/2;
-        console.log(totalPower, multihit)
 
        
 
@@ -3947,35 +3948,6 @@ function resetPokedexFilters(){
 }
 
 
-const pokedexList = document.getElementById('pokedex-list');
-
-const observerPokedex = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      // Elemento visible: restaurar contenido
-      if (entry.target.dataset.content) {
-        entry.target.innerHTML = entry.target.dataset.content;
-        delete entry.target.dataset.content;
-      }
-    } else {
-      // Elemento no visible: guardar contenido y vaciar
-      if (!entry.target.dataset.content) {
-        entry.target.dataset.content = entry.target.innerHTML;
-      }
-      const height = entry.target.offsetHeight;
-      entry.target.innerHTML = '';
-      entry.target.style.minHeight = height + 'px';
-    }
-  });
-}, {
-  root: null,
-  rootMargin: '0px',
-  threshold: 0
-});
-
-
-
-
 
 function updatePokedex(){
 
@@ -4065,6 +4037,8 @@ function updatePokedex(){
         if (areas[saved.currentAreaBuffer]?.type=="frontier" && rotationFrontierCurrent===3 && (returnPkmnDivision(pkmn[i])!="A" && returnPkmnDivision(pkmn[i])!="B" && returnPkmnDivision(pkmn[i])!="C" &&  returnPkmnDivision(pkmn[i])!="D")) continue
 
         gotPokemon++
+
+        //if (gotPokemon>50) continue
 
         const div = document.createElement(`div`)
 
@@ -4184,6 +4158,9 @@ function updatePokedex(){
                 div.addEventListener("click", e => { 
 
                 pkmn[i].level++
+
+                if (pkmn[ i ].level % 7 === 0) pkmn[ i ].movepool.push(learnPkmnMove(pkmn[i].id, pkmn[i].level))
+
                 item.rareCandy.got--
                 updatePokedex()  
 
@@ -4335,7 +4312,6 @@ function updatePokedex(){
 
 
         document.getElementById("pokedex-list").appendChild(div);
-        observerPokedex.observe(div); 
 
     }
 

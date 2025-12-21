@@ -1064,7 +1064,7 @@ areas.victoryRoadIII = {
 
 const rotationEventMax = 3;
 const tier1difficulty = 25;
-const tier2difficulty = 100;
+const tier2difficulty = 70;
 
 
 areas.alphaRuins = {
@@ -1438,7 +1438,7 @@ areas.eventRoaringMoon = {
 areas.eventMegaAerodactly = {
     rotation: 2,
     type: `event`,
-    name: `Aerodactly Mega-Showdown`,
+    name: `Aerodactyl Mega-Showdown`,
     background : `gym`,
     icon: pkmn.megaAerodactyl,
     trainer: true,
@@ -1450,7 +1450,7 @@ areas.eventMegaAerodactly = {
     level : 100,
     team : {
         slot1 : pkmn.megaAerodactyl,
-        slot1Moves : [move.dragonDance.id,move.stoneEdge.id, move.airShlash.id, move.earthquake.id],
+        slot1Moves : [move.accelerock.id,move.rockBlast.id, move.airShlash.id, move.earthquake.id],
     },
     reward : [item.aerodactylite, pkmn.aerodactyl]
 }
@@ -1624,7 +1624,7 @@ areas.eventMegaMawile = {
     level : 100,
     team : {
         slot1 : pkmn.megaMawile,
-        slot1Moves : [move.swordsDance.id,move.ironHead.id, move.playRough.id, move.shiftGear.id],
+        slot1Moves : [move.charm.id,move.ironHead.id, move.playRough.id, move.ironTail.id],
     },
     reward : [item.mawilite, pkmn.mawile]
 }
