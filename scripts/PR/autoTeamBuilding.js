@@ -293,7 +293,6 @@ function autoBuildTeam() {
     const newPkmn = optimizedTeam[i - 1]
 
     if (newPkmn) {
-      if (currentTeam[slotKey].pkmn !== newPkmn) currentTeam[slotKey].item = undefined
       currentTeam[slotKey].pkmn = newPkmn
     } else {
       currentTeam[slotKey].pkmn = undefined
