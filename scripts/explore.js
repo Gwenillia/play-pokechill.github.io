@@ -3331,14 +3331,14 @@ function exploreCombatWild() {
     if (wildBuffs.speup2 > 0) moveTimerWild = move[nextMoveWild]?.timer / 2
 
 
-    if (saved.weatherTimer>0 && saved.weather=="sunny" && move[nextMoveWild].type == 'fire') moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="rainy" && move[nextMoveWild].type == 'water') moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="sandstorm" && (move[nextMoveWild].type == 'rock' || move[nextMoveWild].type == 'ground') ) moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="hail" &&  move[nextMoveWild].type == 'ice' ) moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="foggy" && (move[nextMoveWild].type == 'ghost' || move[nextMoveWild].type == 'dark') ) moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="electricTerrain" && (move[nextMoveWild].type == 'electric' || move[nextMoveWild].type == 'steel') ) moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="mistyTerrain" && (move[nextMoveWild].type == 'fairy' || move[nextMoveWild].type == 'psychic') ) moveTimerPlayer /= 2
-    if (saved.weatherTimer>0 && saved.weather=="grassyTerrain" && (move[nextMoveWild].type == 'grass' || move[nextMoveWild].type == 'bug') ) moveTimerPlayer /= 2
+    if (saved.weatherTimer>0 && saved.weather=="sunny" && move[nextMoveWild].type == 'fire') moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="rainy" && move[nextMoveWild].type == 'water') moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="sandstorm" && (move[nextMoveWild].type == 'rock' || move[nextMoveWild].type == 'ground') ) moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="hail" &&  move[nextMoveWild].type == 'ice' ) moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="foggy" && (move[nextMoveWild].type == 'ghost' || move[nextMoveWild].type == 'dark') ) moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="electricTerrain" && (move[nextMoveWild].type == 'electric' || move[nextMoveWild].type == 'steel') ) moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="mistyTerrain" && (move[nextMoveWild].type == 'fairy' || move[nextMoveWild].type == 'psychic') ) moveTimerWild /= 2
+    if (saved.weatherTimer>0 && saved.weather=="grassyTerrain" && (move[nextMoveWild].type == 'grass' || move[nextMoveWild].type == 'bug') ) moveTimerWild /= 2
        
 
     //afk time
@@ -7039,6 +7039,7 @@ window.addEventListener('load', function() {
 
     //updateTeamExp()
 });
+
 
 
 
