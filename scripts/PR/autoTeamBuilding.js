@@ -50,10 +50,8 @@ function openAutoTeam(){
     
     ` 
 
-    
-    
+    setAutoTeamBiasFromPercent(50)
     initAutoTeamBiasSlider()
-    document.getElementById("settings-auto-team-bias").value = 50
     
 
     //document.getElementById("team-name-field").addEventListener("keydown", e => {
