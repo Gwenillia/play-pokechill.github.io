@@ -2753,6 +2753,38 @@ color: var(--dark2);
     opacity: 0.85;
 }
 
+.custom-challenge-card-reward{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.custom-challenge-reward-items{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.custom-challenge-reward-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 0.4rem;
+    cursor: help;
+}
+
+.custom-challenge-reward-item img{
+    width: 1.8rem;
+    height: 1.8rem;
+    image-rendering: pixelated;
+}
+
 .custom-challenge-card-actions{
     display: flex;
     gap: 0.5rem;

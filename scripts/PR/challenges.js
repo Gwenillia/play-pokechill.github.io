@@ -815,6 +815,42 @@
       <span><strong>Enemy:</strong> ${formatTeamPreview(challenge.enemyTeam || [])}</span>
     `;
 
+    let rewardBlock;
+    if (challenge.isMainChallenge && Array.isArray(challenge.reward) && challenge.reward.length) {
+      rewardBlock = document.createElement("div");
+      rewardBlock.className = "custom-challenge-card-reward";
+      rewardBlock.innerHTML = "<strong>Reward:</strong>";
+
+      const rewards = document.createElement("div");
+      rewards.className = "custom-challenge-reward-items";
+
+      challenge.reward.forEach((reward) => {
+        const rewardId = reward?.id;
+        if (!rewardId) return;
+        if (item[rewardId] === undefined && pkmn[rewardId] === undefined) return;
+
+        const rewardItem = document.createElement("div");
+        rewardItem.className = "custom-challenge-reward-item";
+        rewardItem.title = format(rewardId);
+
+        if (item[rewardId] !== undefined) {
+          rewardItem.dataset.item = rewardId;
+          rewardItem.innerHTML = `<img src="img/items/${rewardId}.png" alt="${format(rewardId)}">`;
+        } else {
+          rewardItem.dataset.pkmn = rewardId;
+          rewardItem.innerHTML = `<img src="img/pkmn/sprite/${rewardId}.png" alt="${format(rewardId)}">`;
+        }
+
+        rewards.appendChild(rewardItem);
+      });
+
+      if (rewards.childElementCount) {
+        rewardBlock.appendChild(rewards);
+      } else {
+        rewardBlock = undefined;
+      }
+    }
+
     const icons = document.createElement("div");
     icons.className = "custom-challenge-card-icons";
 
@@ -877,6 +913,7 @@
     card.appendChild(title);
     if (challenge.notes) card.appendChild(notes);
     card.appendChild(teams);
+    if (rewardBlock) card.appendChild(rewardBlock);
     card.appendChild(actions);
 
     return card;
