@@ -1,3 +1,15 @@
+
+
+
+//auto team building, lets you build teams based on weights
+// by gwenillia
+//changes made by duck are marked with PR-EDIT
+
+
+
+
+
+
 (function () {
   function getTeamOptions() {
     const selector = document.getElementById("team-slot-selector");
