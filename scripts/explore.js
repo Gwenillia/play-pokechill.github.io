@@ -1316,7 +1316,10 @@ function closeTooltip(){
     document.getElementById("tooltipTitle").innerHTML = ""
     document.getElementById("tooltipMid").innerHTML = ""
     document.getElementById("tooltipBottom").innerHTML = ""
+    const tooltipActions = document.getElementById("tooltipActions");
+    if (tooltipActions) tooltipActions.innerHTML = "";
     document.getElementById("tooltipBackground").style.display = "none"
+
     }, 150);
 
 

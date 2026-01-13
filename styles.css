@@ -710,6 +710,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 
 #tooltipBox{
     height: auto;
+    max-height: 75vh;
     width: 100%;
     background: var(--dark1);
     border-radius: 0.5rem;
@@ -722,6 +723,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 1rem;
     gap: 0.5rem;
 }
+
 
 #tooltipTop {
     height: auto;
@@ -758,10 +760,21 @@ border: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--dark1);
     text-align: center;
     padding: 1rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+#tooltipActions{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-shrink: 0;
 }
 
 #tooltipTitle{
+
     width: 100%;
     height: auto;
     background: transparent;
@@ -2761,11 +2774,6 @@ color: var(--dark2);
 }
 .custom-challenge-button:active{
     scale: 0.9;
-}
-
-.start-challenge-button{
-    background: var(--dark2);
-    color: var(--light2);
 }
 
 .custom-challenge-danger{

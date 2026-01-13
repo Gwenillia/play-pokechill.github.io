@@ -493,8 +493,10 @@
     const tooltipTitle = document.getElementById("tooltipTitle");
     const tooltipMid = document.getElementById("tooltipMid");
     const tooltipBottom = document.getElementById("tooltipBottom");
+    const tooltipActions = document.getElementById("tooltipActions");
 
     tooltipTop.style.display = "none";
+    if (tooltipActions) tooltipActions.innerHTML = "";
     tooltipTitle.style.display = "inline";
     tooltipMid.style.display = "inline";
     tooltipBottom.style.display = "inline";
@@ -679,8 +681,11 @@
   const openPlayerSelection = (challenge, parseResult) => {
     const selection = new Set();
 
+    const tooltipActions = document.getElementById("tooltipActions");
+
     document.getElementById("tooltipTop").style.display = "none";
     document.getElementById("tooltipBottom").innerHTML = "<span id=\"prevent-tooltip-exit\"></span>";
+    if (tooltipActions) tooltipActions.innerHTML = "";
     document.getElementById("tooltipTitle").innerHTML = "Choose Your Team";
     document.getElementById("tooltipMid").innerHTML = `
       <div id="custom-challenge-selection-count">Selected 0/${CONFIG.MAX_TEAM}</div>
@@ -764,8 +769,13 @@
       beginChallenge(challenge, parseResult, selectedTeam);
     });
 
-    document.getElementById("tooltipBottom").appendChild(list);
-    document.getElementById("tooltipBottom").appendChild(startButton);
+    const tooltipBottom = document.getElementById("tooltipBottom");
+    tooltipBottom.appendChild(list);
+    if (tooltipActions) {
+      tooltipActions.appendChild(startButton);
+    } else {
+      tooltipBottom.appendChild(startButton);
+    }
     openTooltip();
   };
 
