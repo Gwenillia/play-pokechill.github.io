@@ -304,7 +304,7 @@ function setPkmnTeamHp(){
     if (team[i].pkmn === undefined) continue
 
     let hpMultiplier = 10
-    if (areas[saved.currentArea]?.trainer || saved.currentArea == areas.frontierSpiralingTower.id) hpMultiplier = 4
+    if (areas[saved.currentArea].trainer || saved.currentArea == areas.frontierSpiralingTower.id) hpMultiplier = 4
     if (saved.currentArea == areas.training.id) hpMultiplier = 80 //100
 
 
