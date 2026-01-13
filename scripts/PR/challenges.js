@@ -56,15 +56,7 @@
     if (!areas[CONFIG.AREA_ID]) {
       areas[CONFIG.AREA_ID] = {
         id: CONFIG.AREA_ID,
-        name: "Custom Challenge",
-        background: "gym",
-        sprite: "aceTrainer",
         trainer: true,
-        type: "vs",
-        level: 50,
-        team: {},
-        teamLevels: {},
-        reward: [item.bottleCap],
         customChallenge: true
       };
     }
@@ -625,6 +617,12 @@
     state.snapshot = snapshotTeam();
     state.pkmnSnapshots = {};
 
+    if (challenge.isMainChallenge && Array.isArray(challenge.reward)) {
+      area.reward = [...challenge.reward];
+    } else {
+      delete area.reward;
+    }
+
     const uniqueIds = new Set([
       ...selectedTeam.map(m => m.id),
       ...parseResult.enemyTeam.map(m => m.id)
@@ -924,6 +922,7 @@
       const parseResult = parseChallengeText(challenge.rawText || "");
       const challengeData = {
         ...challenge,
+        isMainChallenge: true,
         playerTeam: parseResult.playerTeam,
         enemyTeam: parseResult.enemyTeam
       };

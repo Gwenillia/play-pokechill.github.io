@@ -4,6 +4,7 @@ window.mainChallenges = [
     id: "main-001",
     title: "Starter Trial",
     notes: "Beginner-friendly battle using starter Pokémon to discover the basics of Pokechill battles.",
+    reward: [item.bottleCap],
     rawText: `[Player] Bulbasaur
 Ability: Overgrow
 Level: 12
