@@ -90,7 +90,7 @@
     });
 
     const confirmButton = document.createElement("div");
-    confirmButton.className = "auto-build-confirm";
+    confirmButton.className = "duplicate-build-confirm";
     confirmButton.textContent = "Overwrite";
     confirmButton.style.cursor = "pointer";
     confirmButton.style.flex = "1";
@@ -145,7 +145,7 @@
     });
 
     const duplicateButton = document.createElement("div");
-    duplicateButton.className = "auto-build-confirm";
+    duplicateButton.className = "duplicate-build-confirm";
     duplicateButton.textContent = "Duplicate Team";
     duplicateButton.style.cursor = "pointer";
     duplicateButton.style.fontSize = "1.3rem";
