@@ -492,6 +492,69 @@
     openTooltip();
   }
 
+  function openCopyTeamTooltip(code, message) {
+    document.getElementById("tooltipTop").style.display = "none";
+    document.getElementById("tooltipTitle").innerHTML = "Team Code";
+    document.getElementById("tooltipMid").innerHTML = message;
+
+    const bottom = document.getElementById("tooltipBottom");
+    bottom.innerHTML = '<span id="prevent-tooltip-exit"></span>';
+
+    const textarea = document.createElement("textarea");
+    textarea.value = code;
+    textarea.readOnly = true;
+    textarea.style.width = "100%";
+    textarea.style.height = "6rem";
+    textarea.style.borderRadius = "0.4rem";
+    textarea.style.border = "none";
+    textarea.style.padding = "0.5rem";
+    textarea.style.resize = "none";
+    textarea.style.marginTop = "0.5rem";
+
+    bottom.appendChild(textarea);
+    openTooltip();
+  }
+
+  function handleCopyTeamCode() {
+    const result = encodeTeamCode();
+    if (result.error) {
+      openCopyTeamTooltip("", result.error);
+      return;
+    }
+
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(result.code).catch(() => {});
+    }
+
+    openCopyTeamTooltip(result.code, "Copied to clipboard.");
+  }
+
+  function injectTeamCopyButton() {
+    const teamPreview = document.getElementById("team-preview");
+    if (!teamPreview) return;
+
+    const existing = document.getElementById("team-code-copy");
+    if (existing) existing.remove();
+
+    const button = document.createElement("div");
+    button.id = "team-code-copy";
+    button.className = "auto-build-confirm";
+    button.textContent = "Copy Team Code";
+    button.style.cursor = "pointer";
+    button.style.fontSize = "1.3rem";
+    button.style.display = "flex";
+    button.style.justifyContent = "center";
+    button.style.alignItems = "center";
+    button.style.padding = "0.4rem";
+    button.style.width = "100%";
+    button.style.marginTop = "0.5rem";
+
+    button.addEventListener("click", handleCopyTeamCode);
+
+    teamPreview.appendChild(button);
+  }
+
+  let updatePreviewWrapped = false;
   let leaveCombatWrapped = false;
   let saveExitListenerAdded = false;
 
@@ -503,6 +566,21 @@
       resetLossTracker("save-exit");
     });
     saveExitListenerAdded = true;
+  }
+
+  function wrapUpdatePreviewTeam() {
+    if (updatePreviewWrapped) return true;
+    if (typeof updatePreviewTeam !== "function") return false;
+    const original = updatePreviewTeam;
+
+    updatePreviewTeam = function () {
+      const result = original();
+      injectTeamCopyButton();
+      return result;
+    };
+
+    updatePreviewWrapped = true;
+    return true;
   }
 
   function wrapLeaveCombat() {
@@ -538,6 +616,11 @@
     setTimeout(initLeaveCombatHook, 500);
   }
 
+  function initUpdatePreviewHook() {
+    if (wrapUpdatePreviewTeam()) return;
+    setTimeout(initUpdatePreviewHook, 500);
+  }
+
   window.exportTeamCode = function () {
     const result = encodeTeamCode();
     if (result.error) {
@@ -554,4 +637,5 @@
   };
 
   initLeaveCombatHook();
+  initUpdatePreviewHook();
 })();
