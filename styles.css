@@ -2565,12 +2565,9 @@ color: var(--dark2);
     var(--dark1);
     overflow: scroll;
     overflow-x: hidden;
-    display: flex;
-    justify-content: start;
     align-items: center;
     flex-direction: column;
     padding-bottom: 3rem;
-    z-index: 30;
 }
 
 
@@ -2642,14 +2639,7 @@ color: var(--dark2);
     background-size: cover;
     background-position: bottom;
     image-rendering: pixelated;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: end;
-    text-align: end;
     flex-shrink: 0;
-    gap: 0.5rem;
-    padding-bottom: 0.5rem;
     margin-bottom: 1rem;
     padding: 0.4rem 2%;
     border-radius: 0 0 0.5rem 0.5rem;
@@ -2657,41 +2647,30 @@ color: var(--dark2);
 }
 
 #custom-challenges-header > div{
-    display: flex;
-    gap: 0.2rem;
-    width: 100%;
     justify-content: flex-end;
 }
 
 #custom-challenges-header span{
     height: 2rem;
-    width: auto;
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: center;
     background: rgba(0, 0, 0, 0.5);
     color: white;
     border: rgba(255, 255, 255, 0.7) 1px solid;
     border-radius: 0.5rem;
     font-size: 1.5rem;
     padding: 1.3rem 1rem;
-    font-weight: 100;
-    flex-shrink: 0;
 }
 
 #custom-challenges-header span svg{
     height: 2rem;
     width: 2rem;
-    margin-right: 0.5rem;
 }
 
 #custom-challenges-controls{
     width: 95%;
     gap: 1rem;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
 }
 
 .challenges-list{
@@ -2703,7 +2682,6 @@ color: var(--dark2);
 
 .custom-challenge-card{
     background: rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 0.5rem;
     padding: 0.8rem;
     display: flex;
@@ -2732,10 +2710,6 @@ color: var(--dark2);
     color: var(--light2);
     cursor: pointer;
     transition: 0.1s;
-}
-
-.custom-challenge-card-icon:hover{
-    background: rgba(255, 255, 255, 0.2);
 }
 
 .custom-challenge-card-icon.danger{
@@ -2880,7 +2854,6 @@ color: var(--dark2);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     padding: 0.6rem 0.4rem;
     background: rgba(0, 0, 0, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -2889,7 +2862,6 @@ color: var(--dark2);
     cursor: pointer;
     transition: 0.15s;
     text-align: center;
-    gap: 0.3rem;
     min-height: 12rem;
 }
 
@@ -2918,7 +2890,6 @@ color: var(--dark2);
     width: 64px;
     height: 64px;
     image-rendering: pixelated;
-    flex-shrink: 0;
 }
 
 .custom-challenge-select-info{

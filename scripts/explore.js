@@ -411,11 +411,8 @@ for (let i = 0; i < 4; i++) {
         if (areas[saved.currentArea].team.slot5 && currentTrainerSlot == 5) {spawnedPkmn = areas[saved.currentArea].team.slot5.id; randomMoves = areas[saved.currentArea].team.slot5Moves}
         if (areas[saved.currentArea].team.slot6 && currentTrainerSlot == 6) {spawnedPkmn = areas[saved.currentArea].team.slot6.id; randomMoves = areas[saved.currentArea].team.slot6Moves}
 
-        const trainerSlotKey = `slot${currentTrainerSlot}`
-        if (areas[saved.currentArea].teamLevels && areas[saved.currentArea].teamLevels[trainerSlotKey] !== undefined) wildLevel = areas[saved.currentArea].teamLevels[trainerSlotKey]
-        else wildLevel = areas[saved.currentArea].level
-        hpMultiplier = 4 
-
+        wildLevel = areas[saved.currentArea].level
+        hpMultiplier = 4
 
         
 
@@ -5352,7 +5349,6 @@ function switchMenu(id){
         document.getElementById(`custom-challenges-menu`).style.zIndex = "40"
         if (typeof updateCustomChallenges === "function") updateCustomChallenges()
     }
-
 
     if (id!=="items") document.getElementById(`item-menu`).style.display = "none"
     if (id!=="dex") document.getElementById(`pokedex-menu`).style.display = "none"
