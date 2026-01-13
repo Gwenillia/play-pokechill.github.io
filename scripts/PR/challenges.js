@@ -882,8 +882,19 @@
       </svg>
     `;
 
+    const exportIcon = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3h7v7"/>
+        <path d="M10 14L21 3"/>
+        <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>
+      </svg>
+    `;
+
     if (allowEdit) {
       icons.appendChild(createIconButton(editIcon, "", () => openEditor(challenge)));
+    }
+    if (allowExport) {
+      icons.appendChild(createIconButton(exportIcon, "", () => handleExport(challenge)));
     }
     if (allowDelete) {
       icons.appendChild(createIconButton(deleteIcon, "danger", () => confirmDelete(challenge.id)));
@@ -905,9 +916,6 @@
     };
 
     actions.appendChild(createButton("Start", () => startChallenge(challenge)));
-    if (allowExport) {
-      actions.appendChild(createButton("Export", () => handleExport(challenge)));
-    }
 
     if (icons.childElementCount) card.appendChild(icons);
     card.appendChild(title);
