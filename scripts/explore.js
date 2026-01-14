@@ -373,10 +373,11 @@ for (let i = 0; i < 4; i++) {
         if (currentTrainerSlot>5) document.getElementById(`team-indicator-slot-5`).style.filter = `brightness(0.5)`
 
         if (currentTrainerSlot>maxTrainerSlot) { //trainer won
-
-
+ 
+ 
             
             if (areas[saved.currentArea].reward){
+
             const rewards = areas[saved.currentArea].reward;
             for (const i of rewards) {
             if (item[i.id]!=undefined) {
@@ -411,7 +412,7 @@ for (let i = 0; i < 4; i++) {
         if (areas[saved.currentArea].team.slot6 && currentTrainerSlot == 6) {spawnedPkmn = areas[saved.currentArea].team.slot6.id; randomMoves = areas[saved.currentArea].team.slot6Moves}
 
         wildLevel = areas[saved.currentArea].level
-        hpMultiplier = 4 
+        hpMultiplier = 4
 
         
 
@@ -464,9 +465,13 @@ for (let t of thresholds) {
     
     document.getElementById("explore-wild-name").innerHTML = format(spawnedPkmn) + ` <span class="explore-pkmn-level" > lvl ${wildLevel} </span>`
     document.getElementById("explore-wild-sprite").src = `img/pkmn/sprite/${spawnedPkmn}.png`
+    if (pkmn[spawnedPkmn].shiny && pkmn[spawnedPkmn].shinyDisabled !== true) {
+        document.getElementById("explore-wild-sprite").src = `img/pkmn/shiny/${spawnedPkmn}.png`
+    }
 
     if (pkmn[spawnedPkmn].float) document.getElementById("explore-wild-sprite").classList.add(`floating-pkmn`)
     if (!pkmn[spawnedPkmn].float && document.getElementById("explore-wild-sprite").classList.contains(`floating-pkmn`)) document.getElementById("explore-wild-sprite").classList.remove(`floating-pkmn`)
+
 
 
     //wildPkmnHp = 100 + (
@@ -1140,8 +1145,8 @@ for (let i = activeBars; i < hpBars.length; i++) {
 
     if (percent <= 0) { //on wild death enemy kill
 
-
     if (afkSeconds>0) afkSeconds-- //account for the lack of timer respawn
+
 
 
 
@@ -1311,7 +1316,10 @@ function closeTooltip(){
     document.getElementById("tooltipTitle").innerHTML = ""
     document.getElementById("tooltipMid").innerHTML = ""
     document.getElementById("tooltipBottom").innerHTML = ""
+    const tooltipActions = document.getElementById("tooltipActions");
+    if (tooltipActions) tooltipActions.innerHTML = "";
     document.getElementById("tooltipBackground").style.display = "none"
+
     }, 150);
 
 
@@ -1616,9 +1624,9 @@ function updateTeamPkmn(){
         (team?.slot2?.pkmn?.id === undefined || pkmn[ team.slot2.pkmn?.id ].playerHp <= 0) &&
         (team?.slot1?.pkmn?.id === undefined || pkmn[ team.slot1.pkmn?.id ].playerHp <= 0))
         {
-
-         
+ 
         leaveCombat();
+
         
         if (saved.autoRefight == true) {
             if (areas[saved.currentArea].encounter!=true) item.autoRefightTicket.got--
@@ -1820,6 +1828,12 @@ document.addEventListener("contextmenu", e => {
 
         if (el.dataset.help === `VS`) document.getElementById("tooltipTitle").innerHTML = `VS Trainers`
         if (el.dataset.help === `VS`) document.getElementById("tooltipBottom").innerHTML = `Defeat increasingly difficult trainers and carve yourself a path of fame! You may unlock additional areas to explore as your progress`
+
+        if (el.dataset.help === `Main Challenges`) document.getElementById("tooltipTitle").innerHTML = `Main Challenges`
+        if (el.dataset.help === `Main Challenges`) document.getElementById("tooltipBottom").innerHTML = `Story-driven battles and curated challenges live here. More Main Challenges are coming soon.`
+
+        if (el.dataset.help === `Custom Challenges`) document.getElementById("tooltipTitle").innerHTML = `Custom Challenges`
+        if (el.dataset.help === `Custom Challenges`) document.getElementById("tooltipBottom").innerHTML = `Create custom battles from your own pools and enemy teams. Import and export challenge codes to share them.`
 
         if (el.dataset.help === `Frontier`) document.getElementById("tooltipTitle").innerHTML = `Battle Frontier`
         if (el.dataset.help === `Frontier`) document.getElementById("tooltipBottom").innerHTML = `The Battle Frontier houses different types of challenges under a specific division restriction that rotates every three days. Trainers fought here will reset every day`
@@ -5230,6 +5244,7 @@ function switchMenu(id){
     document.getElementById(`pokedex-menu`).style.zIndex = "30"
     document.getElementById(`item-menu`).style.zIndex = "30"
     document.getElementById(`vs-menu`).style.zIndex = "30"
+    document.getElementById(`custom-challenges-menu`).style.zIndex = "30"
     document.getElementById(`content-explore`).style.zIndex = "30"
     document.getElementById(`team-menu`).style.zIndex = "30"
     document.getElementById(`settings-menu`).style.zIndex = "30"
@@ -5237,6 +5252,7 @@ function switchMenu(id){
     document.getElementById(`genetics-menu`).style.zIndex = "30"
     document.getElementById(`shop-menu`).style.zIndex = "30"
     document.getElementById(`training-menu`).style.zIndex = "30"
+
 
 
     if (id==="travel") {
@@ -5330,18 +5346,26 @@ function switchMenu(id){
         updateVS()
     } 
 
+    if (id==="custom-challenges") {
+        if (saved.currentArea!==undefined) {openMenu(); return; }
+        document.getElementById(`custom-challenges-menu`).style.display = "flex"
+        document.getElementById(`custom-challenges-menu`).style.zIndex = "40"
+        if (typeof updateCustomChallenges === "function") updateCustomChallenges()
+    }
 
     if (id!=="items") document.getElementById(`item-menu`).style.display = "none"
     if (id!=="dex") document.getElementById(`pokedex-menu`).style.display = "none"
     if (id!=="travel") document.getElementById(`explore-menu`).style.display = "none"    
     if (id!=="travel") document.getElementById(`content-explore`).style.display = "none"    
     if (id!=="vs") document.getElementById(`vs-menu`).style.display = "none"    
+    if (id!=="custom-challenges") document.getElementById(`custom-challenges-menu`).style.display = "none"    
     if (id!=="team") document.getElementById(`team-menu`).style.display = "none"    
     if (id!=="settings") document.getElementById(`settings-menu`).style.display = "none"    
     if (id!=="guide") document.getElementById(`guide-menu`).style.display = "none"    
     if (id!=="genetics") document.getElementById(`genetics-menu`).style.display = "none"    
     if (id!=="shop") document.getElementById(`shop-menu`).style.display = "none"    
     if (id!=="training") document.getElementById(`training-menu`).style.display = "none"    
+
 
 
     openMenu()
