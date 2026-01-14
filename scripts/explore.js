@@ -397,7 +397,7 @@ for (let i = 0; i < 4; i++) {
 
             areas[saved.currentArea].defeated = true;
             leaveCombat(); 
-            wildPkmnHp = 100000000
+            wildPkmnHp = wildPkmnHpMax
             return
         }
 
@@ -7601,3 +7601,4 @@ window.addEventListener('load', function() {
 
     //updateTeamExp()
 });
+
