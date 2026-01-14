@@ -906,6 +906,10 @@
     ensureSavedChallenges();
     const list = document.getElementById("custom-challenges-list");
     if (!list) return;
+    const editor = document.getElementById("custom-challenge-editor");
+    if (editor && editor.parentElement === list) {
+      list.insertAdjacentElement("afterend", editor);
+    }
     list.innerHTML = "";
 
     if (!saved.customChallenges.length) {
