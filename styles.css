@@ -1156,19 +1156,23 @@ border: 1px solid rgba(255, 255, 255, 0.3);
         background: rgb(95, 146, 167);
 }
 
-.auto-build-confirm{
+.auto-build-confirm,
+.duplicate-build-confirm{
     border-radius: 0.2rem;
     background: var(--light1);
     color: white;
-    margin-top: 1rem;
     transition: 0.1s;
+}
+.auto-build-confirm{
+    margin-top: 1rem;
 }
 
 #pokedex-filters-remove, #pokedex-filters-cancel{
     cursor: pointer;
 }
 
-.auto-build-confirm:hover{
+.auto-build-confirm:hover,
+.duplicate-build-confirm:hover{
     filter: brightness(1.1);
 }
 
