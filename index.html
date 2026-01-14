@@ -393,16 +393,16 @@
         <div id="settings-menu-header">
 
             <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077l1.41-.513m14.095-5.13l1.41-.513M5.106 17.785l1.15-.964m11.49-9.642l1.149-.964M7.501 19.795l.75-1.3m7.5-12.99l.75-1.3m-6.063 16.658l.26-1.477m2.605-14.772l.26-1.477m0 17.726l-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205L12 12m6.894 5.785l-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864l-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"/></svg>
-                Settings </span>
+                <span data-i18n="settings.title">Settings</span></span>
             
             
         </div>
 
         <div class="settings-list">
-            <div onclick="exportData()">Export Data</div>
-            <div onclick="importData()">Import Data</div>
+            <div onclick="exportData()" data-i18n="settings.export">Export Data</div>
+            <div onclick="importData()" data-i18n="settings.import">Import Data</div>
 
-            <div>Theme: <select id="settings-theme">
+            <div><span data-i18n="settings.theme">Theme</span>: <select id="settings-theme">
                 <option value="dark">dark</option>
                 <option value="verdant">verdant</option>
                 <option value="lilac">lilac</option>
@@ -412,10 +412,16 @@
                 <option value="oled">oled</option>
             </select></div>
 
-            <div>Hide non-new Pokemon got in summary: <select id="settings-hide-got">
-                <option value="false">disabled</option>
-                <option value="true">enabled</option>
+            <div><span data-i18n="settings.hideGot">Hide non-new Pokemon got in summary</span>: <select id="settings-hide-got">
+                <option value="false" data-i18n="settings.hideGot.disabled">disabled</option>
+                <option value="true" data-i18n="settings.hideGot.enabled">enabled</option>
             </select></div>
+
+            <div><span data-i18n="settings.language">Language</span>: <select id="settings-language">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+            </select></div>
+
 
             <!--<div>Tutorials: <select id="settings-tutorial">
                 <option value="enabled">enabled</option>
@@ -426,8 +432,8 @@
         document.getElementById("tooltipTitle").innerHTML = `Credits`
         document.getElementById("tooltipMid").style.display = `none`
         document.getElementById("tooltipBottom").innerHTML = `Made by <span onclick="fightMissing()">Duck</span><br><br>Pokemon and trainer sprites by Pokemon Showdown (Including artists: Beliot419, kyledove, Gnomowladny, Brumirage and ZacWeavile. Go check their work. Now.)<br><br>Gen 9 sprites by KingOfThe-X-Roads<br><br>All characters and related assets featured in this game are the exclusive property of Nintendo, Creatures Inc., and The Pokémon Company, and are used here strictly for non-commercial purposes.`
-        openTooltip()' >Credits</div>
-            <div onclick="window.open('https://discord.gg/VnukKfSs3S', '_blank')">Discord</div>
+        openTooltip()' data-i18n="settings.credits">Credits</div>
+            <div onclick="window.open('https://discord.gg/VnukKfSs3S', '_blank')" data-i18n="settings.discord">Discord</div>
 
             <div style="margin-top: 3rem;background: rgb(206, 83, 83); color: white; " onclick='document.getElementById("tooltipTop").style.display = `none`
         document.getElementById("tooltipTitle").innerHTML = `Are you sure you want to delete all data forever?`
@@ -435,7 +441,8 @@
         document.getElementById("tooltipBottom").innerHTML = `<div onClick = "clearData()" style="cursor:pointer; font-size:2rem" id="prevent-tooltip-exit">Yeah!</div>`
         openTooltip()'
             
-            >Wipe Data</div>
+            data-i18n="settings.wipe">Wipe Data</div>
+
 
 
         </div>
@@ -513,9 +520,9 @@ Game Guide
 
     <div id="training-menu-header">
     <div style="display:flex; gap:0.2rem" >
-    <span >
+    <span>
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"><path d="M9.102 13.727c.032-1.321.78-2.503 2.092-2.656c.378-.043.812-.071 1.306-.071s.928.028 1.306.072c1.313.152 2.06 1.334 2.092 2.655c.047 1.944.102 5.29.102 10.273s-.055 8.329-.102 10.273c-.032 1.321-.78 2.503-2.092 2.656c-.378.043-.812.071-1.306.071s-.928-.028-1.306-.071c-1.313-.153-2.06-1.335-2.092-2.656C9.055 32.329 9 28.983 9 24s.055-8.329.102-10.273m29.796 0c-.032-1.321-.78-2.503-2.092-2.656c-.378-.043-.812-.071-1.306-.071s-.928.028-1.306.072c-1.313.152-2.06 1.334-2.092 2.655C32.055 15.671 32 19.017 32 24s.055 8.329.102 10.273c.032 1.321.78 2.503 2.092 2.656c.378.043.812.071 1.306.071s.928-.028 1.306-.071c1.313-.153 2.06-1.335 2.092-2.656c.047-1.944.102-5.29.102-10.273s-.055-8.329-.102-10.273"/><path d="M15.993 26.982a1293 1293 0 0 0 16.014-.013m-.001-5.939c-2.414-.017-5.4-.03-9.007-.03c-2.668 0-4.998.007-7.007.018M3.055 18.803c.036-1.49.984-2.748 2.474-2.796a15 15 0 0 1 .942 0c1.49.048 2.438 1.305 2.474 2.796C8.975 20.026 9 21.739 9 24s-.026 3.974-.055 5.197c-.036 1.49-.984 2.748-2.474 2.796a15 15 0 0 1-.942 0c-1.49-.048-2.438-1.305-2.474-2.796C3.025 27.974 3 26.261 3 24s.026-3.974.055-5.197m41.89 0c-.036-1.49-.984-2.748-2.474-2.796a15 15 0 0 0-.942 0c-1.49.048-2.438 1.305-2.474 2.796C39.025 20.026 39 21.739 39 24s.026 3.974.055 5.197c.036 1.49.984 2.748 2.474 2.796a15 15 0 0 0 .942 0c1.49-.048 2.438-1.305 2.474-2.796c.03-1.223.055-2.936.055-5.197s-.026-3.974-.055-5.197"/></g></svg>
-    Training
+    <span data-i18n="training.title">Training</span>
     </span>
     <span class="header-help" data-help="Training"><svg  style="opacity:0.8; pointer-events:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g fill="currentColor"><g opacity="0.2"><path d="M12.739 17.213a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path fill-rule="evenodd" d="M10.71 5.765c-.67 0-1.245.2-1.65.486c-.39.276-.583.597-.639.874a1.45 1.45 0 0 1-2.842-.574c.227-1.126.925-2.045 1.809-2.67c.92-.65 2.086-1.016 3.322-1.016c2.557 0 5.208 1.71 5.208 4.456c0 1.59-.945 2.876-2.169 3.626a1.45 1.45 0 1 1-1.514-2.474c.57-.349.783-.794.783-1.152c0-.574-.715-1.556-2.308-1.556" clip-rule="evenodd"/><path fill-rule="evenodd" d="M10.71 9.63c.8 0 1.45.648 1.45 1.45v1.502a1.45 1.45 0 1 1-2.9 0V11.08c0-.8.649-1.45 1.45-1.45" clip-rule="evenodd"/><path fill-rule="evenodd" d="M14.239 8.966a1.45 1.45 0 0 1-.5 1.99l-2.284 1.367a1.45 1.45 0 0 1-1.49-2.488l2.285-1.368a1.45 1.45 0 0 1 1.989.5" clip-rule="evenodd"/></g><path d="M11 16.25a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0"/><path fill-rule="evenodd" d="M9.71 4.065c-.807 0-1.524.24-2.053.614c-.51.36-.825.826-.922 1.308a.75.75 0 1 1-1.47-.297c.186-.922.762-1.696 1.526-2.236c.796-.562 1.82-.89 2.919-.89c2.325 0 4.508 1.535 4.508 3.757c0 1.292-.768 2.376-1.834 3.029a.75.75 0 0 1-.784-1.28c.729-.446 1.118-1.093 1.118-1.749c0-1.099-1.182-2.256-3.008-2.256m0 5.265a.75.75 0 0 1 .75.75v1.502a.75.75 0 1 1-1.5 0V10.08a.75.75 0 0 1 .75-.75" clip-rule="evenodd"/><path fill-rule="evenodd" d="M12.638 8.326a.75.75 0 0 1-.258 1.029l-2.285 1.368a.75.75 0 1 1-.77-1.287l2.285-1.368a.75.75 0 0 1 1.028.258" clip-rule="evenodd"/></g></svg></span>
     </div>
@@ -545,29 +552,29 @@ Game Guide
     <div id="training-list">
 
         <div class="training-module">
-            <span>IV Training</span>
-            <strong>Difficulty: ★</strong>
+            <span data-i18n="training.module.iv">IV Training</span>
+            <strong data-i18n="training.difficulty.one">Difficulty: ★</strong>
         </div>
 
         <div class="training-module">
-            <span>EXP Training</span>
-            <strong>Difficulty: ★★★</strong>
+            <span data-i18n="training.module.exp">EXP Training</span>
+            <strong data-i18n="training.difficulty.three">Difficulty: ★★★</strong>
         </div>
 
 
         <div class="training-module">
-            <span>Signature Move Training</span>
-            <strong>Difficulty: ★★★★</strong>
+            <span data-i18n="training.module.signature">Signature Move Training</span>
+            <strong data-i18n="training.difficulty.four">Difficulty: ★★★★</strong>
         </div>
 
         <div class="training-module">
-            <span>Ability Training</span>
-            <strong>Difficulty: ★★</strong>
+            <span data-i18n="training.module.ability">Ability Training</span>
+            <strong data-i18n="training.difficulty.two">Difficulty: ★★</strong>
         </div>
 
         <div class="training-module">
-            <span>Hidden Ability Training</span>
-            <strong>Difficulty: ★★★★</strong>
+            <span data-i18n="training.module.hiddenAbility">Hidden Ability Training</span>
+            <strong data-i18n="training.difficulty.four">Difficulty: ★★★★</strong>
         </div>
 
     </div>
@@ -592,9 +599,9 @@ Game Guide
     <div id="genetics-menu-header">
 
     <div style="display:flex; gap:0.2rem" >
-    <span >
+    <span>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 21.616q0-3.495 1.412-5.436T11.239 12Q8.804 9.762 7.392 7.82T5.981 2.384v-.25q0-.213.143-.356q.143-.144.357-.144t.357.144t.143.356v.25q0 .506.032.965q.031.459.114.882h9.727q.083-.423.114-.882q.032-.458.032-.965v-.25q0-.213.143-.356q.143-.144.357-.144t.357.144t.143.357v.25q0 3.494-1.412 5.435T12.762 12q2.416 2.22 3.828 4.17T18 21.615v.25q0 .214-.143.357q-.143.144-.357.144t-.357-.144t-.143-.357v-.25q0-.505-.032-.964q-.031-.459-.114-.882H7.146q-.082.423-.114.882T7 21.616v.25q0 .213-.143.356q-.143.144-.357.144t-.357-.144T6 21.865zM8.739 8h6.503q.46-.61.822-1.287t.582-1.482H7.335q.238.8.581 1.47T8.738 8M12 11.335q.673-.618 1.273-1.197q.6-.578 1.121-1.138H9.586q.522.56 1.131 1.138q.61.58 1.283 1.196M9.606 15h4.788q-.521-.56-1.121-1.138q-.6-.58-1.273-1.197q-.673.618-1.273 1.197q-.6.578-1.121 1.138m-2.252 3.77h9.292q-.238-.8-.581-1.471T15.242 16H8.758q-.48.629-.832 1.296q-.353.668-.572 1.473"/></svg>
-    Genetics
+    <span data-i18n="genetics.title">Genetics</span>
     </span>
     <span class="header-help" data-help="Genetics"><svg  style="opacity:0.8; pointer-events:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g fill="currentColor"><g opacity="0.2"><path d="M12.739 17.213a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path fill-rule="evenodd" d="M10.71 5.765c-.67 0-1.245.2-1.65.486c-.39.276-.583.597-.639.874a1.45 1.45 0 0 1-2.842-.574c.227-1.126.925-2.045 1.809-2.67c.92-.65 2.086-1.016 3.322-1.016c2.557 0 5.208 1.71 5.208 4.456c0 1.59-.945 2.876-2.169 3.626a1.45 1.45 0 1 1-1.514-2.474c.57-.349.783-.794.783-1.152c0-.574-.715-1.556-2.308-1.556" clip-rule="evenodd"/><path fill-rule="evenodd" d="M10.71 9.63c.8 0 1.45.648 1.45 1.45v1.502a1.45 1.45 0 1 1-2.9 0V11.08c0-.8.649-1.45 1.45-1.45" clip-rule="evenodd"/><path fill-rule="evenodd" d="M14.239 8.966a1.45 1.45 0 0 1-.5 1.99l-2.284 1.367a1.45 1.45 0 0 1-1.49-2.488l2.285-1.368a1.45 1.45 0 0 1 1.989.5" clip-rule="evenodd"/></g><path d="M11 16.25a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0"/><path fill-rule="evenodd" d="M9.71 4.065c-.807 0-1.524.24-2.053.614c-.51.36-.825.826-.922 1.308a.75.75 0 1 1-1.47-.297c.186-.922.762-1.696 1.526-2.236c.796-.562 1.82-.89 2.919-.89c2.325 0 4.508 1.535 4.508 3.757c0 1.292-.768 2.376-1.834 3.029a.75.75 0 0 1-.784-1.28c.729-.446 1.118-1.093 1.118-1.749c0-1.099-1.182-2.256-3.008-2.256m0 5.265a.75.75 0 0 1 .75.75v1.502a.75.75 0 1 1-1.5 0V10.08a.75.75 0 0 1 .75-.75" clip-rule="evenodd"/><path fill-rule="evenodd" d="M12.638 8.326a.75.75 0 0 1-.258 1.029l-2.285 1.368a.75.75 0 1 1-.77-1.287l2.285-1.368a.75.75 0 0 1 1.028.258" clip-rule="evenodd"/></g></svg></span>
     </div>
@@ -619,11 +626,11 @@ Game Guide
             </div>
 
             <div class="genetics-parameter">
-                <strong>Compatibility</strong><div style="width: 100%; height: 100%; position: relative;"><div class="genetics-parameter-bar" id="genetics-bar-compatibility"></div></div> 
+                <strong data-i18n="genetics.compatibility">Compatibility</strong><div style="width: 100%; height: 100%; position: relative;"><div class="genetics-parameter-bar" id="genetics-bar-compatibility"></div></div> 
             </div>
-
+ 
             <div class="genetics-parameter">
-                <strong>Power Cost</strong><div style="width: 100%; height: 100%; position: relative;"><div class="genetics-parameter-bar" id="genetics-bar-power"></div></div> 
+                <strong data-i18n="genetics.powerCost">Power Cost</strong><div style="width: 100%; height: 100%; position: relative;"><div class="genetics-parameter-bar" id="genetics-bar-power"></div></div> 
             </div>
             
         </div>
@@ -633,23 +640,23 @@ Game Guide
         <div class="genetics-overview">
 
 
-            <div class="genetics-overview-data"><span>Time to complete operation</span><div></div><span id="genetics-data-time">12:84:12</span></div>
-            <div class="genetics-overview-data"><span>% for shiny mutation</span><div></div><span id="genetics-data-shiny">5%</span></div>
-            <div class="genetics-overview-data"><span>% to inherit a move from the sample</span><div></div><span id="genetics-data-moves">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.timeToComplete">Time to complete operation</span><div></div><span id="genetics-data-time">12:84:12</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.shinyMutation">% for shiny mutation</span><div></div><span id="genetics-data-shiny">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritMove">% to inherit a move from the sample</span><div></div><span id="genetics-data-moves">5%</span></div>
             <br>
             <!--<div class="genetics-overview-data"><span>% to swap sample's ability</span><div></div><span>12%</span></div>
             <div class="genetics-overview-data"><span>% to inherit sample's signature move</span><div></div><span>8%</span></div>
             <br> these require special items -->
 
-            <div class="genetics-overview-data"><span>% to inherit sample's HP Iv's</span><div></div><span id="genetics-data-hp">5%</span></div>
-            <div class="genetics-overview-data"><span>% to inherit sample's Attack Iv's</span><div></div><span id="genetics-data-atk">5%</span></div>
-            <div class="genetics-overview-data"><span>% to inherit sample's S. Attack Iv's</span><div></div><span id="genetics-data-satk">5%</span></div>
-            <div class="genetics-overview-data"><span>% to inherit sample's Defense Iv's</span><div></div><span id="genetics-data-def">5%</span></div>
-            <div class="genetics-overview-data"><span>% to inherit sample's S. Defense Iv's</span><div></div><span id="genetics-data-sdef">5%</span></div>
-            <div class="genetics-overview-data"><span>% to inherit sample's Speed Iv's</span><div></div><span id="genetics-data-spe">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritHp">% to inherit sample's HP Iv's</span><div></div><span id="genetics-data-hp">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritAtk">% to inherit sample's Attack Iv's</span><div></div><span id="genetics-data-atk">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritSatk">% to inherit sample's S. Attack Iv's</span><div></div><span id="genetics-data-satk">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritDef">% to inherit sample's Defense Iv's</span><div></div><span id="genetics-data-def">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritSdef">% to inherit sample's S. Defense Iv's</span><div></div><span id="genetics-data-sdef">5%</span></div>
+            <div class="genetics-overview-data"><span data-i18n="genetics.inheritSpe">% to inherit sample's Speed Iv's</span><div></div><span id="genetics-data-spe">5%</span></div>
             <div id="genetics-warning">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="28" d="M12 10l4 7h-8Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="28;0"/></path><path d="M12 10l4 7h-8Z" opacity="0"><animate attributeName="d" begin="0.4s" dur="0.8s" keyTimes="0;0.25;1" repeatCount="indefinite" values="M12 10l4 7h-8Z;M12 4l9.25 16h-18.5Z;M12 4l9.25 16h-18.5Z"/><animate attributeName="opacity" begin="0.4s" dur="0.8s" keyTimes="0;0.1;0.75;1" repeatCount="indefinite" values="0;1;1;0"/></path></g></svg>
-                Warning, power cost too high! Only 5 out of 6 maximum IV's per stat will be inherited!
+                <span data-i18n="genetics.warningHighPower">Warning, power cost too high! Only 5 out of 6 maximum IV's per stat will be inherited!</span>
             </div>
         </div>
 
@@ -663,10 +670,10 @@ Game Guide
             </div>
         </div>
 
-        <div id="genetics-start">
-
+        <div id="genetics-start" data-i18n="genetics.start">
+ 
             Start
-
+ 
         </div>
 
 
@@ -691,8 +698,8 @@ Game Guide
         <div id="shop-menu-header">
 
             <span data-help="Shop">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m0 1a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1m-9-1a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m0 1a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1M18 6H4.27l2.55 6H15c.33 0 .62-.16.8-.4l3-4c.13-.17.2-.38.2-.6a1 1 0 0 0-1-1m-3 7H6.87l-.77 1.56L6 15a1 1 0 0 0 1 1h11v1H7a2 2 0 0 1-2-2a2 2 0 0 1 .25-.97l.72-1.47L2.34 4H1V3h2l.85 2H18a2 2 0 0 1 2 2c0 .5-.17.92-.45 1.26l-2.91 3.89c-.36.51-.96.85-1.64.85"/></svg>Poke-Mart
-
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m0 1a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1m-9-1a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2a2 2 0 0 1 2-2m0 1a1 1 0 0 0-1 1a1 1 0 0 0 1 1a1 1 0 0 0 1-1a1 1 0 0 0-1-1M18 6H4.27l2.55 6H15c.33 0 .62-.16.8-.4l3-4c.13-.17.2-.38.2-.6a1 1 0 0 0-1-1m-3 7H6.87l-.77 1.56L6 15a1 1 0 0 0 1 1h11v1H7a2 2 0 0 1-2-2a2 2 0 0 1 .25-.97l.72-1.47L2.34 4H1V3h2l.85 2H18a2 2 0 0 1 2 2c0 .5-.17.92-.45 1.26l-2.91 3.89c-.36.51-.96.85-1.64.85"/></svg><span data-i18n="shop.title">Poke-Mart</span>
+ 
             </span>
 
             <div style="display: flex; margin-top: 0rem; gap:0.5rem">
@@ -714,23 +721,23 @@ Game Guide
         <div id="shop-categories">
 
             <div onclick="shopCategory = 'goods'; updateItemShop() ">
-                <img src="img/items/rareCandy.png">Goods
+                <img src="img/items/rareCandy.png"><span data-i18n="shop.category.goods">Goods</span>
             </div>
-
+ 
             <div onclick="shopCategory = 'held'; updateItemShop() ">
-                <img src="img/items/choiceBand.png">Held
+                <img src="img/items/choiceBand.png"><span data-i18n="shop.category.held">Held</span>
             </div>
-
+ 
             <div onclick="shopCategory = 'evolution'; updateItemShop() ">
-                <img src="img/items/waterStone.png">Evolution
+                <img src="img/items/waterStone.png"><span data-i18n="shop.category.evolution">Evolution</span>
             </div>
-
+ 
             <div onclick="shopCategory = 'tm'; updateItemShop() ">
-                <img src="img/items/tmDummy.png">TM's
+                <img src="img/items/tmDummy.png"><span data-i18n="shop.category.tm">TM's</span>
             </div>
-
+ 
             <div onclick="shopCategory = 'genetics'; updateItemShop() ">
-                <img src="img/items/destinyKnot.png">Genetics
+                <img src="img/items/destinyKnot.png"><span data-i18n="shop.category.genetics">Genetics</span>
             </div>
 
         </div>
@@ -739,7 +746,7 @@ Game Guide
 
             <div>
                 <img src="img/items/calcium.png">
-                <span>Calcium Bottle</span>
+                <span data-i18n="shop.sample.calciumBottle">Calcium Bottle</span>
                 <strong>
                     <img src="img/items/bottleCap.png">
                     x12
@@ -817,15 +824,16 @@ Game Guide
 
         <div id="custom-challenges-header">
             <div style="display:flex; gap:0.2rem">
-                <span id="custom-challenges-title">Challenges</span>
+                <span id="custom-challenges-title" data-i18n="menu.challenges">Challenges</span>
+
                 <span id="custom-challenges-help" class="header-help" data-help="Main Challenges"><svg style="opacity:0.8; pointer-events:none" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><g fill="currentColor"><g opacity="0.2"><path d="M12.739 17.213a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path fill-rule="evenodd" d="M10.71 5.765c-.67 0-1.245.2-1.65.486c-.39.276-.583.597-.639.874a1.45 1.45 0 0 1-2.842-.574c.227-1.126.925-2.045 1.809-2.67c.92-.65 2.086-1.016 3.322-1.016c2.557 0 5.208 1.71 5.208 4.456c0 1.59-.945 2.876-2.169 3.626a1.45 1.45 0 1 1-1.514-2.474c.57-.349.783-.794.783-1.152c0-.574-.715-1.556-2.308-1.556" clip-rule="evenodd"/><path fill-rule="evenodd" d="M10.71 9.63c.8 0 1.45.648 1.45 1.45v1.502a1.45 1.45 0 1 1-2.9 0V11.08c0-.8.649-1.45 1.45-1.45" clip-rule="evenodd"/><path fill-rule="evenodd" d="M14.239 8.966a1.45 1.45 0 0 1-.5 1.99l-2.284 1.367a1.45 1.45 0 0 1-1.49-2.488l2.285-1.368a1.45 1.45 0 0 1 1.989.5" clip-rule="evenodd"/></g><path d="M11 16.25a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0"/><path fill-rule="evenodd" d="M9.71 4.065c-.807 0-1.524.24-2.053.614c-.51.36-.825.826-.922 1.308a.75.75 0 1 1-1.47-.297c.186-.922.762-1.696 1.526-2.236c.796-.562 1.82-.89 2.919-.89c2.325 0 4.508 1.535 4.508 3.757c0 1.292-.768 2.376-1.834 3.029a.75.75 0 0 1-.784-1.28c.729-.446 1.118-1.093 1.118-1.749c0-1.099-1.182-2.256-3.008-2.256m0 5.265a.75.75 0 0 1 .75.75v1.502a.75.75 0 1 1-1.5 0V10.08c0-.8.649-1.45 1.45-1.45" clip-rule="evenodd"/><path fill-rule="evenodd" d="M12.638 8.326a.75.75 0 0 1-.258 1.029l-2.285 1.368a.75.75 0 1 1-.77-1.287l2.285-1.368a.75.75 0 0 1 1.028.258" clip-rule="evenodd"/></g></svg></span>
             </div>
 
         </div>
 
         <div class="explore-menu-selector" id="custom-challenges-selector">
-            <div id="custom-challenges-tab-main-button" onclick="setChallengesTab('main')">Main Challenges</div>
-            <div id="custom-challenges-tab-custom-button" onclick="setChallengesTab('custom')">Custom Challenges</div>
+            <div id="custom-challenges-tab-main-button" onclick="setChallengesTab('main')" data-i18n="challenges.mainTab">Main Challenges</div>
+            <div id="custom-challenges-tab-custom-button" onclick="setChallengesTab('custom')" data-i18n="challenges.customTab">Custom Challenges</div>
         </div>
 
         <div id="custom-challenges-tab-main" class="custom-challenges-tab">
@@ -834,23 +842,24 @@ Game Guide
 
         <div id="custom-challenges-tab-custom" class="custom-challenges-tab">
             <div id="custom-challenges-controls">
-                <div id="custom-challenge-new" class="custom-challenge-button custom-challenge-primary">New Challenge</div>
-                <div id="custom-challenge-import" class="custom-challenge-button custom-challenge-secondary">Import</div>
+                <div id="custom-challenge-new" class="custom-challenge-button custom-challenge-primary" data-i18n="challenges.new">New Challenge</div>
+                <div id="custom-challenge-import" class="custom-challenge-button custom-challenge-secondary" data-i18n="challenges.import">Import</div>
             </div>
+
 
             <div id="custom-challenges-list" class="challenges-list"></div>
 
             <div id="custom-challenge-editor" style="display: none;">
                 <div class="custom-challenge-field">
-                    <label for="custom-challenge-title">Title</label>
-                    <input id="custom-challenge-title" type="text" maxlength="30" placeholder="Custom Challenge">
+                    <label for="custom-challenge-title" data-i18n="challenges.field.title">Title</label>
+                    <input id="custom-challenge-title" type="text" maxlength="30" placeholder="Custom Challenge" data-i18n-placeholder="challenges.placeholder.title">
                 </div>
                 <div class="custom-challenge-field">
-                    <label for="custom-challenge-notes">Notes</label>
-                    <input id="custom-challenge-notes" type="text" maxlength="60" placeholder="Optional description">
+                    <label for="custom-challenge-notes" data-i18n="challenges.field.notes">Notes</label>
+                    <input id="custom-challenge-notes" type="text" maxlength="60" placeholder="Optional description" data-i18n-placeholder="challenges.placeholder.notes">
                 </div>
                 <div class="custom-challenge-field">
-                    <label for="custom-challenge-text">Challenge Text</label>
+                    <label for="custom-challenge-text" data-i18n="challenges.field.text">Challenge Text</label>
                     <textarea id="custom-challenge-text" placeholder="[Player] Pikachu @ Light Ball
 Ability: Static
 Level: 50
@@ -863,13 +872,13 @@ Ability: Levitate
 Level: 52
 Shiny: No
 IVs: 0 HP / 0 Atk / 0 Def / 6 SpA / 6 SpD / 6 Spe
-- Shadow Ball"></textarea>
+- Shadow Ball" data-i18n-placeholder="challenges.placeholder.text"></textarea>
                 </div>
                 <div id="custom-challenge-preview"></div>
                 <div id="custom-challenge-error"></div>
                 <div class="custom-challenge-actions">
-                    <div id="custom-challenge-save" class="custom-challenge-button custom-challenge-primary">Save Challenge</div>
-                    <div id="custom-challenge-cancel" class="custom-challenge-button custom-challenge-secondary">Cancel</div>
+                    <div id="custom-challenge-save" class="custom-challenge-button custom-challenge-primary" data-i18n="challenges.action.save">Save Challenge</div>
+                    <div id="custom-challenge-cancel" class="custom-challenge-button custom-challenge-secondary" data-i18n="challenges.action.cancel">Cancel</div>
                 </div>
             </div>
         </div>
@@ -883,7 +892,8 @@ IVs: 0 HP / 0 Atk / 0 Def / 6 SpA / 6 SpD / 6 Spe
 
         <div id="explore-menu-header">
 
-            <span>Wild Areas
+            <span>
+                <span data-i18n="explore.title.wildAreas">Wild Areas</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8s8-3.59 8-8s-3.59-8-8-8m1 13h-2v-6h2zm0-8h-2V7h2z" opacity="0.3"/><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8"/></svg>
             </span>
 
@@ -893,23 +903,23 @@ IVs: 0 HP / 0 Atk / 0 Def / 6 SpA / 6 SpD / 6 Spe
         <div class="explore-menu-selector" id="explore-selector">
             <div style="background: #967546; outline: solid 1px #FF9E3D; color: white; z-index: 2;" onclick="setWildAreas()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m17.861 3.163l.16.054l1.202.4c.463.155.87.29 1.191.44c.348.162.667.37.911.709s.341.707.385 1.088c.04.353.04.781.04 1.27v8.212c0 .698 0 1.287-.054 1.753c-.056.484-.182.962-.535 1.348a2.25 2.25 0 0 1-.746.538c-.478.212-.971.18-1.448.081c-.46-.096-1.018-.282-1.68-.503l-.043-.014c-1.12-.374-1.505-.49-1.877-.477a2.3 2.3 0 0 0-.441.059c-.363.085-.703.299-1.686.954l-1.382.922l-.14.093c-1.062.709-1.8 1.201-2.664 1.317c-.863.116-1.705-.165-2.915-.57l-.16-.053l-1.202-.4c-.463-.155-.87-.29-1.191-.44c-.348-.162-.667-.37-.911-.71c-.244-.338-.341-.706-.385-1.088c-.04-.353-.04-.78-.04-1.269V8.665c0-.699 0-1.288.054-1.753c.056-.484.182-.962.535-1.348a2.25 2.25 0 0 1 .746-.538c.478-.213.972-.181 1.448-.081c.46.095 1.018.282 1.68.503l.043.014c1.12.373 1.505.49 1.878.477a2.3 2.3 0 0 0 .44-.059c.363-.086.703-.3 1.686-.954l1.382-.922l.14-.094c1.062-.708 1.8-1.2 2.663-1.316c.864-.116 1.706.165 2.916.57m-2.111.943V16.58c.536.058 1.1.246 1.843.494l.125.042c.717.239 1.192.396 1.555.472c.356.074.477.04.532.016a.75.75 0 0 0 .249-.179c.04-.044.11-.149.152-.51c.043-.368.044-.869.044-1.624V7.163c0-.54-.001-.88-.03-1.138c-.028-.239-.072-.328-.112-.382c-.039-.054-.109-.125-.326-.226c-.236-.11-.56-.218-1.07-.389l-1.165-.388c-.887-.296-1.413-.464-1.797-.534m-1.5 12.654V4.434c-.311.18-.71.441-1.276.818l-1.382.922l-.11.073c-.688.46-1.201.802-1.732.994v12.326c.311-.18.71-.442 1.276-.819l1.382-.921l.11-.073c.688-.46 1.201-.802 1.732-.994m-6 3.135V7.42c-.536-.058-1.1-.246-1.843-.494l-.125-.042c-.717-.239-1.192-.396-1.556-.472c-.355-.074-.476-.041-.53-.017a.75.75 0 0 0-.25.18c-.04.043-.11.148-.152.509c-.043.368-.044.87-.044 1.625v8.128c0 .54.001.88.03 1.138c.028.239.072.327.112.382c.039.054.109.125.326.226c.236.11.56.218 1.07.389l1.165.388c.887.295 1.412.463 1.797.534" clip-rule="evenodd"/></svg>
-                Wild Areas</div>
+                <span data-i18n="explore.selector.wildAreas">Wild Areas</span></div>
             <div onclick="setDungeonAreas()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M4 10a8 8 0 1 1 16 0v8.667c0 1.246 0 1.869-.268 2.333a2 2 0 0 1-.732.732c-.464.268-1.087.268-2.333.268H7.333C6.087 22 5.464 22 5 21.732A2 2 0 0 1 4.268 21C4 20.536 4 19.913 4 18.667z"/><path d="M20 18H9c-.943 0-1.414 0-1.707.293S7 19.057 7 20v2m13-8h-7c-.943 0-1.414 0-1.707.293S11 15.057 11 16v2m9-8h-3c-.943 0-1.414 0-1.707.293S15 11.057 15 12v2"/></g></svg>
-                Dungeons</div>
+                <span data-i18n="explore.selector.dungeons">Dungeons</span></div>
             <div onclick="setEventAreas()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5.658 11.002l-1.47 3.308c-1.856 4.174-2.783 6.261-1.77 7.274s3.098.085 7.272-1.77L13 18.342c2.517-1.119 3.776-1.678 3.976-2.757s-.774-2.053-2.722-4l-1.838-1.839c-1.947-1.948-2.921-2.922-4-2.721c-1.079.2-1.638 1.459-2.757 3.976M6.5 10.5l7 7m-9-2l4 4M16 8l3-3m-4.803-3c.4.667.719 2.4-1.197 4m9 3.803c-.667-.4-2.4-.719-4 1.197m0-9v.02M22 6v.02M21 13v.02M11 3v.02"/></svg>
-                Events</div>
+                <span data-i18n="explore.selector.events">Events</span></div>
             </div>
 
 
         <div id="event-banner" style="display: none;">
-            <span>- Return To Kanto -</span>
+            <span data-i18n="explore.eventBanner">- Return To Kanto -</span>
         </div>
-
+ 
         <div class="explore-menu-selector" id="event-banner-category" style="display: none;">
-            <div onclick="eventCategory = 1; setEventAreas()" id="event-selector-1">Novice</div>
-            <div onclick="eventCategory = 2; setEventAreas()" id="event-selector-2">Elite</div>
+            <div onclick="eventCategory = 1; setEventAreas()" id="event-selector-1" data-i18n="explore.eventCategory.novice">Novice</div>
+            <div onclick="eventCategory = 2; setEventAreas()" id="event-selector-2" data-i18n="explore.eventCategory.elite">Elite</div>
             <!--<div onclick="eventCategory = 3; setEventAreas()" id="event-selector-3">Master</div>-->
         </div>
 
@@ -1189,75 +1199,76 @@ IVs: 0 HP / 0 Atk / 0 Def / 6 SpA / 6 SpD / 6 Spe
 
         <div class="menu-item" id="menu-item-travel" onClick="switchMenu('travel')">
             <img src="img/items/oldMap.png">
-            <span>Travel</span>
+            <span data-i18n="menu.travel">Travel</span>
         </div>
 
         <div class="menu-item" id="menu-item-vs" onClick="switchMenu('vs')">
             <img src="img/items/vs.png">
-            <span>VS</span>
+            <span data-i18n="menu.vs">VS</span>
         </div>
 
         <div class="menu-item" id="menu-item-custom-challenges" onClick="switchMenu('custom-challenges')">
             <img src="img/items/endorsement.png">
-            <span>Challenges</span>
+            <span data-i18n="menu.challenges">Challenges</span>
         </div>
 
         <div class="menu-item" id="menu-item-items" onClick="switchMenu('items')">
             <img src="img/items/items.png">
-            <span>Items</span>
+            <span data-i18n="menu.items">Items</span>
         </div>
 
         <div class="menu-item" id="menu-item-team" onClick="switchMenu('team')">
             <img src="img/items/pokeball.png">
-            <span>Team</span>
+            <span data-i18n="menu.team">Team</span>
         </div>
 
         <div class="menu-item" id="menu-item-dex" onClick="switchMenu('dex')">
             <img src="img/items/dex.png">
-            <span>Dex</span>
+            <span data-i18n="menu.dex">Dex</span>
         </div>
 
         <div class="menu-item" id="menu-item-shop" onClick="switchMenu('shop')">
             <img src="img/items/maxPotion.png">
-            <span>Poke-Mart</span>
+            <span data-i18n="menu.shop">Poke-Mart</span>
         </div>
 
         <div class="menu-item" id="menu-item-training" onClick="switchMenu('training')">
             <img src="img/items/blackBelt.png">
-            <span>Training</span>
+            <span data-i18n="menu.training">Training</span>
         </div>
 
         <div class="menu-item" id="menu-item-genetics" onClick="switchMenu('genetics')">
             <img src="img/items/dnaSplicer.png">
-            <span>Genetics</span>
+            <span data-i18n="menu.genetics">Genetics</span>
         </div>
 
 
 
         <div class="menu-item" id="menu-mystery-gift" onClick="claimMysteryGift()">
             <img src="img/items/gift.png">
-            <span>Mystery Gift</span>
+            <span data-i18n="menu.mysteryGift">Mystery Gift</span>
         </div>
 
         <div class="menu-item" id="menu-export-reward" onClick="claimExportReward()">
             <img src="img/items/parcel.png">
-            <span>Export Reward</span>
+            <span data-i18n="menu.exportReward">Export Reward</span>
         </div>
 
         <div class="menu-item" id="menu-item-guide" onClick="switchMenu('guide')">
             <img src="img/items/tv.png">
-            <span>Guide</span>
+            <span data-i18n="menu.guide">Guide</span>
         </div>
 
         <div class="menu-item" id="menu-item-settings" onClick="switchMenu('settings')">
             <img src="img/items/key.png">
-            <span>Settings</span>
+            <span data-i18n="menu.settings">Settings</span>
         </div>
 
         <div class="menu-item" id="menu-item-fullscreen" onclick="document.documentElement.requestFullscreen(); openMenu()">
             <img src="img/items/wideLens.png">
-            <span>Full Screen</span>
+            <span data-i18n="menu.fullscreen">Full Screen</span>
         </div>
+
 
 
         
@@ -1351,8 +1362,9 @@ IVs: 0 HP / 0 Atk / 0 Def / 6 SpA / 6 SpD / 6 Spe
 
             <div id="explore-leave" onclick="saved.autoRefight = false; leaveCombat()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M5 5v14a1 1 0 0 0 1 1h3v-2H7V6h2V4H6a1 1 0 0 0-1 1m14.242-.97l-8-2A1 1 0 0 0 10 3v18a.998.998 0 0 0 1.242.97l8-2A1 1 0 0 0 20 19V5a1 1 0 0 0-.758-.97M15 12.188a1.001 1.001 0 0 1-2 0v-.377a1 1 0 1 1 2 .001z"/></svg>
-                Leave Combat
+                <span data-i18n="settings.leaveCombat">Leave Combat</span>
             </div>
+
 
 
 
@@ -1389,9 +1401,14 @@ IVs: 0 HP / 0 Atk / 0 Def / 6 SpA / 6 SpD / 6 Spe
     <script src="scripts/pkmnDictionary.js"></script>
     <script src="scripts/areasDictionary.js"></script>
 
+    <script src="scripts/i18n/en.js"></script>
+    <script src="scripts/i18n/fr.js"></script>
+    <script src="scripts/i18n/generated.js"></script>
+    <script src="scripts/i18n/i18n.js"></script>
 
 
     <script src="scripts/script.js"></script>
+
     <script src="scripts/teams.js"></script>
     <script src="scripts/explore.js"></script>
     <script src="scripts/shop.js"></script>

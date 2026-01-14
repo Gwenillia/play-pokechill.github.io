@@ -22,6 +22,18 @@
     items: null
   };
 
+  const t = (key, fallback, vars) => {
+    const i18n = window.i18n;
+    if (i18n?.t) return i18n.t(key, vars);
+    return fallback;
+  };
+
+  const tSideLabel = (side) => {
+    const normalized = String(side || "").toLowerCase();
+    if (normalized === "player") return t("challenges.side.player", "player");
+    return t("challenges.side.enemy", "enemy");
+  };
+
   // ============= Utilities =============
   const normalize = (val) => String(val || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 
@@ -194,9 +206,14 @@
       const statKey = normalizeStatName(match[2]);
       
       if (!statKey) {
-        errors.push(`Unknown IV stat: ${match[2].trim()}`);
+        errors.push(t("challenges.error.unknownIvStat", `Unknown IV stat: ${match[2].trim()}`, {
+          stat: match[2].trim()
+        }));
       } else if (isNaN(value) || value < 0 || value > 6) {
-        errors.push(`Invalid IV value for ${statKey}: ${value}`);
+        errors.push(t("challenges.error.invalidIvValue", `Invalid IV value for ${statKey}: ${value}`, {
+          stat: statKey,
+          value
+        }));
       } else {
         mon.ivs[statKey] = Math.max(0, Math.min(6, value));
       }
@@ -221,7 +238,10 @@
 
     const pokemonId = nameMaps.pokemon[normalize(name)];
     if (!pokemonId) {
-      errors.push(`Unknown ${sideLabel} Pokémon: ${name}`);
+      errors.push(t("challenges.error.unknownPokemon", `Unknown ${sideLabel} Pokémon: ${name}`, {
+        side: tSideLabel(sideLabel),
+        name
+      }));
     } else {
       result.id = pokemonId;
     }
@@ -229,7 +249,10 @@
     if (itemPart) {
       const itemId = nameMaps.items[normalize(itemPart)];
       if (!itemId) {
-        errors.push(`Unknown ${sideLabel} item: ${itemPart}`);
+        errors.push(t("challenges.error.unknownItem", `Unknown ${sideLabel} item: ${itemPart}`, {
+          side: tSideLabel(sideLabel),
+          item: itemPart
+        }));
       } else {
         result.item = itemId;
       }
@@ -281,8 +304,11 @@
       if (/^ability:/i.test(trimmed)) {
         const abilityName = trimmed.replace(/^ability:/i, "").trim();
         const abilityId = nameMaps.abilities[normalize(abilityName)];
-        if (!abilityId) result.errors.push(`Unknown ability: ${abilityName}`);
-        else current.ability = abilityId;
+        if (!abilityId) {
+          result.errors.push(t("challenges.error.unknownAbility", `Unknown ability: ${abilityName}`, {
+            ability: abilityName
+          }));
+        } else current.ability = abilityId;
         return;
       }
 
@@ -290,7 +316,9 @@
       if (/^level:/i.test(trimmed)) {
         const levelValue = parseInt(trimmed.replace(/^level:/i, "").trim(), 10);
         if (isNaN(levelValue) || levelValue < 1) {
-          result.errors.push(`Invalid level: ${trimmed}`);
+          result.errors.push(t("challenges.error.invalidLevel", `Invalid level: ${trimmed}`, {
+            level: trimmed
+          }));
         } else {
           current.level = levelValue;
         }
@@ -315,9 +343,13 @@
         const moveName = trimmed.replace(/^-\s+/, "").trim();
         const moveId = nameMaps.moves[normalize(moveName)];
         if (!moveId) {
-          result.errors.push(`Unknown move: ${moveName}`);
+          result.errors.push(t("challenges.error.unknownMove", `Unknown move: ${moveName}`, {
+            move: moveName
+          }));
         } else if (current.moves.length >= 4) {
-          result.errors.push(`Too many moves for ${format(current.id)}.`);
+          result.errors.push(t("challenges.error.tooManyMoves", `Too many moves for ${format(current.id)}.`, {
+            pokemon: format(current.id)
+          }));
         } else {
           current.moves.push(moveId);
         }
@@ -328,11 +360,16 @@
 
     // Validation
     if (result.enemyTeam.length < CONFIG.MIN_TEAM || result.enemyTeam.length > CONFIG.MAX_TEAM) {
-      result.errors.push(`Enemy team must have ${CONFIG.MIN_TEAM}-${CONFIG.MAX_TEAM} Pokémon.`);
+      result.errors.push(t("challenges.error.enemyTeamSize", `Enemy team must have ${CONFIG.MIN_TEAM}-${CONFIG.MAX_TEAM} Pokémon.`, {
+        min: CONFIG.MIN_TEAM,
+        max: CONFIG.MAX_TEAM
+      }));
     }
     [...result.playerTeam, ...result.enemyTeam].forEach(mon => {
       if (mon.moves.length === 0) {
-        result.errors.push(`${format(mon.id)} needs at least one move.`);
+        result.errors.push(t("challenges.error.needsMove", `${format(mon.id)} needs at least one move.`, {
+          pokemon: format(mon.id)
+        }));
       }
     });
 
@@ -341,15 +378,17 @@
 
   // ============= UI Functions =============
   const formatTeamPreview = (team) => 
-    team.length ? team.map(mon => `${format(mon.id)} (Lv ${mon.level})`).join(", ") : "None";
+    team.length
+      ? team.map(mon => `${format(mon.id)} (Lv ${mon.level})`).join(", ")
+      : t("challenges.none", "None");
 
   const renderPreview = (parseResult) => {
     const preview = document.getElementById("custom-challenge-preview");
     if (!preview) return;
     preview.innerHTML = `
-      <strong>Player Pool:</strong> ${formatTeamPreview(parseResult.playerTeam)}<br>
-      <strong>Enemy Team:</strong> ${formatTeamPreview(parseResult.enemyTeam)}<br>
-      <strong>Reward:</strong> 1 Bottle Cap
+      <strong>${t("challenges.preview.playerPool", "Player Pool:")}</strong> ${formatTeamPreview(parseResult.playerTeam)}<br>
+      <strong>${t("challenges.preview.enemyTeam", "Enemy Team:")}</strong> ${formatTeamPreview(parseResult.enemyTeam)}<br>
+      <strong>${t("challenges.preview.reward", "Reward:")}</strong> ${t("challenges.preview.rewardDefault", "1 Bottle Cap")}
     `;
   };
 
@@ -400,12 +439,12 @@
     const rawTitle = title.value.trim();
     const rawText = text.value.trim();
     if (!rawTitle) {
-      showError("Give your challenge a title.");
+      showError(t("challenges.error.titleRequired", "Give your challenge a title."));
       return;
     }
 
     if (!rawText) {
-      showError("Make a challenge text first.");
+      showError(t("challenges.error.textRequired", "Make a challenge text first."));
       return;
     }
 
@@ -420,7 +459,7 @@
     const existing = editId ? saved.customChallenges.find(e => e.id === editId) : null;
     const challenge = {
       id: editId || `challenge-${Date.now()}`,
-      title: title.value.trim() || parseResult.title || "Custom Challenge",
+      title: title.value.trim() || parseResult.title || t("challenges.placeholder.title", "Custom Challenge"),
       notes: notes.value.trim() || parseResult.notes || "",
       rawText,
       playerTeam: parseResult.playerTeam,
@@ -500,14 +539,14 @@
   const handleImport = () => {
     clearError();
     openChallengeDialog({
-      title: "Import Challenge",
+      title: t("challenges.import.title", "Import Challenge"),
       body: `
-        <textarea id="custom-challenge-import-input" placeholder="Paste challenge code" style="min-height:8rem; width:100%; padding:.5rem;"></textarea>
+        <textarea id="custom-challenge-import-input" placeholder="${t("challenges.import.placeholder", "Paste challenge code")}" style="min-height:8rem; width:100%; padding:.5rem;"></textarea>
         <div id="custom-challenge-import-error" style="color:#ff9e9e; margin-top:0.4rem;"></div>
       `,
       actions: [
         {
-          label: "Import",
+          label: t("challenges.import.action", "Import"),
           onClick: () => {
             const input = document.getElementById("custom-challenge-import-input");
             const errorEl = document.getElementById("custom-challenge-import-error");
@@ -520,13 +559,13 @@
             try {
               data = decodeChallenge(encoded);
             } catch (error) {
-              if (errorEl) errorEl.textContent = "Invalid challenge code.";
+              if (errorEl) errorEl.textContent = t("challenges.import.invalid", "Invalid challenge code.");
               return;
             }
 
             const rawText = String(data?.rawText || "").trim();
             if (!rawText) {
-              if (errorEl) errorEl.textContent = "Invalid challenge code.";
+              if (errorEl) errorEl.textContent = t("challenges.import.invalid", "Invalid challenge code.");
               return;
             }
 
@@ -539,7 +578,7 @@
             ensureSavedChallenges();
             saved.customChallenges.unshift({
               id: `challenge-${Date.now()}`,
-              title: String(data?.title ?? parseResult.title ?? "Custom Challenge").trim(),
+              title: String(data?.title ?? parseResult.title ?? t("challenges.placeholder.title", "Custom Challenge")).trim(),
               notes: String(data?.notes ?? parseResult.notes ?? "").trim(),
               rawText,
               playerTeam: parseResult.playerTeam,
@@ -561,14 +600,14 @@
 
     const encoded = encodeChallenge(challenge);
     openChallengeDialog({
-      title: "Challenge Export",
+      title: t("challenges.export.title", "Challenge Export"),
       body: `
         <textarea id=\"custom-challenge-export-code\" readonly style=\"min-height:8rem; width:100%; padding:.5rem;\">${encoded}</textarea>
-        <div style=\"opacity:0.75; margin-top:0.4rem;\">Share this code to import the challenge.</div>
+        <div style=\"opacity:0.75; margin-top:0.4rem;\">${t("challenges.export.share", "Share this code to import the challenge.")}</div>
       `,
       actions: [
         {
-          label: "Copy",
+          label: t("challenges.export.copy", "Copy"),
           onClick: () => {
             const output = document.getElementById("custom-challenge-export-code");
             if (!output) return;
@@ -659,10 +698,10 @@
     document.getElementById("tooltipTop").style.display = "none";
     document.getElementById("tooltipBottom").innerHTML = "<span id=\"prevent-tooltip-exit\"></span>";
     if (tooltipActions) tooltipActions.innerHTML = "";
-    document.getElementById("tooltipTitle").innerHTML = "Choose Your Team";
+    document.getElementById("tooltipTitle").innerHTML = t("challenges.select.title", "Choose Your Team");
     document.getElementById("tooltipMid").innerHTML = `
-      <div id="custom-challenge-selection-count">Selected 0/${CONFIG.MAX_TEAM}</div>
-      <div style="opacity:0.8; margin-top:0.3rem;">Pick ${CONFIG.MIN_TEAM}-${CONFIG.MAX_TEAM} Pokémon from the player pool.</div>
+      <div id="custom-challenge-selection-count">${t("challenges.select.count", "Selected {current}/{max}", { current: 0, max: CONFIG.MAX_TEAM })}</div>
+      <div style="opacity:0.8; margin-top:0.3rem;">${t("challenges.select.pick", "Pick {min}-{max} Pokémon from the player pool.", { min: CONFIG.MIN_TEAM, max: CONFIG.MAX_TEAM })}</div>
       <div id="custom-challenge-selection-error" style="color:#ff9e9e; margin-top:0.4rem;"></div>
     `;
 
@@ -695,8 +734,8 @@
         <img class="custom-challenge-select-sprite" src="${sprite}">
         <div class="custom-challenge-select-info">
           <span class="custom-challenge-select-name">${format(mon.id)}</span>
-          <span class="custom-challenge-select-level">Level ${mon.level}</span>
-          ${mon.ability ? `<span class="custom-challenge-select-ability">Ability: ${format(mon.ability)}</span>` : ''}
+          <span class="custom-challenge-select-level">${t("challenges.select.level", "Level {level}", { level: mon.level })}</span>
+          ${mon.ability ? `<span class="custom-challenge-select-ability">${t("challenges.select.ability", "Ability: {ability}", { ability: format(mon.ability) })}</span>` : ''}
           <span class="custom-challenge-select-ivs">${ivDisplay}</span>
           <span class="custom-challenge-select-moves">${movesDisplay}</span>
         </div>
@@ -711,7 +750,11 @@
           entry.classList.remove("selected");
         } else {
           if (selection.size >= CONFIG.MAX_TEAM) {
-            if (errorEl) errorEl.textContent = `You can only select ${CONFIG.MAX_TEAM} Pokémon.`;
+            if (errorEl) {
+              errorEl.textContent = t("challenges.error.selectionLimit", `You can only select ${CONFIG.MAX_TEAM} Pokémon.`, {
+                max: CONFIG.MAX_TEAM
+              });
+            }
             return;
           }
           selection.add(idx);
@@ -719,7 +762,12 @@
         }
         
         const counter = document.getElementById("custom-challenge-selection-count");
-        if (counter) counter.textContent = `Selected ${selection.size}/${CONFIG.MAX_TEAM}`;
+        if (counter) {
+          counter.textContent = t("challenges.select.count", "Selected {current}/{max}", {
+            current: selection.size,
+            max: CONFIG.MAX_TEAM
+          });
+        }
       });
       
       list.appendChild(entry);
@@ -727,13 +775,17 @@
 
     const startButton = document.createElement("div");
     startButton.className = "custom-challenge-button start-challenge-button";
-    startButton.textContent = "Start Challenge";
+    startButton.textContent = t("challenges.action.startChallenge", "Start Challenge");
     startButton.style.cssText = "cursor:pointer; margin-top:0.6rem;";
     startButton.addEventListener("click", (e) => {
       e.stopPropagation();
       const errorEl = document.getElementById("custom-challenge-selection-error");
       if (selection.size < CONFIG.MIN_TEAM) {
-        if (errorEl) errorEl.textContent = `Select at least ${CONFIG.MIN_TEAM} Pokémon.`;
+        if (errorEl) {
+          errorEl.textContent = t("challenges.error.selectionMinimum", `Select at least ${CONFIG.MIN_TEAM} Pokémon.`, {
+            min: CONFIG.MIN_TEAM
+          });
+        }
         return;
       }
       if (errorEl) errorEl.textContent = "";
@@ -786,15 +838,15 @@
     const teams = document.createElement("div");
     teams.className = "custom-challenge-card-teams";
     teams.innerHTML = `
-      <span><strong>Pool:</strong> ${formatTeamPreview(challenge.playerTeam || [])}</span>
-      <span><strong>Enemy:</strong> ${formatTeamPreview(challenge.enemyTeam || [])}</span>
+      <span><strong>${t("challenges.card.pool", "Pool:")}</strong> ${formatTeamPreview(challenge.playerTeam || [])}</span>
+      <span><strong>${t("challenges.card.enemy", "Enemy:")}</strong> ${formatTeamPreview(challenge.enemyTeam || [])}</span>
     `;
 
     let rewardBlock;
     if (challenge.isMainChallenge && Array.isArray(challenge.reward) && challenge.reward.length) {
       rewardBlock = document.createElement("div");
       rewardBlock.className = "custom-challenge-card-reward";
-      rewardBlock.innerHTML = "<strong>Reward:</strong>";
+      rewardBlock.innerHTML = `<strong>${t("challenges.card.reward", "Reward:")}</strong>`;
 
       const rewards = document.createElement("div");
       rewards.className = "custom-challenge-reward-items";
@@ -890,7 +942,7 @@
       return btn;
     };
 
-    actions.appendChild(createButton("Start", () => startChallenge(challenge)));
+    actions.appendChild(createButton(window.i18n?.t("challenges.start") ?? "Start", () => startChallenge(challenge)));
 
     if (icons.childElementCount) card.appendChild(icons);
     card.appendChild(title);
@@ -915,7 +967,7 @@
     if (!saved.customChallenges.length) {
       const empty = document.createElement("div");
       empty.className = "custom-challenge-card";
-      empty.textContent = "No custom challenges yet.";
+      empty.textContent = t("challenges.emptyCustom", "No custom challenges yet.");
       list.appendChild(empty);
       return;
     }
@@ -937,7 +989,7 @@
     if (!Array.isArray(window.mainChallenges) || !window.mainChallenges.length) {
       const empty = document.createElement("div");
       empty.className = "custom-challenge-card";
-      empty.textContent = "Main Challenges are coming soon.";
+      empty.textContent = window.i18n?.t("challenges.emptyMain") ?? "Main Challenges are coming soon.";
       list.appendChild(empty);
       return;
     }
@@ -977,14 +1029,14 @@
       customTab.style.display = "none";
       mainBtn.style.cssText = activeMainStyle;
       customBtn.style.cssText = inactiveStyle;
-      if (headerTitle) headerTitle.textContent = "Main Challenges";
+      if (headerTitle) headerTitle.textContent = window.i18n?.t("challenges.mainTab") ?? "Main Challenges";
       if (headerHelp) headerHelp.dataset.help = "Main Challenges";
     } else {
       mainTab.style.display = "none";
       customTab.style.display = "flex";
       mainBtn.style.cssText = inactiveStyle;
       customBtn.style.cssText = activeCustomStyle;
-      if (headerTitle) headerTitle.textContent = "Custom Challenges";
+      if (headerTitle) headerTitle.textContent = window.i18n?.t("challenges.customTab") ?? "Custom Challenges";
       if (headerHelp) headerHelp.dataset.help = "Custom Challenges";
     }
   };
@@ -1053,6 +1105,14 @@
     updateCustomChallenges();
     updateMainChallenges();
     setChallengesTab("main");
+    window.addEventListener("i18n:change", () => {
+      const activeTab = document.getElementById("custom-challenges-tab-main")?.style.display === "flex"
+        ? "main"
+        : "custom";
+      setChallengesTab(activeTab);
+      updateMainChallenges();
+      updateCustomChallenges();
+    });
   };
 
   window.updateCustomChallenges = updateCustomChallenges;
