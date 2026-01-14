@@ -6,15 +6,12 @@
     AREA_ID: "customChallenge",
     MAX_TEAM: 6,
     MIN_TEAM: 1,
-    IV_STATS: ["hp", "atk", "def", "satk", "sdef", "spe"]
   };
 
   const state = {
     active: false,
-    restorePending: false,
     snapshot: null,
     pkmnSnapshots: {},
-    activeChallengeId: null,
     pendingStart: false
   };
 
@@ -161,19 +158,15 @@
     });
 
     area.level = teamList.length > 0 ? Math.round(totalLevel / teamList.length) : 1;
-    area.reward = [item.bottleCap];
   };
 
   const restoreCustomTeam = () => {
-    if (!state.restorePending) return;
     restoreTeam(state.snapshot);
     Object.keys(state.pkmnSnapshots).forEach(id => restorePkmn(id, state.pkmnSnapshots[id]));
     Object.assign(state, {
       snapshot: null,
       pkmnSnapshots: {},
-      restorePending: false,
       active: false,
-      activeChallengeId: null
     });
   };
 
@@ -225,15 +218,6 @@
     const itemPart = itemParts.join("@").trim();
     
     let name = line.trim();
-    const parenMatch = line.match(/\(([^)]+)\)/);
-    if (parenMatch) {
-      const inside = parenMatch[1].trim();
-      if (!["m", "f"].includes(normalize(inside))) {
-        name = inside;
-      } else {
-        name = line.split("(")[0].trim();
-      }
-    }
 
     const pokemonId = nameMaps.pokemon[normalize(name)];
     if (!pokemonId) {
@@ -441,7 +425,6 @@
       rawText,
       playerTeam: parseResult.playerTeam,
       enemyTeam: parseResult.enemyTeam,
-      updatedAt: Date.now(),
       imported: existing?.imported || false
     };
 
@@ -498,9 +481,8 @@
     const bottom = tooltipBottom;
     bottom.innerHTML = "<span id=\"prevent-tooltip-exit\"></span>";
 
-    actions.forEach(({ label, className, onClick }) => {
+    actions.forEach(({ label, onClick }) => {
       const button = document.createElement("div");
-      button.className = `custom-challenge-button ${className}`;
       button.textContent = label;
       button.style.cursor = "pointer";
       button.addEventListener("click", (event) => {
@@ -512,8 +494,6 @@
 
     if (typeof openTooltip === "function") {
       openTooltip();
-    } else if (tooltipBackground) {
-      tooltipBackground.style.display = "flex";
     }
   };
 
@@ -564,7 +544,6 @@
               rawText,
               playerTeam: parseResult.playerTeam,
               enemyTeam: parseResult.enemyTeam,
-              updatedAt: Date.now(),
               imported: true
             });
 
@@ -654,8 +633,6 @@
 
     Object.assign(state, {
       active: true,
-      restorePending: true,
-      activeChallengeId: challenge.id,
       pendingStart: true
     });
 
@@ -670,8 +647,6 @@
       document.getElementById("content-explore").style.display = "flex";
       document.getElementById("menu-button-parent").style.display = "flex";
       saved.currentArea = area.id;
-      currentTrainerSlot = 1;
-      areas[area.id].defeated = false;
       initialiseArea();
     }, 500);
   };
@@ -1017,7 +992,7 @@
 
     leaveCombat = function () {
       const result = original();
-      if (state.restorePending) restoreCustomTeam();
+      if (state.active) restoreCustomTeam();
       
       if (areas[saved.lastAreaJoined]?.customChallenge) {
         ["vs-menu", "explore-menu"].forEach(id => {
