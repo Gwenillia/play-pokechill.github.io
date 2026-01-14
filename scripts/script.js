@@ -176,6 +176,18 @@ document.getElementById("settings-hide-got").addEventListener("change", e => {
   saved.hideGotPkmn = document.getElementById(`settings-hide-got`).value
 });
 
+const languageSelect = document.getElementById("settings-language");
+if (languageSelect && window.i18n) {
+  languageSelect.value = window.i18n.getLanguage();
+  languageSelect.addEventListener("change", () => {
+    window.i18n.setLanguage(languageSelect.value);
+  });
+  window.addEventListener("i18n:change", () => {
+    languageSelect.value = window.i18n.getLanguage();
+  });
+}
+
+
 function changeTheme(){
 
   if (saved.theme === "dark"){
