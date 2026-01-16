@@ -140,7 +140,12 @@ pkmn.charizard = {
         sdef: 85,
         spe: 100,
     },
-    evolve: function() { return { 1: { pkmn: pkmn.megaCharizardX, item: item.charizarditeX } } },
+    evolve: function() { 
+        return { 
+            1: { pkmn: pkmn.megaCharizardX, item: item.charizarditeX }, 
+            2: { pkmn: pkmn.megaCharizardY, item: item.charizarditeY },
+        } 
+    },
     hiddenAbility: ability.toughClaws,
     signature : move.flameBurst
 }
@@ -16752,4 +16757,5 @@ ribbon.smile ={
     name: `Smile Ribbon`,
     description: `Awarded very rarely for spending a lot of time together`
 }
+
 
