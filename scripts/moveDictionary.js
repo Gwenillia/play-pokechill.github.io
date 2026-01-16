@@ -1196,7 +1196,7 @@ move.flameCharge = {
     rarity: 2,
     type: "fire",
     power: 50,
-    info: function() {return `10% chance to increase Speed by 50%`},
+    info: function() {return `50% chance to increase Speed by 50%`},
     hitEffect: function(target) { if (rng(0.50))  moveBuff(target,'speup1','self') },
 }
 
@@ -4450,5 +4450,6 @@ for (const i in move){
     move[i].id = i
     if (move[i].timer == undefined) move[i].timer = defaultPlayerMoveTimer
 }
+
 
 
