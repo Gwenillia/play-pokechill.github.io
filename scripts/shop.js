@@ -429,6 +429,24 @@ shop.moonblastTm = {
     category: `tm`,
 }
 
+//temp
+
+shop.nastyPlotTm = {
+    icon: item.nastyPlotTm.id,
+    price: 3,
+    currency: `gold`,
+    category: `tm`,
+}
+
+shop.swordsDanceTm = {
+    icon: item.swordsDanceTm.id,
+    price: 3,
+    currency: `gold`,
+    category: `tm`,
+}
+
+
+
 shop.fireBlastTm = {
     icon: item.fireBlastTm.id,
     price: 5,
@@ -503,6 +521,8 @@ function updateItemShop(){
     for (let i in shop){
 
     if (shop[i].category !== shopCategory && shop[i].category !== "all") continue
+
+    if (item[shop[i].icon].type == "held" && item[shop[i].icon].got>= 20) continue
     
 
     let currency = `bottleCap`

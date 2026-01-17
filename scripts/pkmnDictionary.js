@@ -22,6 +22,7 @@ pkmn.missingno = {
         spe: 0,
     },
     evolve: function() { return { 1: { pkmn: pkmn.kangaskhan, level: 128 } } },
+    hidden: true
 }
 
 // 001 Bulbasaur → Ivysaur → Venusaur
@@ -139,7 +140,12 @@ pkmn.charizard = {
         sdef: 85,
         spe: 100,
     },
-    evolve: function() { return { 1: { pkmn: pkmn.megaCharizardX, item: item.charizarditeX } } },
+    evolve: function() { 
+        return { 
+            1: { pkmn: pkmn.megaCharizardX, item: item.charizarditeX }, 
+            2: { pkmn: pkmn.megaCharizardY, item: item.charizarditeY },
+        } 
+    },
     hiddenAbility: ability.toughClaws,
     signature : move.flameBurst
 }
@@ -8585,6 +8591,7 @@ pkmn.pansear = {
     spe: 64,
   },
   evolve: function() { return { 1: { pkmn: pkmn.simisear, item: item.fireStone } } },
+    hiddenAbility: ability.scorch,
 }
 
 pkmn.simisear = {
@@ -8597,6 +8604,7 @@ pkmn.simisear = {
     sdef: 63,
     spe: 101,
   },
+    hiddenAbility: ability.scorch,
 }
 
 // 515 Panpour → Simipour
@@ -10301,6 +10309,7 @@ pkmn.heatmor = {
     sdef: 66,
     spe: 65,
   },
+    hiddenAbility: ability.scorch,
 }
 
 // 630 Durant
@@ -12697,7 +12706,8 @@ pkmn.salandit = {
     spe: 77,
   },
   evolve: function() { return { 1: { pkmn: pkmn.salazzle, level: evolutionLevel2 } } },
-    signature : move.fireLash
+    signature : move.fireLash,
+    hiddenAbility: ability.corrosion,
 }
 
 pkmn.salazzle = {
@@ -12710,7 +12720,8 @@ pkmn.salazzle = {
     sdef: 60,
     spe: 117,
   },
-    signature : move.fireLash
+    signature : move.fireLash,
+    hiddenAbility: ability.corrosion,
 }
 
 // 758 Stufful → Bewear
@@ -13428,6 +13439,63 @@ pkmn.guzzlord = {
     hiddenAbility: ability.beastBoost,
 }
 
+// 803 Poipole → Naganadel
+pkmn.poipole = {
+  type: ["poison"],
+  bst: {
+    hp: 67,
+    atk: 73,
+    def: 67,
+    satk: 73,
+    sdef: 67,
+    spe: 73,
+  },
+  evolve: function() { return { 1: { pkmn: pkmn.naganadel, level: evolutionLevel3 } } },
+    hiddenAbility: ability.beastBoost,
+}
+
+pkmn.naganadel = {
+  type: ["poison","dragon"],
+  bst: {
+    hp: 80,
+    atk: 80,
+    def: 80,
+    satk: 127,
+    sdef: 80,
+    spe: 121,
+  },
+    hiddenAbility: ability.beastBoost,
+}
+
+// 805 Stakataka
+pkmn.stakataka = {
+  type: ["rock","steel"],
+  bst: {
+    hp: 80,
+    atk: 141,
+    def: 211,
+    satk: 53,
+    sdef: 101,
+    spe: 13,
+  },
+    hiddenAbility: ability.beastBoost,
+}
+
+// 806 Blacephalon
+pkmn.blacephalon = {
+  type: ["fire","ghost"],
+  bst: {
+    hp: 53,
+    atk: 127,
+    def: 53,
+    satk: 151,
+    sdef: 79,
+    spe: 107,
+  },
+    signature : move.mindBlown,
+    hiddenAbility: ability.beastBoost,
+}
+
 // 800 Necrozma
 pkmn.necrozma = {
   type: ["psychic"],
@@ -13505,58 +13573,7 @@ pkmn.marshadow = {
   },
 }
 
-// 803 Poipole → Naganadel
-pkmn.poipole = {
-  type: ["poison"],
-  bst: {
-    hp: 67,
-    atk: 73,
-    def: 67,
-    satk: 73,
-    sdef: 67,
-    spe: 73,
-  },
-  evolve: function() { return { 1: { pkmn: pkmn.naganadel, level: evolutionLevel3 } } },
-}
 
-pkmn.naganadel = {
-  type: ["poison","dragon"],
-  bst: {
-    hp: 80,
-    atk: 80,
-    def: 80,
-    satk: 127,
-    sdef: 80,
-    spe: 121,
-  },
-}
-
-// 805 Stakataka
-pkmn.stakataka = {
-  type: ["rock","steel"],
-  bst: {
-    hp: 80,
-    atk: 141,
-    def: 211,
-    satk: 53,
-    sdef: 101,
-    spe: 13,
-  },
-}
-
-// 806 Blacephalon
-pkmn.blacephalon = {
-  type: ["fire","ghost"],
-  bst: {
-    hp: 53,
-    atk: 127,
-    def: 53,
-    satk: 151,
-    sdef: 79,
-    spe: 107,
-  },
-    signature : move.mindBlown
-}
 
 // 807 Zeraora
 pkmn.zeraora = {
@@ -14163,7 +14180,8 @@ pkmn.sizzlipede = {
     spe: 45,
   },
   evolve: function() { return { 1: { pkmn: pkmn.centiskorch, level: evolutionLevel2 } } },
-    signature : move.burnUp
+    signature : move.burnUp,
+    hiddenAbility: ability.scorch,
 }
 
 pkmn.centiskorch = {
@@ -14176,7 +14194,8 @@ pkmn.centiskorch = {
     sdef: 90,
     spe: 65,
   },
-    signature : move.burnUp
+    signature : move.burnUp,
+    hiddenAbility: ability.scorch,
 }
 
 // 859 Clobbopus → Grapploct
@@ -16008,7 +16027,8 @@ pkmn.shroodle = {
     sdef: 35,
     spe: 75,
   },
-  evolve: function() { return { 1: { pkmn: pkmn.grafaiai, level: evolutionLevel1 } } }
+  evolve: function() { return { 1: { pkmn: pkmn.grafaiai, level: evolutionLevel1 } } },
+    hiddenAbility: ability.corrosion,
 }
 
 pkmn.grafaiai = {
@@ -16020,7 +16040,8 @@ pkmn.grafaiai = {
     satk: 80,
     sdef: 72,
     spe: 110,
-  }
+  },
+    hiddenAbility: ability.corrosion,
 }
 
 // 946 Bramblin → Brambleghast
@@ -16338,7 +16359,8 @@ pkmn.glimmet = {
     sdef: 60,
     spe: 60,
   },
-  evolve: function() { return { 1: { pkmn: pkmn.glimmora, level: evolutionLevel1 } } }
+  evolve: function() { return { 1: { pkmn: pkmn.glimmora, level: evolutionLevel1 } } },
+    hiddenAbility: ability.corrosion,
 }
 
 pkmn.glimmora = {
@@ -16350,7 +16372,8 @@ pkmn.glimmora = {
     satk: 130,
     sdef: 81,
     spe: 86,
-  }
+  },
+    hiddenAbility: ability.corrosion,
 }
 
 // 972 Greavard → Houndstone

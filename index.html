@@ -219,6 +219,42 @@
 
     </div>
 
+
+
+
+
+    <div id="dictionary-menu">
+
+        <div id="dictionary-header">
+
+        <div id="dictionary-filters">
+            <div onclick='dictionaryFilter="pokemon"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Pokemon</div>
+            <div onclick='dictionaryFilter="ability"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Abilities</div>
+            <div onclick='dictionaryFilter="move"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Moves</div>
+            <div onclick='dictionaryFilter="item"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Items</div>
+        </div>
+
+        <input id="dictionary-search" type="text" placeholder="Search Pokemon, Ability, Move, Item...">
+
+        </div>
+
+        
+
+        <div id="dictionary-list">
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
     <div id="pokedex-menu" style="display: none;">
 
         <img class="pokedex-menu-flair" src="img/icons/pokeball.svg">
@@ -878,7 +914,7 @@ Game Guide
 
     <div id="area-end" style="display: none;">
 
-    <div class="pkmn-leave-exit" onClick=' saved.autoRefight = false; afkSeconds = 0
+    <div class="pkmn-leave-exit" onClick=' saved.autoRefight = false; afkSeconds = 0; storedAfkSeconds = 0
     if (saved.tutorial && saved.tutorialStep === "battleEnd") {saved.tutorialStep = "none"; openTutorial()}
     voidAnimation("area-end","tooltipBoxAppear 0.2s reverse 1 ease-in");
     setTimeout(() => {document.getElementById("area-end").style.display = "none"}, 150);
@@ -887,7 +923,7 @@ Game Guide
         Save and exit
     </div>
 
-        <div id="area-rejoin"  onClick='afkSeconds = 0; rejoinArea();'>
+        <div id="area-rejoin"  onClick='afkSeconds = 0; storedAfkSeconds = 0; rejoinArea();'>
         <svg style="margin-right:0.1rem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6c0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0 0 20 12c0-4.42-3.58-8-8-8m0 14c-3.31 0-6-2.69-6-6c0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 0 0 4 12c0 4.42 3.58 8 8 8v3l4-4l-4-4z"/></svg>
         Fight Again
     </div>
@@ -1183,6 +1219,11 @@ Game Guide
             <span data-i18n="menu.exportReward">Export Reward</span>
         </div>
 
+        <div class="menu-item" id="menu-item-dictionary" onClick="switchMenu('dictionary')">
+            <img src="img/items/journal.png">
+            <span data-i18n="menu.dictionary">Dictionary</span>
+        </div>
+
         <div class="menu-item" id="menu-item-guide" onClick="switchMenu('guide')">
             <img src="img/items/tv.png">
             <span data-i18n="menu.guide">Guide</span>
@@ -1198,8 +1239,6 @@ Game Guide
             <span data-i18n="menu.fullscreen">Full Screen</span>
         </div>
 
-
-        
     </div>
 
     </div></div>
@@ -1333,6 +1372,7 @@ Game Guide
 
     
     <script src="scripts/PR/autoTeamBuilding.js"></script>
+    <script src="scripts/PR/movesetGenerator.js"></script>
 
     <script src="scripts/i18n/en.js"></script>
     <script src="scripts/i18n/fr.js"></script>
@@ -1346,6 +1386,7 @@ Game Guide
     <script src="scripts/teams.js"></script>
     <script src="scripts/explore.js"></script>
     <script src="scripts/shop.js"></script>
+    <script src="scripts/dictionarySearch.js"></script>
 
     <script src="scripts/save.js"></script>
 </body>
