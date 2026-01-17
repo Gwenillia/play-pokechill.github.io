@@ -593,7 +593,7 @@ function updateItemsGot(){
         divItem.dataset.item = i
 
         if (item[i].type !== "tm") divItem.innerHTML = `<img src="img/items/${i}.png"> <span>x${item[i].newItem}</span>`;
-        if (item[i].type == "tm") divItem.innerHTML = `<img src="img/items/tm${format(move[item[i].move].type)}.png"> <span>x${item[i].newItem}</span>`;
+        if (item[i].type == "tm") divItem.innerHTML = `<img src="img/items/tm${move[item[i].move].type}.png"> <span>x${item[i].newItem}</span>`;
 
 
         document.getElementById("explore-drops").appendChild(divItem);
@@ -773,7 +773,7 @@ function leaveCombat(){
         divItem.className = "area-end-item";
         divItem.dataset.item = i
         if (item[i].type !== "tm") divItem.innerHTML = `<img src="img/items/${i}.png"><span>+${item[i].newItem}</span>`;
-        if (item[i].type == "tm") divItem.innerHTML = `<img src="img/items/tm${format(move[item[i].move].type)}.png"><span>+${item[i].newItem}</span>`;
+        if (item[i].type == "tm") divItem.innerHTML = `<img src="img/items/tm${move[item[i].move].type}.png"><span>+${item[i].newItem}</span>`;
         document.getElementById("area-end-item-list").appendChild(divItem);
 
         item[i].newItem = 0;
@@ -1746,7 +1746,7 @@ document.addEventListener("contextmenu", e => {
         if (listName === "uncommon") { tag = `<span>Uncommon</span>`; }
         div.className = "area-preview";
         if (item.type!=="tm") div.innerHTML = `<img style="scale:2" src="img/items/${item.id}.png">` + tag;
-        if (item.type=="tm") div.innerHTML = `<img style="scale:2" src="img/items/tm${format(move[item.move].type)}.png">` + tag;
+        if (item.type=="tm") div.innerHTML = `<img style="scale:2" src="img/items/tm${move[item.move].type}.png">` + tag;
         document.getElementById("area-preview-items").appendChild(div);
         }}
 
@@ -1802,7 +1802,7 @@ document.addEventListener("contextmenu", e => {
         else {div.dataset.pkmn = i.id;}
         div.className = "area-preview";
         if (i.type!=="tm") div.innerHTML = `<img style="scale:2" src="img/${meow}/${i.id}.png">`;
-        if (i.type=="tm") div.innerHTML = `<img style="scale:2" src="img/${meow}/tm${format(move[i.move].type)}.png">` + tag;
+        if (i.type=="tm") div.innerHTML = `<img style="scale:2" src="img/${meow}/tm${move[i.move].type}.png">` + tag;
         if (meow == `pkmn/sprite`) div.innerHTML = `<img style="scale:1" src="img/${meow}/${i.id}.png">`;
         document.getElementById("area-preview-items").appendChild(div);
         }
@@ -1921,7 +1921,7 @@ document.addEventListener("contextmenu", e => {
 
         document.getElementById("tooltipTop").style.display = `inline`
         document.getElementById("tooltipTitle").style.display = `inline`
-        document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${format(move[el.dataset.move].type)}.png">`
+        document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${move[el.dataset.move].type}.png">`
         document.getElementById("tooltipTitle").innerHTML = format(el.dataset.move)
         document.getElementById("tooltipMid").style.display = "inline"
 
@@ -1948,7 +1948,7 @@ document.addEventListener("contextmenu", e => {
 
         document.getElementById("tooltipTop").style.display = "flex"
         if (item[el.dataset.item].type !== "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/${el.dataset.item}.png">`
-        if (item[el.dataset.item].type == "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${format(move[item[el.dataset.item].move].type)}.png">`
+        if (item[el.dataset.item].type == "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${move[item[el.dataset.item].move].type}.png">`
         
         document.getElementById("tooltipTitle").innerHTML = format(el.dataset.item)
         document.getElementById("tooltipBottom").innerHTML = item[el.dataset.item].info()
@@ -5423,7 +5423,7 @@ function updateItemBag(){
 
         div.dataset.item = i
         if (item[i].type !== "tm") div.innerHTML = `<img src="img/items/${i}.png"> <span class="item-list-name">${format(i)}</span> <span>x${item[i].got}</span>`
-        if (item[i].move && move[item[i].move]) div.innerHTML = `<img src="img/items/tm${format(move[item[i].move].type)}.png"> <span class="item-list-name">${format(i)} <strong style="opacity:0.6; font-weight:200; white-space:nowrap; font-size:0.9rem; margin-left:0.2rem"> (${move[item[i].move].power} BP, ${format(move[item[i].move].split).slice(0, 3)})</strong> </span>  <span>x${item[i].got}</span>`
+        if (item[i].move && move[item[i].move]) div.innerHTML = `<img src="img/items/tm${move[item[i].move].type}.png"> <span class="item-list-name">${format(i)} <strong style="opacity:0.6; font-weight:200; white-space:nowrap; font-size:0.9rem; margin-left:0.2rem"> (${move[item[i].move].power} BP, ${format(move[item[i].move].split).slice(0, 3)})</strong> </span>  <span>x${item[i].got}</span>`
 
 
 

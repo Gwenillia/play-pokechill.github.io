@@ -568,7 +568,7 @@ div.addEventListener("click", () => {
 
 
     if (item[i] && item[i].type=="tm"){ div.innerHTML = `
-    <img src="img/items/tm${format(move[item[i].move].type)}.png">
+    <img src="img/items/tm${move[item[i].move].type}.png">
         <span>${name}</span>
     <strong>
         <img src="img/items/${currency}.png">
