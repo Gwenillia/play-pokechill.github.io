@@ -8,6 +8,12 @@
 
   var STORAGE_KEY = 'dev-tools-pos-v1';
 
+  function t(key, fallback, vars) {
+    var i18n = window.i18n;
+    if (i18n && i18n.t) return i18n.t(key, vars);
+    return fallback;
+  }
+
   function loadPos() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
@@ -74,7 +80,7 @@
     header.style.gap = '8px';
 
     var handle = document.createElement('div');
-    handle.textContent = 'DEV TOOLS';
+    handle.textContent = t('debug.tools.title', 'DEV TOOLS');
     handle.style.fontWeight = '700';
     handle.style.letterSpacing = '0.08em';
     handle.style.opacity = '0.9';
@@ -82,7 +88,7 @@
     handle.style.padding = '6px 8px';
     handle.style.borderRadius = '8px';
     handle.style.background = 'rgba(255,255,255,0.08)';
-    handle.title = 'Drag me';
+    handle.title = t('debug.tools.drag', 'Drag me');
 
     var controls = document.createElement('div');
     controls.style.display = 'flex';
@@ -113,13 +119,15 @@
     row.style.gap = '8px';
 
     var collapsed = false;
-    var toggle = smallBtn('Hide', function () {
+    var hideLabel = t('debug.tools.hide', 'Hide');
+    var showLabel = t('debug.tools.show', 'Show');
+    var toggle = smallBtn(hideLabel, function () {
       collapsed = !collapsed;
       row.style.display = collapsed ? 'none' : 'flex';
-      toggle.textContent = collapsed ? 'Show' : 'Hide';
+      toggle.textContent = collapsed ? showLabel : hideLabel;
     });
 
-    var reset = smallBtn('Reset', function () {
+    var reset = smallBtn(t('debug.tools.reset', 'Reset'), function () {
       try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
       host.style.left = '';
       host.style.right = '10px';

@@ -2,6 +2,12 @@
   if (window.__candyButtonsInjected) return;
   window.__candyButtonsInjected = true;
 
+  function t(key, fallback, vars) {
+    var i18n = window.i18n;
+    if (i18n && i18n.t) return i18n.t(key, vars);
+    return fallback;
+  }
+
   function findByText(text){
     const needle = (text || '').toLowerCase();
     const els = document.querySelectorAll('*');
@@ -29,16 +35,18 @@
     return;
   }
 
-  const candyBtn = window.__debugUI.addButton('Candytime XL', () => {
+  const candyLabel = t('debug.candyxl', 'Candytime XL');
+  const candyBtn = window.__debugUI.addButton(candyLabel, () => {
     if (item && item.timeCandyXL && typeof item.timeCandyXL.effect === 'function') {
       try { item.timeCandyXL.effect(); return; } catch (e) { console.error(e); }
     }
-    const target = findByText('Candytime XL');
+    const target = findByText(candyLabel);
     if (target) triggerClick(target);
-    else alert('Candytime XL action not available on this page.');
+    else alert(t('debug.candyxl.unavailable', 'Candytime XL action not available on this page.'));
   }, { background: '#ff4081' });
 
-  const plus5Btn = window.__debugUI.addButton('+5 Candy', () => {
+  const plus5Label = t('debug.candy.plus5', '+5 Candy');
+  const plus5Btn = window.__debugUI.addButton(plus5Label, () => {
     if (item && item.timeCandyXL) {
       try {
         item.timeCandyXL.got = (item.timeCandyXL.got || 0) + 5;
@@ -49,7 +57,7 @@
     }
     const target = findByText('+5') || findByText('Plus 5') || findByText('+ 5');
     if (target) triggerClick(target);
-    else alert('+5 action not available on this page.');
+    else alert(t('debug.candy.plus5.unavailable', '+5 action not available on this page.'));
   }, { background: '#ff4081' });
 
   document.addEventListener('keydown', function(e){

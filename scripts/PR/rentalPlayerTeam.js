@@ -11,6 +11,12 @@
 
 
 (function () {
+  const t = (key, fallback, vars) => {
+    const i18n = window.i18n;
+    if (i18n?.t) return i18n.t(key, vars);
+    return fallback;
+  };
+
   const SLOT_COUNT = 6;
   const MOVE_SLOTS = 4;
   const IV_KEYS = ["hp", "atk", "def", "satk", "sdef", "spe"];
@@ -434,22 +440,37 @@
   function openRentalTooltip() {
     if (rentalUsedToday()) {
       document.getElementById("tooltipTop").style.display = "none";
-      document.getElementById("tooltipTitle").innerHTML = "Rental Used";
-      document.getElementById("tooltipMid").innerHTML = "You can only rent a team once per day.";
+      document.getElementById("tooltipTitle").innerHTML = t(
+        "rental.used.title",
+        "Rental Used"
+      );
+      document.getElementById("tooltipMid").innerHTML = t(
+        "rental.used.body",
+        "You can only rent a team once per day."
+      );
       document.getElementById("tooltipBottom").innerHTML = "";
       openTooltip();
       return;
     }
 
     document.getElementById("tooltipTop").style.display = "none";
-    document.getElementById("tooltipTitle").innerHTML = "Rental Team";
-    document.getElementById("tooltipMid").innerHTML = "Paste a rental team code to fight once.";
+    document.getElementById("tooltipTitle").innerHTML = t(
+      "rental.title",
+      "Rental Team"
+    );
+    document.getElementById("tooltipMid").innerHTML = t(
+      "rental.body",
+      "Paste a rental team code to fight once."
+    );
 
     const bottom = document.getElementById("tooltipBottom");
     bottom.innerHTML = '<span id="prevent-tooltip-exit"></span>';
 
     const input = document.createElement("textarea");
-    input.placeholder = "Paste rental code here";
+    input.placeholder = t(
+      "rental.placeholder",
+      "Paste rental code here"
+    );
     input.style.width = "100%";
     input.style.height = "6rem";
     input.style.borderRadius = "0.4rem";
@@ -460,7 +481,7 @@
 
     const button = document.createElement("div");
     button.className = "auto-build-confirm";
-    button.textContent = "Start Rental";
+    button.textContent = t("rental.start", "Start Rental");
     button.style.cursor = "pointer";
     button.style.fontSize = "1.3rem";
     button.style.display = "flex";
@@ -471,7 +492,7 @@
     button.addEventListener("click", () => {
       const raw = input.value;
       if (!raw) {
-        showRentalError("Paste a rental code first.");
+        showRentalError(t("rental.error.missing", "Paste a rental code first."));
         return;
       }
 
@@ -494,7 +515,10 @@
 
   function openCopyTeamTooltip(code, message) {
     document.getElementById("tooltipTop").style.display = "none";
-    document.getElementById("tooltipTitle").innerHTML = "Team Code";
+    document.getElementById("tooltipTitle").innerHTML = t(
+      "rental.teamCode.title",
+      "Team Code"
+    );
     document.getElementById("tooltipMid").innerHTML = message;
 
     const bottom = document.getElementById("tooltipBottom");
@@ -526,7 +550,7 @@
       navigator.clipboard.writeText(result.code).catch(() => {});
     }
 
-    openCopyTeamTooltip(result.code, "Copied to clipboard.");
+    openCopyTeamTooltip(result.code, t("rental.teamCode.copied", "Copied to clipboard."));
   }
 
   function injectTeamCopyButton() {
@@ -539,7 +563,7 @@
     const button = document.createElement("div");
     button.id = "team-code-copy";
     button.className = "auto-build-confirm";
-    button.textContent = "Copy Team Code";
+    button.textContent = t("rental.copy", "Copy Team Code");
     button.style.cursor = "pointer";
     button.style.fontSize = "1.3rem";
     button.style.display = "flex";

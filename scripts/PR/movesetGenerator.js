@@ -10,8 +10,14 @@ function getMoveset(poke,level){ //PR-EDIT
     showMovePopup(getMoveCalculatorReport(poke, level))
 }
 
+const tMoveset = (key, fallback, vars) => {
+    const i18n = window.i18n
+    if (i18n?.t) return i18n.t(key, vars)
+    return fallback
+}
 
 const TYPE_COLORS = {
+
     normal:  "#A8A77A",
     fire:    "#EE8130",
     water:   "#6390F0",
@@ -157,7 +163,12 @@ function showMovePopup(report) {
     });
 
     const title = document.createElement("h2");
-    title.textContent = `Moves for ${report.pokemon} (Lv ${report.level})`;
+    title.textContent = tMoveset(
+        "moveset.title",
+        "Moves for {pokemon} (Lv {level})",
+        { pokemon: report.pokemon, level: report.level }
+    );
+
     Object.assign(title.style, {
         marginTop: "0",
         marginBottom: "20px",
@@ -198,11 +209,12 @@ function showMovePopup(report) {
         table.innerHTML = `
             <thead style="background:#333;">
                 <tr>
-                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">Move</th>
-                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">Type</th>
-                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">Split</th>
-                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">Power</th>
-                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">Info</th>
+                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">${tMoveset("moveset.table.move", "Move")}</th>
+                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">${tMoveset("moveset.table.type", "Type")}</th>
+                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">${tMoveset("moveset.table.split", "Split")}</th>
+                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">${tMoveset("moveset.table.power", "Power")}</th>
+                    <th style="border-bottom:2px solid #444; text-align:left; padding:8px; color:#fff;">${tMoveset("moveset.table.info", "Info")}</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -241,14 +253,27 @@ function showMovePopup(report) {
 
     Object.keys(buckets.sameType).forEach(typeName => {
     const color = TYPE_COLORS[typeName] || "#555";
-    buildTable(`Same-Type: ${typeName}`, buckets.sameType[typeName], color);
+    buildTable(
+        tMoveset("moveset.section.sameType", "Same-Type: {type}", { type: typeName }),
+        buckets.sameType[typeName],
+        color
+    );
+
     });
-    buildTable("Moveset Tag Matches", buckets.movesetMatch);
-    buildTable("All-Type Moves", buckets.allTag);
+    buildTable(
+        tMoveset("moveset.section.movesetMatch", "Moveset Tag Matches"),
+        buckets.movesetMatch
+    );
+    buildTable(
+        tMoveset("moveset.section.allType", "All-Type Moves"),
+        buckets.allTag
+    );
+
 
     // Close button
     const closeBtn = document.createElement("button");
-    closeBtn.textContent = "Close";
+    closeBtn.textContent = tMoveset("moveset.close", "Close");
+
     Object.assign(closeBtn.style, {
         marginTop: "20px",
         padding: "10px 18px",

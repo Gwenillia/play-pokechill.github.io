@@ -6,7 +6,8 @@ const shop = {}
 
 shop.exchange = {
     icon: item.goldenBottleCap.id,
-    name: `Golden Bottle Cap Exchange`,
+    nameKey: "shop.exchange.goldenBottleCap",
+    name: "Golden Bottle Cap Exchange",
     price: 10,
     category: `all`,
     effect: function() {item.goldenBottleCap.got++}
@@ -14,7 +15,8 @@ shop.exchange = {
 
 shop.exchange1 = {
     icon: item.bottleCap.id,
-    name: `Bottle Cap Exchange`,
+    nameKey: "shop.exchange.bottleCap",
+    name: "Bottle Cap Exchange",
     price: 1,
     currency: `gold`,
     category: `all`,
@@ -501,10 +503,11 @@ function updateItemShop(){
     document.getElementById("shop-listing").innerHTML = ""
 
     const goBack = document.createElement("div")
+    const goBackLabel = t("shop.goBack", "Go Back")
     goBack.id = "shop-back"
     goBack.innerHTML =`
     <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><g fill="currentColor"><path d="M224 56v144a8 8 0 0 1-8 8H40a8 8 0 0 1-8-8V56a8 8 0 0 1 8-8h176a8 8 0 0 1 8 8" opacity="0.2"/><path d="M184 104v32a8 8 0 0 1-8 8H99.31l10.35 10.34a8 8 0 0 1-11.32 11.32l-24-24a8 8 0 0 1 0-11.32l24-24a8 8 0 0 1 11.32 11.32L99.31 128H168v-24a8 8 0 0 1 16 0m48-48v144a16 16 0 0 1-16 16H40a16 16 0 0 1-16-16V56a16 16 0 0 1 16-16h176a16 16 0 0 1 16 16m-16 144V56H40v144z"/></g></svg>
-    Go Back`
+    ${goBackLabel}`
     document.getElementById("shop-listing").appendChild(goBack);
     goBack.addEventListener("click", () => {
     shopCategory = undefined
@@ -531,6 +534,8 @@ function updateItemShop(){
 
     let name = format(shop[i].icon)
     if (shop[i].name) name = shop[i].name
+    if (shop[i].nameKey) name = t(shop[i].nameKey, name)
+
 
     const div = document.createElement("div");
 
@@ -538,7 +543,7 @@ function updateItemShop(){
 div.addEventListener("click", () => {
 
     document.getElementById("tooltipTop").style.display = "none"
-    document.getElementById("tooltipTitle").innerHTML = "How many will you buy?"
+    document.getElementById("tooltipTitle").innerHTML = t("shop.buyPrompt", "How many will you buy?")
     document.getElementById("tooltipMid").style.display = "none"
 
     document.getElementById("tooltipBottom").innerHTML = `
@@ -576,7 +581,7 @@ div.addEventListener("click", () => {
             updateItemShop()
             closeTooltip()
         } else{
-            document.getElementById("tooltipTitle").innerHTML = "Cant afford";
+            document.getElementById("tooltipTitle").innerHTML = t("shop.cantAfford", "Cant afford");
             document.getElementById("tooltipTop").style.display = "none"    
             document.getElementById("tooltipTop").style.display = "none"    
             document.getElementById("tooltipMid").style.display = "none"
