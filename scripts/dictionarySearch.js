@@ -291,11 +291,12 @@ document.addEventListener("click", e => {
 
 
         let spawnLocation = ""
-        if (wildSpawn != "") spawnLocation += `<span>Found in the wild area ${format(wildSpawn)} (Rotation ${areas[wildSpawn].rotation})</span>`
+        if (wildSpawn != "") spawnLocation += `<span>Found in the wild area ${getAreaName(wildSpawn, areas[wildSpawn])} (Rotation ${areas[wildSpawn].rotation})</span>`
         if ( wildlifePoolCommon.includes(el.dataset.dictionaryPkmn) || wildlifePoolUncommon.includes(el.dataset.dictionaryPkmn) || wildlifePoolRare.includes(el.dataset.dictionaryPkmn) ) spawnLocation += `<span>Found randomly in the Wildlife Park wild area</span>`
         if ( exclusiveFrontierPkmn.includes(pkmn[el.dataset.dictionaryPkmn]) ) spawnLocation += `<span>Obtained as a random reward in the Battle Frontier</span>`
-        if (encounterSpawn != "") spawnLocation += `<span>Obtained in the event ${format(areas[encounterSpawn].name)} (Rotation ${areas[encounterSpawn].rotation})</span>`
-        if (eventSpawn != "") spawnLocation += `<span>Found in the event ${format(eventSpawn)} (Rotation ${areas[eventSpawn].rotation})</span>`
+        if (encounterSpawn != "") spawnLocation += `<span>Obtained in the event ${getAreaName(encounterSpawn, areas[encounterSpawn])} (Rotation ${areas[encounterSpawn].rotation})</span>`
+        if (eventSpawn != "") spawnLocation += `<span>Found in the event ${getAreaName(eventSpawn, areas[eventSpawn])} (Rotation ${areas[eventSpawn].rotation})</span>`
+
 
 
         if (spawnLocation == "") spawnLocation = `This Pokemon cannot be caught on its current stage`
@@ -352,26 +353,30 @@ document.addEventListener("click", e => {
         for (const i in areas){
             if (areas[i].type=="wild") {
             if (areas[i].drops?.common?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.uncommon?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.rare?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Can be dropped in the wild area ${format(i)} (Rotation ${areas[i].rotation})</span>`
+                obtainText += `<span>Can be dropped in the wild area ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
+
             }
             }
 
             if (areas[i].type=="event") {
             if (areas[i].drops?.common?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.uncommon?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.rare?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Can be dropped in the event area ${format(i)} (Rotation ${areas[i].rotation})</span>`
+                obtainText += `<span>Can be dropped in the event area ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
+
             }
             }
 
             if (areas[i].type=="dungeon") {
             if (areas[i].drops?.common?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.uncommon?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.rare?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Can be dropped in the dungeon area ${format(i)} (Rotation ${areas[i].rotation})</span>`
+                obtainText += `<span>Can be dropped in the dungeon area ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
+
             }
             }
 
 
             if (areas[i].encounter) {
             if (areas[i].reward?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Reward from the event ${format(areas[i].name)} (Rotation ${areas[i].rotation})</span>`
+                obtainText += `<span>Reward from the event ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
+
             }
             }
         }

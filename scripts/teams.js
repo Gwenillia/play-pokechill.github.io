@@ -32,7 +32,14 @@ saved.previewTeams.preview28 = {}
 saved.previewTeams.preview29 = {}
 saved.previewTeams.preview30 = {}
 
+const t = (key, fallback, vars) => {
+    const i18n = window.i18n
+    if (i18n?.t) return i18n.t(key, vars)
+    return fallback
+}
+
 for (const i in saved.previewTeams) {
+
     saved.previewTeams[i].slot1 = { } 
     saved.previewTeams[i].slot2 = { } 
     saved.previewTeams[i].slot3 = { } 
@@ -85,7 +92,11 @@ function updatePreviewTeam(){
         document.getElementById(`pokedex-menu`).scrollTop = 0
         dexTeamSelect = i
         document.getElementById("pokedex-filters-title").style.display = "flex"
-        document.getElementById("pokedex-filters-title").innerHTML = `Select a Pokemon to add to the team`
+        document.getElementById("pokedex-filters-title").innerHTML = t(
+            "team.selectPokemon",
+            "Select a Pokemon to add to the team"
+        )
+
         document.getElementById(`team-menu`).style.display = "none"
         setTimeout(() => {
         updatePokedex()    
@@ -127,8 +138,14 @@ function updatePreviewTeam(){
 
 
 
-    let pkmnName = `${format(currentTeam[i].pkmn)} ${nameTag} <span class="explore-pkmn-level" id="explore-${i}-lvl">lvl ${pkmn[ currentTeam[i].pkmn ].level}</span>`
-    if (pkmn[currentTeam[i].pkmn].shiny) pkmnName = `${format(currentTeam[i].pkmn)} ${nameTag} <span style="color:#FF4671;">✦</span> <span class="explore-pkmn-level" id="explore-${i}-lvl">lvl ${pkmn[ currentTeam[i].pkmn ].level}</span>`
+    const levelLabel = t(
+        "pkmn.level.short",
+        "lvl {level}",
+        { level: pkmn[ currentTeam[i].pkmn ].level }
+    )
+    let pkmnName = `${format(currentTeam[i].pkmn)} ${nameTag} <span class="explore-pkmn-level" id="explore-${i}-lvl">${levelLabel}</span>`
+    if (pkmn[currentTeam[i].pkmn].shiny) pkmnName = `${format(currentTeam[i].pkmn)} ${nameTag} <span style="color:#FF4671;">✦</span> <span class="explore-pkmn-level" id="explore-${i}-lvl">${levelLabel}</span>`
+
 
     let pkmnSprite = `<img class="sprite-trim" src="img/pkmn/sprite/${currentTeam[i].pkmn}.png" id="explore-team-member-${i}-sprite">`
     if (pkmn[currentTeam[i].pkmn].shiny) pkmnSprite = `<img class="sprite-trim" src="img/pkmn/shiny/${currentTeam[i].pkmn}.png" id="explore-team-member-${i}-sprite">`
@@ -202,7 +219,8 @@ function updatePreviewTeam(){
         </div>
         <div class="explore-header-infobox">
         <div class="explore-header-hpbox">
-        <span style="color: white;">Add Pokemon</span>
+        <span style="color: white;">${t("team.addPokemon", "Add Pokemon")}</span>
+
         </div>
         <div class="explore-header-moves" id="explore-team-member-${i}-moves-preview">
         </div>
@@ -219,7 +237,11 @@ function updatePreviewTeam(){
 function editTeamName(){
     document.getElementById("tooltipTop").style.display = "none"
     document.getElementById("tooltipBottom").style.display = "none"
-    document.getElementById("tooltipTitle").innerHTML = "Edit team name"
+    document.getElementById("tooltipTitle").innerHTML = t(
+        "team.editName",
+        "Edit team name"
+    )
+
     const select = document.getElementById("team-slot-selector");
     const text = select.options[select.selectedIndex].text;
     document.getElementById("tooltipMid").innerHTML = `
@@ -267,8 +289,15 @@ function injectPreviewTeam(){
     if (frontierError) {
         document.getElementById("tooltipTop").style.display = "none"
         document.getElementById("tooltipBottom").style.display = "none"
-        document.getElementById("tooltipTitle").innerHTML = `Banned Pokemon`
-        document.getElementById("tooltipMid").innerHTML = `One or more Pokemon in the current team do not met the division restrictions of the current league`
+        document.getElementById("tooltipTitle").innerHTML = t(
+            "team.banned.title",
+            "Banned Pokemon"
+        )
+        document.getElementById("tooltipMid").innerHTML = t(
+            "team.banned.body",
+            "One or more Pokemon in the current team do not meet the division restrictions of the current league"
+        )
+
         openTooltip()
         return
     }
@@ -293,8 +322,16 @@ function injectPreviewTeam(){
     if (restrictedError) {
         document.getElementById("tooltipTop").style.display = "none"
         document.getElementById("tooltipBottom").style.display = "none"
-        document.getElementById("tooltipTitle").innerHTML = `Restricted Moves`
-        document.getElementById("tooltipMid").innerHTML = `One or more Pokemon in the current team have multiple restricted moves (${restrictedIcon}) equipped`
+        document.getElementById("tooltipTitle").innerHTML = t(
+            "team.restricted.title",
+            "Restricted Moves"
+        )
+        document.getElementById("tooltipMid").innerHTML = t(
+            "team.restricted.body",
+            "One or more Pokemon in the current team have multiple restricted moves ({icon}) equipped",
+            { icon: restrictedIcon }
+        )
+
         openTooltip()
         return
     }
@@ -308,7 +345,11 @@ function injectPreviewTeam(){
     if (pkmn[currentTeam.slot1.pkmn]===undefined){
         document.getElementById("tooltipTop").style.display = "none"    
         document.getElementById("tooltipMid").style.display = "none"
-        document.getElementById("tooltipBottom").innerHTML = "First team slot must not be empty!"
+        document.getElementById("tooltipBottom").innerHTML = t(
+            "team.slot1Required",
+            "First team slot must not be empty!"
+        )
+
         openTooltip()
         return
     }
@@ -519,8 +560,14 @@ function setPkmnTeam(){
     div.id = `explore-${i}-member`
 
 
-    let pkmnName = `${format(team[i].pkmn.id)} <span class="explore-pkmn-level" id="explore-${i}-lvl">lvl ${pkmn[team[i].pkmn.id].level}</span>`
-    if (pkmn[team[i].pkmn.id].shiny) pkmnName = `${format(team[i].pkmn.id)} <span style="color:#FF4671;">✦</span> <span class="explore-pkmn-level" id="explore-${i}-lvl">lvl ${pkmn[team[i].pkmn.id].level}</span>`
+    const levelLabel = t(
+        "pkmn.level.short",
+        "lvl {level}",
+        { level: pkmn[team[i].pkmn.id].level }
+    )
+    let pkmnName = `${format(team[i].pkmn.id)} <span class="explore-pkmn-level" id="explore-${i}-lvl">${levelLabel}</span>`
+    if (pkmn[team[i].pkmn.id].shiny) pkmnName = `${format(team[i].pkmn.id)} <span style="color:#FF4671;">✦</span> <span class="explore-pkmn-level" id="explore-${i}-lvl">${levelLabel}</span>`
+
 
 
     let pkmnSprite = `<img class="sprite-trim" src="img/pkmn/sprite/${team[i].pkmn.id}.png" id="explore-team-member-${i}-sprite">`

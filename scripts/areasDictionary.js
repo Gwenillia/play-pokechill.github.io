@@ -3586,13 +3586,13 @@ areas.vsEliteTrainerCynthia = {
     reward : [item.dragonFang, item.goldenBottleCap],
     encounterEffect: function() {
         document.getElementById("tooltipTop").style.display = `none`
-        document.getElementById("tooltipTitle").innerHTML = `New features unlocked!`
+        document.getElementById("tooltipTitle").innerHTML = t("areas.unlock.title", "New features unlocked!")
         document.getElementById("tooltipBottom").style.display = `none`
         document.getElementById("tooltipMid").innerHTML = `
         <div class="genetics-overview-tags" >
-        <div style="filter:hue-rotate(100deg)" >Tier I Event Raids unlocked</div>
-        <div style="filter:hue-rotate(0deg)" >New Dungeon: Victory Road</div>
-        <div style="filter:hue-rotate(50deg)" >Level Training unlocked</div>
+        <div style="filter:hue-rotate(100deg)" >${t("areas.unlock.eventRaidTier1", "Tier I Event Raids unlocked")}</div>
+        <div style="filter:hue-rotate(0deg)" >${t("areas.unlock.newDungeonVictoryRoad", "New Dungeon: Victory Road")}</div>
+        <div style="filter:hue-rotate(50deg)" >${t("areas.unlock.levelTraining", "Level Training unlocked")}</div>
         </div>
         `
         openTooltip()

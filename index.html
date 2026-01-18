@@ -228,13 +228,14 @@
         <div id="dictionary-header">
 
         <div id="dictionary-filters">
-            <div onclick='dictionaryFilter="pokemon"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Pokemon</div>
-            <div onclick='dictionaryFilter="ability"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Abilities</div>
-            <div onclick='dictionaryFilter="move"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Moves</div>
-            <div onclick='dictionaryFilter="item"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Items</div>
+            <div data-i18n="dictionary.filter.pokemon" onclick='dictionaryFilter="pokemon"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Pokemon</div>
+            <div data-i18n="dictionary.filter.abilities" onclick='dictionaryFilter="ability"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Abilities</div>
+            <div data-i18n="dictionary.filter.moves" onclick='dictionaryFilter="move"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Moves</div>
+            <div data-i18n="dictionary.filter.items" onclick='dictionaryFilter="item"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Items</div>
         </div>
 
-        <input id="dictionary-search" type="text" placeholder="Search Pokemon, Ability, Move, Item...">
+        <input id="dictionary-search" type="text" placeholder="Search Pokemon, Ability, Move, Item..." data-i18n-placeholder="dictionary.search.placeholder">
+
 
         </div>
 
@@ -269,56 +270,56 @@
             </div>
 
             <div class="pokedex-filters-menu">
-            <div style="color: white; font-size: 1.2rem;">Filters</div>
+            <div data-i18n="pokedex.filters.title" style="color: white; font-size: 1.2rem;">Filters</div>
             <div class="separator-solid" style="width: 90%; height: 2px; opacity: 0.5; margin: 0;"></div>
             
             <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
             <select id="pokedex-filter-type">
-                <option value="all">type</option>
-                <option value="normal">normal</option>
-                <option value="fire">fire</option>
-                <option value="water">water</option>
-                <option value="electric">electric</option>
-                <option value="grass">grass</option>
-                <option value="ice">ice</option>
-                <option value="fighting">fighting</option>
-                <option value="poison">poison</option>
-                <option value="ground">ground</option>
-                <option value="flying">flying</option>
-                <option value="psychic">psychic</option>
-                <option value="bug">bug</option>
-                <option value="rock">rock</option>
-                <option value="ghost">ghost</option>
-                <option value="dragon">dragon</option>
-                <option value="dark">dark</option>
-                <option value="steel">steel</option>
-                <option value="fairy">fairy</option>
+                <option value="all" data-i18n="pokedex.filter.type">type</option>
+                <option value="normal" data-i18n="type.normal">normal</option>
+                <option value="fire" data-i18n="type.fire">fire</option>
+                <option value="water" data-i18n="type.water">water</option>
+                <option value="electric" data-i18n="type.electric">electric</option>
+                <option value="grass" data-i18n="type.grass">grass</option>
+                <option value="ice" data-i18n="type.ice">ice</option>
+                <option value="fighting" data-i18n="type.fighting">fighting</option>
+                <option value="poison" data-i18n="type.poison">poison</option>
+                <option value="ground" data-i18n="type.ground">ground</option>
+                <option value="flying" data-i18n="type.flying">flying</option>
+                <option value="psychic" data-i18n="type.psychic">psychic</option>
+                <option value="bug" data-i18n="type.bug">bug</option>
+                <option value="rock" data-i18n="type.rock">rock</option>
+                <option value="ghost" data-i18n="type.ghost">ghost</option>
+                <option value="dragon" data-i18n="type.dragon">dragon</option>
+                <option value="dark" data-i18n="type.dark">dark</option>
+                <option value="steel" data-i18n="type.steel">steel</option>
+                <option value="fairy" data-i18n="type.fairy">fairy</option>
             </select>
 
             <select id="pokedex-filter-type-2">
-                <option value="all">type</option>
-                <option value="normal">normal</option>
-                <option value="fire">fire</option>
-                <option value="water">water</option>
-                <option value="electric">electric</option>
-                <option value="grass">grass</option>
-                <option value="ice">ice</option>
-                <option value="fighting">fighting</option>
-                <option value="poison">poison</option>
-                <option value="ground">ground</option>
-                <option value="flying">flying</option>
-                <option value="psychic">psychic</option>
-                <option value="bug">bug</option>
-                <option value="rock">rock</option>
-                <option value="ghost">ghost</option>
-                <option value="dragon">dragon</option>
-                <option value="dark">dark</option>
-                <option value="steel">steel</option>
-                <option value="fairy">fairy</option>
+                <option value="all" data-i18n="pokedex.filter.type">type</option>
+                <option value="normal" data-i18n="type.normal">normal</option>
+                <option value="fire" data-i18n="type.fire">fire</option>
+                <option value="water" data-i18n="type.water">water</option>
+                <option value="electric" data-i18n="type.electric">electric</option>
+                <option value="grass" data-i18n="type.grass">grass</option>
+                <option value="ice" data-i18n="type.ice">ice</option>
+                <option value="fighting" data-i18n="type.fighting">fighting</option>
+                <option value="poison" data-i18n="type.poison">poison</option>
+                <option value="ground" data-i18n="type.ground">ground</option>
+                <option value="flying" data-i18n="type.flying">flying</option>
+                <option value="psychic" data-i18n="type.psychic">psychic</option>
+                <option value="bug" data-i18n="type.bug">bug</option>
+                <option value="rock" data-i18n="type.rock">rock</option>
+                <option value="ghost" data-i18n="type.ghost">ghost</option>
+                <option value="dragon" data-i18n="type.dragon">dragon</option>
+                <option value="dark" data-i18n="type.dark">dark</option>
+                <option value="steel" data-i18n="type.steel">steel</option>
+                <option value="fairy" data-i18n="type.fairy">fairy</option>
             </select>
 
             <select id="pokedex-filter-level">
-                <option value="all">level</option>
+                <option value="all" data-i18n="pokedex.filter.level">level</option>
                 <option value="20">1-20</option>
                 <option value="40">20-40</option>
                 <option value="60">40-60</option>
@@ -327,7 +328,7 @@
             </select>
 
             <select id="pokedex-filter-division">
-                <option value="all">division</option>
+                <option value="all" data-i18n="pokedex.filter.division">division</option>
                 <option value="D">D</option>
                 <option value="C">C</option>
                 <option value="B">B</option>
@@ -338,75 +339,76 @@
             </select>
 
             <select id="pokedex-filter-evolution">
-                <option value="all">evolution</option>
-                <option value="true">not evolved (all)</option>
-                <option value="level-only">not evolved (level)</option>
+                <option value="all" data-i18n="pokedex.filter.evolution">evolution</option>
+                <option value="true" data-i18n="pokedex.filter.evolution.notEvolved">not evolved (all)</option>
+                <option value="level-only" data-i18n="pokedex.filter.evolution.notEvolvedLevel">not evolved (level)</option>
             </select>
 
             <select id="pokedex-filter-ability">
-                <option value="all">ability</option>
-                <option value=1>common</option>
-                <option value=2>uncommon</option>
-                <option value=3>rare</option>
-                <option value=4>locked HA</option>
+                <option value="all" data-i18n="pokedex.filter.ability">ability</option>
+                <option value=1 data-i18n="pokedex.filter.ability.common">common</option>
+                <option value=2 data-i18n="pokedex.filter.ability.uncommon">uncommon</option>
+                <option value=3 data-i18n="pokedex.filter.ability.rare">rare</option>
+                <option value=4 data-i18n="pokedex.filter.ability.lockedHa">locked HA</option>
             </select>
 
             <select id="pokedex-filter-shiny">
-                <option value="all">shiny</option>
-                <option value=true>is shiny</option>
-                <option value=undefined>not shiny</option>
+                <option value="all" data-i18n="pokedex.filter.shiny">shiny</option>
+                <option value=true data-i18n="pokedex.filter.shiny.is">is shiny</option>
+                <option value=undefined data-i18n="pokedex.filter.shiny.not">not shiny</option>
             </select>
 
             <select id="pokedex-filter-signature">
-                <option value="all">signature       </option>
-                <option value=false>has signature   </option>
+                <option value="all" data-i18n="pokedex.filter.signature">signature</option>
+                <option value=false data-i18n="pokedex.filter.signature.has">has signature</option>
             </select>
 
             <select id="pokedex-filter-ribbon">
-                <option value="all">ribbon</option>
-                <option value=true>has ribbon</option>
+                <option value="all" data-i18n="pokedex.filter.ribbon">ribbon</option>
+                <option value=true data-i18n="pokedex.filter.ribbon.has">has ribbon</option>
             </select>
 
               <select id="pokedex-filter-tag">
-                <option value="all">tag</option>
-                <option value="none">none</option>
-                <option value="red">red</option>
-                <option value="orange">orange</option>
-                <option value="yellow">yellow</option>
-                <option value="green">green</option>
-                <option value="lime">lime</option>
-                <option value="blue">blue</option>
-                <option value="teal">teal</option>
-                <option value="pink">pink</option>
-                <option value="magenta">magenta</option>
-                <option value="hidden">hidden</option>
+                <option value="all" data-i18n="pokedex.filter.tag">tag</option>
+                <option value="none" data-i18n="pokedex.filter.tag.none">none</option>
+                <option value="red" data-i18n="pokedex.filter.tag.red">red</option>
+                <option value="orange" data-i18n="pokedex.filter.tag.orange">orange</option>
+                <option value="yellow" data-i18n="pokedex.filter.tag.yellow">yellow</option>
+                <option value="green" data-i18n="pokedex.filter.tag.green">green</option>
+                <option value="lime" data-i18n="pokedex.filter.tag.lime">lime</option>
+                <option value="blue" data-i18n="pokedex.filter.tag.blue">blue</option>
+                <option value="teal" data-i18n="pokedex.filter.tag.teal">teal</option>
+                <option value="pink" data-i18n="pokedex.filter.tag.pink">pink</option>
+                <option value="magenta" data-i18n="pokedex.filter.tag.magenta">magenta</option>
+                <option value="hidden" data-i18n="pokedex.filter.tag.hidden">hidden</option>
             </select>
 
               <select id="pokedex-sort-filter">
-                <option value="default">sort</option>
-                <option value="level">level</option>
-                <option value="hpBst">hp BST</option>
-                <option value="atkBst">atk BST</option>
-                <option value="defBst">def BST</option>
-                <option value="satkBst">satk BST</option>
-                <option value="sdefBst">sdef BST</option>
-                <option value="speBst">spe BST</option>
-                <option value="hpIv">hp IV's</option>
-                <option value="atkIv">atk IV's</option>
-                <option value="defIv">def IV's</option>
-                <option value="satkIv">satk IV's</option>
-                <option value="sdefIv">sdef IV's</option>
-                <option value="speIv">spe IV's</option>
+                <option value="default" data-i18n="pokedex.sort.label">sort</option>
+                <option value="level" data-i18n="pokedex.sort.level">level</option>
+                <option value="hpBst" data-i18n="pokedex.sort.hpBst">hp BST</option>
+                <option value="atkBst" data-i18n="pokedex.sort.atkBst">atk BST</option>
+                <option value="defBst" data-i18n="pokedex.sort.defBst">def BST</option>
+                <option value="satkBst" data-i18n="pokedex.sort.satkBst">satk BST</option>
+                <option value="sdefBst" data-i18n="pokedex.sort.sdefBst">sdef BST</option>
+                <option value="speBst" data-i18n="pokedex.sort.speBst">spe BST</option>
+                <option value="hpIv" data-i18n="pokedex.sort.hpIv">hp IV's</option>
+                <option value="atkIv" data-i18n="pokedex.sort.atkIv">atk IV's</option>
+                <option value="defIv" data-i18n="pokedex.sort.defIv">def IV's</option>
+                <option value="satkIv" data-i18n="pokedex.sort.satkIv">satk IV's</option>
+                <option value="sdefIv" data-i18n="pokedex.sort.sdefIv">sdef IV's</option>
+                <option value="speIv" data-i18n="pokedex.sort.speIv">spe IV's</option>
             </select>
            
-            <div class="clear-filters" onClick="resetPokedexFilters(); updatePokedex()" style="background: rgb(155, 102, 77); cursor: pointer;">Clear Filters</div>
+            <div class="clear-filters" data-i18n="pokedex.filters.clear" onClick="resetPokedexFilters(); updatePokedex()" style="background: rgb(155, 102, 77); cursor: pointer;">Clear Filters</div>
 
             </div>
             </div>
+
 
             <div class="pokedex-search">
-            <input id="pokedex-search" type="text" placeholder="Search ability, move...">
-            <div style="background: rgb(90, 133, 113); color: white; cursor: default;" id="pokedex-total">caught</div>
+            <input id="pokedex-search" type="text" placeholder="Search ability, move..." data-i18n-placeholder="pokedex.search.placeholder">
+            <div style="background: rgb(90, 133, 113); color: white; cursor: default;" id="pokedex-total" data-i18n="pokedex.total.caught">caught</div>
             </div>
             
 
@@ -535,7 +537,7 @@
             <div id="guide-menu-header">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6.5 16.039q1.31 0 2.547.3t2.453.98V7.508q-1.083-.773-2.386-1.16q-1.305-.386-2.614-.386q-.9 0-1.576.107t-1.501.4q-.23.077-.327.222Q3 6.835 3 7.008v9.015q0 .27.192.394t.423.03q.548-.185 1.267-.297t1.618-.111m6 1.28q1.216-.678 2.453-.98t2.547-.3q.9 0 1.618.111t1.267.296q.23.096.423-.029t.192-.394V7.008q0-.173-.096-.308q-.096-.134-.327-.23q-.825-.293-1.501-.4T17.5 5.961q-1.31 0-2.613.386q-1.304.387-2.387 1.16zm-.5 1.137q-.235 0-.432-.059t-.376-.15q-1.09-.595-2.27-.902T6.5 17.04q-.78 0-1.534.13q-.753.131-1.466.42q-.544.217-1.022-.131T2 16.496V6.831q0-.371.195-.689t.547-.442q.881-.388 1.833-.563T6.5 4.962q1.47 0 2.866.423q1.398.423 2.634 1.23q1.237-.807 2.634-1.23t2.866-.423q.973 0 1.925.175t1.833.563q.352.125.547.442t.195.689v9.665q0 .614-.516.943q-.517.328-1.1.111q-.693-.27-1.418-.39q-.724-.121-1.466-.121q-1.24 0-2.421.306t-2.271.901q-.18.093-.376.151q-.197.059-.432.059m1.885-9.508q0-.11.076-.222t.18-.168q.763-.346 1.613-.53q.85-.182 1.746-.182q.48 0 .91.053t.886.153q.129.03.224.135q.096.104.096.257q0 .252-.15.366t-.402.052q-.37-.075-.757-.103q-.388-.028-.807-.028q-.804 0-1.573.154q-.77.154-1.46.43q-.257.099-.42-.005t-.162-.362m0 5.423q0-.11.076-.231q.076-.123.18-.178q.725-.346 1.613-.52q.888-.173 1.746-.173q.48 0 .91.053t.886.153q.129.03.224.135q.096.104.096.257q0 .252-.15.366t-.402.052q-.37-.075-.757-.103q-.388-.028-.807-.028q-.784 0-1.544.16q-.76.161-1.45.457q-.258.118-.44-.003t-.181-.397m0-2.692q0-.11.076-.222t.18-.168q.763-.347 1.613-.53q.85-.182 1.746-.182q.48 0 .91.053t.886.153q.129.03.224.134q.096.104.096.258q0 .252-.15.366t-.402.051q-.37-.075-.757-.102q-.388-.028-.807-.028q-.804 0-1.573.154q-.77.153-1.46.43q-.257.098-.42-.005q-.162-.105-.162-.362"/></svg>
-Game Guide
+<span data-i18n="guide.title">Game Guide</span>
 
             </span>
             

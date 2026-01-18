@@ -1,7 +1,13 @@
 saved.firstTimePlaying = true //esta flag se tiene que quitar cuando seleccione el pkmn, es lo que hace que no puedas guardar
 
+const tSave = (key, fallback, vars) => {
+  const i18n = window.i18n;
+  if (i18n?.t) return i18n.t(key, vars);
+  return fallback;
+};
 
 function saveGame() {
+
   if (saved.firstTimePlaying == true) return //scary!
   let data = {};
 
@@ -148,7 +154,8 @@ function importData() {
 
         window.location.reload();
       } catch (err) {
-        alert("Error loading data.");
+        alert(tSave("save.error.load", "Error loading data."));
+
       }
     };
 
