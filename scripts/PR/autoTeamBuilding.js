@@ -303,7 +303,7 @@ function buildGreedyTeam(enemies, area) {
 
   const available = [...candidates]
   const chosen = []
-  const usedTypes = new SetAutoTeam()
+  const usedTypes = new Set()
 
   while (chosen.length < 6 && available.length > 0) {
     let bestIndex = 0
