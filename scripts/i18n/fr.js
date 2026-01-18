@@ -3,7 +3,10 @@ window.i18nData.fr = {
   ui: {
     "menu.travel": "Voyage",
     "menu.vs": "VS",
+
+    // TODO : REMOVE IF CHALLENGES IS NOT IMPLEMENTED
     "menu.challenges": "Défis",
+
     "menu.items": "Objets",
     "menu.team": "Équipe",
     "menu.dex": "Dex",
@@ -61,12 +64,15 @@ window.i18nData.fr = {
     "settings.discord": "Discord",
     "settings.wipe": "Effacer les données",
     "settings.leaveCombat": "Quitter le combat",
+
+    // TODO: REMOVE IF CHALLENGES IS NOT IMPLEMENTED
     "challenges.mainTab": "Défis principaux",
     "challenges.customTab": "Défis personnalisés",
     "challenges.new": "Nouveau défi",
     "challenges.import": "Importer",
     "challenges.emptyMain": "Les défis principaux arrivent bientôt.",
     "challenges.start": "Démarrer",
+
     "training.title": "Entraînement",
     "training.module.iv": "Entraînement IV",
     "training.module.exp": "Entraînement EXP",
@@ -671,6 +677,8 @@ window.i18nData.fr = {
     "team.slot1Required": "Le premier emplacement d’équipe ne doit pas être vide !",
     "training.restricted.title": "Attaques restreintes",
     "training.restricted.body": "Le Pokémon d’entraînement a plusieurs attaques restreintes ({icon}) équipées !",
+
+      // TODO:  REMOVE IF DUPLICATE IS NOT IMPLEMENTED
     "team.duplicate.pickDifferent": "Choisissez un autre emplacement d’équipe.",
     "team.duplicate.overwriteTitle": "Écraser l’équipe ?",
     "team.duplicate.overwriteMessage": "Cela remplacera {team}.",
@@ -678,6 +686,7 @@ window.i18nData.fr = {
     "team.duplicate.selectTarget": "Sélectionnez l’emplacement d’équipe à écraser.",
     "team.duplicate.action": "Dupliquer l’équipe",
     "team.duplicate.buttonTitle": "Dupliquer l’équipe",
+
     "rental.used.title": "Location utilisée",
     "rental.used.body": "Vous ne pouvez louer une équipe qu’une fois par jour.",
     "rental.title": "Équipe de location",
@@ -705,15 +714,6 @@ window.i18nData.fr = {
     "moveset.section.movesetMatch": "Correspondances de tags de moveset",
     "moveset.section.allType": "Attaques tous types",
     "moveset.close": "Fermer",
-    "debug.tools.title": "OUTILS DEV",
-    "debug.tools.drag": "Glissez-moi",
-    "debug.tools.hide": "Masquer",
-    "debug.tools.show": "Afficher",
-    "debug.tools.reset": "Réinitialiser",
-    "debug.candyxl": "Candytime XL",
-    "debug.candyxl.unavailable": "L’action Candytime XL n’est pas disponible sur cette page.",
-    "debug.candy.plus5": "+5 Bonbons",
-    "debug.candy.plus5.unavailable": "L’action +5 n’est pas disponible sur cette page.",
     "save.error.load": "Erreur lors du chargement des données."
   },
   names: {

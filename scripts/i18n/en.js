@@ -3,7 +3,10 @@ window.i18nData.en = {
   ui: {
     "menu.travel": "Travel",
     "menu.vs": "VS",
+
+    // TODO: REMOVE IF CHALLENGES ARE NOT IMPLEMENTED
     "menu.challenges": "Challenges",
+
     "menu.items": "Items",
     "menu.team": "Team",
     "menu.dex": "Dex",
@@ -61,12 +64,15 @@ window.i18nData.en = {
     "settings.discord": "Discord",
     "settings.wipe": "Wipe Data",
     "settings.leaveCombat": "Leave Combat",
+
+     // TODO: REMOVE IF CHALLENGES ARE NOT IMPLEMENTED
     "challenges.mainTab": "Main Challenges",
     "challenges.customTab": "Custom Challenges",
     "challenges.new": "New Challenge",
     "challenges.import": "Import",
     "challenges.emptyMain": "Main Challenges are coming soon.",
     "challenges.start": "Start",
+
     "training.title": "Training",
     "training.module.iv": "IV Training",
     "training.module.exp": "EXP Training",
@@ -671,6 +677,8 @@ window.i18nData.en = {
     "team.slot1Required": "First team slot must not be empty!",
     "training.restricted.title": "Restricted Moves",
     "training.restricted.body": "The training Pokemon has multiple restricted moves ({icon}) equipped!",
+
+     // TODO: REMOVE IF DUPLICATE IS NOT IMPLEMENTED
     "team.duplicate.pickDifferent": "Pick a different team slot.",
     "team.duplicate.overwriteTitle": "Overwrite Team?",
     "team.duplicate.overwriteMessage": "This will replace {team}.",
@@ -678,6 +686,7 @@ window.i18nData.en = {
     "team.duplicate.selectTarget": "Select the target team slot to overwrite.",
     "team.duplicate.action": "Duplicate Team",
     "team.duplicate.buttonTitle": "Duplicate team",
+
     "rental.used.title": "Rental Used",
     "rental.used.body": "You can only rent a team once per day.",
     "rental.title": "Rental Team",
@@ -705,15 +714,6 @@ window.i18nData.en = {
     "moveset.section.movesetMatch": "Moveset Tag Matches",
     "moveset.section.allType": "All-Type Moves",
     "moveset.close": "Close",
-    "debug.tools.title": "DEV TOOLS",
-    "debug.tools.drag": "Drag me",
-    "debug.tools.hide": "Hide",
-    "debug.tools.show": "Show",
-    "debug.tools.reset": "Reset",
-    "debug.candyxl": "Candytime XL",
-    "debug.candyxl.unavailable": "Candytime XL action not available on this page.",
-    "debug.candy.plus5": "+5 Candy",
-    "debug.candy.plus5.unavailable": "+5 action not available on this page.",
     "save.error.load": "Error loading data."
   },
   names: {
