@@ -1831,6 +1831,20 @@ document.addEventListener("selectstart", (e) => {
 
 let moveSlotReplace = undefined 
 
+function getItemDisplayName(itemId) {
+  if (item[itemId]?.type === "tm") {
+    const moveId = item[itemId].move;
+    const lang = window.i18n.getLanguage() || "en";
+    return window.i18nData?.[lang]?.names?.move?.[moveId] ?? format(moveId);
+  }
+
+  if (item[itemId]?.nameKey) {
+    return t(item[itemId].nameKey, format(itemId));
+  }
+
+  return format(itemId);
+}
+
 document.addEventListener("contextmenu", e => {
 
     let el = e.target;
@@ -2219,12 +2233,12 @@ document.addEventListener("contextmenu", e => {
         if (item[el.dataset.item].type !== "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/${el.dataset.item}.png">`
         if (item[el.dataset.item].type == "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${move[item[el.dataset.item].move].type}.png">`
         
-        document.getElementById("tooltipTitle").innerHTML = format(el.dataset.item)
+        document.getElementById("tooltipTitle").innerHTML = getItemDisplayName(el.dataset.item)
         document.getElementById("tooltipBottom").innerHTML = item[el.dataset.item].info()
         
 
         if (item[el.dataset.item].type==="held"){
-            document.getElementById("tooltipTitle").innerHTML = format(el.dataset.item) + `<br>${t(
+            document.getElementById("tooltipTitle").innerHTML = getItemDisplayName(el.dataset.item) + `<br>${t(
                 "item.level",
                 "Level {level}",
                 { level: returnItemLevel(el.dataset.item) }

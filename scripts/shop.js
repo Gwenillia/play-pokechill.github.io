@@ -536,6 +536,11 @@ function updateItemShop(){
     if (shop[i].name) name = shop[i].name
     if (shop[i].nameKey) name = t(shop[i].nameKey, name)
 
+    if (item[shop[i].icon]?.type === "tm") {
+      const moveId = item[shop[i].icon].move;
+      const lang = window.i18n.getLanguage() || "en";
+      name = window.i18nData?.[lang]?.names?.move?.[moveId] ?? format(moveId);
+    }
 
     const div = document.createElement("div");
 
