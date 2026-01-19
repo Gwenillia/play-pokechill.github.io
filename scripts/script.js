@@ -654,8 +654,7 @@ guide.genetics = {
     <br><br>IV Inheriting: An advanced alternative to the previous. You can inherit IV's from a species to another depending on factors such as compatibility or genetic-aiding items used
     <br><br>Move Relearn: When completing an operation, all but the four selected moves of the host will be reset, meaning you can attempt to get stronger moves with each operation
     <br><br>Move Inheriting: An advanced alternative to the previous, you can inherit moves from the sample that would otherwise not be available to you through learning
-    <br><br>Ability Relearn: When completing an operation, your ability will reset, unless you use an Everstone. This can be used to get more useful abilities in the process
-    <br><br>Ability Inheriting: An advanced alternative to the previous. Using a Destiny Knot, you can swap abilities with the sample, getting access to otherwise-impossible combinations
+    <br><br>Ability Inheriting: Using a Destiny Knot, you can swap abilities with the sample, getting access to otherwise-impossible combinations
     `}
 }
 

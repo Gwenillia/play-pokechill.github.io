@@ -800,7 +800,7 @@ ability.fullMetalBody = {
 }
 
 ability.supremeOverlord = {
-    info: function() {return `Increases the Damage dealt by x1.1 for every team member defeated`},
+    info: function() {return `Increases the Damage dealt by x1.15 for every team member defeated`},
     rarity: 3,
 }
 
