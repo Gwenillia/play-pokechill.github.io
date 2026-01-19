@@ -1160,4 +1160,3 @@ function joinWithAnd(list) {
     return `${formatted.slice(0, -1).join(", ")}, and ${formatted[len - 1]}`;
 }
 
-

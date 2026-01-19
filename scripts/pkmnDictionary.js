@@ -5331,6 +5331,7 @@ pkmn.nincada = {
         return { 1: { pkmn: pkmn.ninjask, level: evolutionLevel1 },
                  2: { pkmn: pkmn.shedinja, item: item.oddRock } }
     },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.ninjask = {
@@ -5342,7 +5343,8 @@ pkmn.ninjask = {
         satk: 50,
         sdef: 50,
         spe: 160,
-    }
+    },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.shedinja = {

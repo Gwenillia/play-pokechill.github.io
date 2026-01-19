@@ -895,7 +895,7 @@ ability.parentalBond = {
 }
 
 ability.moody = {
-    info: function() {return `Every turn, a stat rises by 100% while one lowers by 50%`},
+    info: function() {return `Every turn, raises two stats by 100% for one turn`},
     rarity: 3,
 }
 

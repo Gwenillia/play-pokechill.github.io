@@ -3242,6 +3242,10 @@ function exploreCombatPlayer() {
 
 
 
+
+
+
+
         //weather
         
         if (saved.weatherTimer>0 && saved.weather=="sunny" && moveType == 'fire') totalPower *= 1.75
@@ -3328,6 +3332,15 @@ function exploreCombatPlayer() {
         for (const i in team[exploreActiveMember].buffs){
             if (team[exploreActiveMember].buffs[i]>0) team[exploreActiveMember].buffs[i] -= 1
         }
+
+
+
+        if (testAbility(`active`, ability.moody.id)) {
+        let picked = arrayPick(["atkup2","satkup2","defup2","sdefup2","speup2"],2)
+        team[exploreActiveMember].buffs[picked[0]] = 1
+        team[exploreActiveMember].buffs[picked[1]] = 1
+        }
+
 
         saved.weatherTimer--
         saved.weatherCooldown--
