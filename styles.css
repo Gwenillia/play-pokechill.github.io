@@ -4274,7 +4274,7 @@ background:
 
 #pokerus-warning{
     background: rgb(193, 110, 214);
-    display: flex;
+    display: none;
 }
 
 #text-data-raw{
@@ -4877,6 +4877,7 @@ right: 0.5rem;
 z-index: 1;
 transform: translateY(-1rem);
 }
+
 
 
 
