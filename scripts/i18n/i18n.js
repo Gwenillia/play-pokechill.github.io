@@ -9,7 +9,7 @@
     data[lang].info = { ...(data[lang].info || {}), ...(generated[lang]?.info || {}) };
   });
 
-  const defaultLang = data.en ? "en" : Object.keys(data)[0];
+  const defaultLang = data.fr ? "fr" : (data.en ? "en" : Object.keys(data)[0]);
   let currentLang = localStorage.getItem(STORAGE_KEY) || defaultLang;
 
   const interpolate = (text, vars = {}) =>
