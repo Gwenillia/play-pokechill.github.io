@@ -1,10 +1,11 @@
 # play-pokechill.github.io
 Monsters and Chill
 
-This repository is a personal fork of the original play-pokechill project (https://github.com/play-pokechill/play-pokechill.github.io).
+play the original game at https://play-pokechill.github.io/
 
-It contains my own changes and experiments
+----
 
-Big thanks to the original authors for their awesome work; this fork builds on their great foundation. 
+Ce repo est un fork français du projet original play-pokechill fait par Duck 
+https://github.com/play-pokechill/play-pokechill.github.io
 
-Please play the original game at https://play-pokechill.github.io/!
+Un grand merci à l'auteur du projet original pour son excellent travail ; ce fork s’appuie sur leur formidable base.
