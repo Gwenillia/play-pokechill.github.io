@@ -4070,6 +4070,45 @@ document.getElementById("pokedex-filter-evolution").addEventListener("change", e
   updatePokedex()
 });
 
+const normalizeSearchTerm = value => {
+    if (value === undefined || value === null) return "";
+    return String(value)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
+const collectSearchTerms = value => {
+    const values = Array.isArray(value) ? value : [value];
+    return values
+        .filter(entry => entry !== undefined && entry !== null && entry !== "")
+        .map(entry => normalizeSearchTerm(entry))
+        .filter(entry => entry !== "");
+}
+
+const getLocalizedNames = (type, id) => {
+    if (!id) return [];
+    return [
+        id,
+        window.i18n?.tId?.(type, id),
+        format(id)
+    ].filter(Boolean);
+}
+
+const getTypeNames = types => {
+    if (!Array.isArray(types)) return [];
+    return types.flatMap(type => [
+        type,
+        window.i18n?.tId?.("type", type),
+        format(type)
+    ]);
+}
+
+const getMoveNames = movepool => {
+    if (!Array.isArray(movepool)) return [];
+    return movepool.flatMap(moveId => getLocalizedNames("move", moveId));
+}
+
 function resetPokedexFilters(){
     document.getElementById("pokedex-search").value = ""
     document.getElementById("pokedex-filter-tag").value = "all";
@@ -4116,6 +4155,13 @@ document.getElementById("pokedex-search").addEventListener("keydown", e => {
         includeTerms.push(term)
       }
     })
+
+    includeTerms = includeTerms
+        .map(term => term === '|' ? term : normalizeSearchTerm(term))
+        .filter(term => term !== "")
+    excludeTerms = excludeTerms
+        .map(term => normalizeSearchTerm(term))
+        .filter(term => term !== "")
     
     let results = []
     
@@ -4352,9 +4398,19 @@ if (sort !== "default") {
 
 
 fusePkmn = new Fuse(sortedPokemon, {
-    keys: [ { name: 'name', getFn: obj => obj.id }, 'type', "level", `ability`, `hiddenAbility.id`, `movepool`,'tagShiny','tagPokerus'],
+    keys: [
+        { name: 'name', getFn: obj => collectSearchTerms(getLocalizedNames("pkmn", obj.id)) },
+        { name: 'type', getFn: obj => collectSearchTerms(getTypeNames(obj.type)) },
+        { name: 'level', getFn: obj => collectSearchTerms(obj.level) },
+        { name: 'ability', getFn: obj => collectSearchTerms(getLocalizedNames("ability", obj.ability)) },
+        { name: 'hiddenAbility', getFn: obj => collectSearchTerms(getLocalizedNames("ability", obj.hiddenAbility?.id)) },
+        { name: 'movepool', getFn: obj => collectSearchTerms(getMoveNames(obj.movepool)) },
+        { name: 'tagShiny', getFn: obj => collectSearchTerms(obj.tagShiny) },
+        { name: 'tagPokerus', getFn: obj => collectSearchTerms(obj.tagPokerus) }
+    ],
     threshold: 0.1,
     useExtendedSearch: true,
+    ignoreDiacritics: true,
     ignoreLocation: true,
     minMatchCharLength: 1
 })
