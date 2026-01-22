@@ -155,9 +155,13 @@ function updateGameVersion() {
   saved.tutorialStep = `none`
   }
 
+  if (saved.version<2.6){
+  saved.mysteryGiftClaimed = false
+  }
 
 
-  saved.version = 2.5
+
+  saved.version = 2.7
   document.getElementById(`game-version`).innerHTML = `v${saved.version}`
 }
 
@@ -187,6 +191,11 @@ if (languageSelect && window.i18n) {
   });
 }
 
+
+saved.alternateWildRotation = "false"
+document.getElementById("settings-alternate-rotation").addEventListener("change", e => {
+  saved.alternateWildRotation = document.getElementById(`settings-alternate-rotation`).value
+});
 
 function changeTheme(){
 
@@ -360,6 +369,7 @@ observer.observe(document.body, {
 
 
 //--Gives Pokemon appropiate moves
+/*
 function learnPkmnMove(id, level, mod) {
     let attempts = 0;
     const MAX_ATTEMPTS = 100;
@@ -420,7 +430,7 @@ function learnPkmnMove(id, level, mod) {
     }
 
     return undefined;
-}
+}*/
 
 
 
@@ -455,12 +465,12 @@ function learnPkmnMove(id, level, mod) {
             
             if (!canLearn) return; 
             
-            if (data.moveset.includes("all")) {
-                allTag.push(m);
-            } else if (types.includes(data.type)) {
+            if (types.includes(data.type)) {
                 typeMatch.push(m);
-            } else {
+            } else if (types.some(t => data.moveset.includes(t))) {
                 movesetMatch.push(m);
+            } else if (data.moveset.includes("all")) {
+                allTag.push(m);
             }
         });
         
@@ -536,12 +546,12 @@ function learnPkmnMoveSeeded(id, level, mod, seed, exclude = []) {
 
 
 //--Gives Pokemon appropiate abilities
-function learnPkmnAbility(id) {
+function learnPkmnAbility(id,boost=1) {
     const types = pkmn[id].type;
 
     let tier = 1;
-    if (rng(0.20)) tier = 2;
-    else if (rng(0.08)) tier = 3;
+    if (rng(0.20*boost)) tier = 2;
+    if (rng(0.06*boost)) tier = 3;
 
     const pool = Object.keys(ability).filter(a => {
         const ab = ability[a];
@@ -593,7 +603,7 @@ function openTutorial(){
 
   if (saved.tutorialStep == "intro") document.getElementById("tutorial-text").innerHTML = `Howdy! I have been assigned to show the ropes<br>Let's start by getting new pokemon shall we? Select "Travel" on the top left menu`
   if (saved.tutorialStep == "travel") document.getElementById("tutorial-text").innerHTML = `You can right click/long tap almost everything on the screen for more info! You can also do this within the info itself too. Try going into the first Wild Area to start catching Pokemon`
-  if (saved.tutorialStep == "moves") document.getElementById("tutorial-text").innerHTML = `Right click/long tap a pokemon in your team to set their moves, you can also do this while in battle. If you got any held items, you can also assign them here<br>Once you are ready, press Save and Go! at the top of the screen`
+  if (saved.tutorialStep == "moves") document.getElementById("tutorial-text").innerHTML = `Right click/long tap a pokemon in your team to set their moves, you can also do this while in battle. Press the + symbol next to the Pokemon to assign items<br>Once you are ready, press Save and Go! at the top of the screen`
   if (saved.tutorialStep == "battle") document.getElementById("tutorial-text").innerHTML = `Your team will automatically attack in a set pattern, even while you tab out or close the browser! You can right click/long press on moves or pokemon to see their stats aswell. Once you have more Pokemon in your team, you will be able to switch them arround in a fight`
   if (saved.tutorialStep == "battleEnd") {document.getElementById("tutorial-text").innerHTML = `You can check a more in-depth explanation about stats and battle mechanics in the Guide menu. For now, I will take a break... Enjoy your stay!`}
   document.getElementById("tutorial").style.display = "flex"
@@ -611,6 +621,7 @@ const tGuide = (key, fallback, vars = {}) => {
 };
 
 const guide = {}
+
 
 
 guide.inspecting = {
@@ -785,7 +796,6 @@ guide.compatibility = {
     )
   }
 }
-
 
 guide.powerCost = {
   nameKey: "guide.powerCost.title",

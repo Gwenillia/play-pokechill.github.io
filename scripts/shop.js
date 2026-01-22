@@ -362,6 +362,13 @@ shop.energyRoot = {
     category: `genetics`,
 }
 
+shop.lockCapsule = {
+    icon: item.lockCapsule.id,
+    price: 3,
+    currency: `gold`,
+    category: `genetics`,
+}
+
 shop.destinyKnot = {
     icon: item.destinyKnot.id,
     price: 5,
@@ -370,7 +377,23 @@ shop.destinyKnot = {
 }
 
 
+shop.tackleTm = {
+    icon: item.tackleTm.id,
+    price: 1,
+    category: `tm`,
+}
 
+shop.leerTm = {
+    icon: item.leerTm.id,
+    price: 1,
+    category: `tm`,
+}
+
+shop.quickAttackTm = {
+    icon: item.quickAttackTm.id,
+    price: 1,
+    category: `tm`,
+}
 
 shop.bulkUpTm = {
     icon: item.bulkUpTm.id,

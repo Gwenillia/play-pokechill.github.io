@@ -12,16 +12,65 @@ const dictionaryItems = []
 
 document.getElementById("dictionary-search").addEventListener("keydown", e => {
   if (e.key === "Enter") {
-    const fuseResults = fuseDictionary.search(document.getElementById("dictionary-search").value)
-    // convert obj to string
-    searchedDictionary = fuseResults.map(result => result.item)
+    let searchValue = document.getElementById("dictionary-search").value.trim()
     document.getElementById("dictionary-search").blur()
-
-    if (document.getElementById("dictionary-search").value!="") dictionaryFilter = "search"
-    if (document.getElementById("dictionary-search").value=="") {dictionaryFilter = "pokemon"; searchedDictionary = []}
-
+    
+    if (searchValue === "") {
+      searchedDictionary = []
+      updateDictionary()
+      return
+    }
+    
+    // Reemplazar " or " con "|" (case insensitive)
+    searchValue = searchValue.replace(/\s+or\s+/gi, ' | ')
+    
+    let allTerms = searchValue.split(/\s+/).filter(t => t !== '')
+    let includeTerms = []
+    let excludeTerms = []
+    
+    allTerms.forEach(term => {
+      if (term.startsWith('!')) {
+        excludeTerms.push(term.substring(1))
+      } else {
+        includeTerms.push(term)
+      }
+    })
+    
+    let results = []
+    let includeQuery = includeTerms.join(' ')
+    
+    if (includeQuery.includes('|')) {
+      // or filter
+      results = fuseDictionary.search(includeQuery).map(r => r.item)
+    } else if (includeTerms.length === 1) {
+      // no filter
+      results = fuseDictionary.search(includeTerms[0]).map(r => r.item)
+    } else if (includeTerms.length > 1) {
+      // and filter
+      let allTermResults = includeTerms.map(term => {
+        return new Set(fuseDictionary.search(term).map(r => r.item))
+      })
+      
+      results = Array.from(allTermResults[0]).filter(item => {
+        return allTermResults.every(termSet => termSet.has(item))
+      })
+    } else if (excludeTerms.length > 0) {
+      results = dictionaryItems.slice()
+    }
+    
+    // optimise exclusion terms
+    if (excludeTerms.length > 0) {
+      let excludeSets = excludeTerms.map(term => {
+        return new Set(fuseDictionary.search(term).map(r => r.item))
+      })
+      
+      results = results.filter(item => {
+        return !excludeSets.some(excludeSet => excludeSet.has(item))
+      })
+    }
+    
+    searchedDictionary = results
     updateDictionary()
-
   }
 });
 
@@ -36,7 +85,11 @@ function updateDictionary(){
     document.getElementById("dictionary-list").innerHTML = ""
 
 
+
     for (const i in ability){
+
+        if (dictionaryFilter!="ability") continue
+
         const div = document.createElement("div")
 
         let icon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22.833 10.117L16.937 7.24c-.07-.035-.106-.106-.142-.177l-2.912-5.896c-.498-1.03-1.776-1.457-2.807-.96a2.1 2.1 0 0 0-.959.96L7.205 7.063a.8.8 0 0 1-.142.177l-5.896 2.913c-1.03.497-1.457 1.776-.96 2.806a2.1 2.1 0 0 0 .96.96l5.896 2.876c.07.036.106.107.142.142l2.948 5.896c.497 1.03 1.776 1.457 2.806.96a2.1 2.1 0 0 0 .959-.96l2.877-5.896c.036-.07.107-.142.142-.142l5.896-2.912c1.03-.498 1.457-1.776.96-2.806c-.178-.427-.533-.746-.96-.96m-4.368.427l-2.735 2.38c-.533.497-.924 1.136-1.066 1.847l-.71 3.551c-.036.143-.178.25-.32.214c-.071 0-.107-.036-.142-.107l-2.38-2.735c-.497-.533-1.137-.923-1.847-1.066l-3.552-.71c-.142-.035-.249-.178-.213-.32c0-.07.035-.106.106-.142l2.735-2.38c.533-.497.924-1.136 1.066-1.847l.71-3.551c.036-.143.178-.25.32-.214a.27.27 0 0 1 .142.071l2.38 2.735c.497.533 1.137.924 1.847 1.066l3.552.71c.142.036.249.178.213.32a.4.4 0 0 1-.106.178"/></svg>`
@@ -47,15 +100,21 @@ function updateDictionary(){
 
         div.dataset.dictionaryAbility = i
 
-        if (!dictionaryItems.includes(i)) dictionaryItems.push(i)
+        if (!dictionaryItems.includes(ability[i])) dictionaryItems.push(ability[i])
+
+        if (document.getElementById("dictionary-search").value!="" && !searchedDictionary.includes(ability[i])) continue
 
         div.innerHTML = ` ${icon} ${format(i)} `
 
-        if (dictionaryFilter=="ability" || searchedDictionary.includes(i)) document.getElementById("dictionary-list").appendChild(div)
+        document.getElementById("dictionary-list").appendChild(div)
+        
     }
     
 
     for (const i in item){
+        if (dictionaryFilter!="item") continue
+
+
         if (item[i].hidden) continue
         if (item[i].rotation) continue
         const div = document.createElement("div")
@@ -66,28 +125,33 @@ function updateDictionary(){
 
         div.dataset.dictionaryItem = i
 
-        if (!dictionaryItems.includes(i)) dictionaryItems.push(i)
+        if (!dictionaryItems.includes(item[i])) dictionaryItems.push(item[i])
 
+        if (document.getElementById("dictionary-search").value!="" && !searchedDictionary.includes(item[i])) continue
 
         div.innerHTML = ` ${icon} ${format(i)} `
 
-        if (dictionaryFilter=="item" || searchedDictionary.includes(i)) document.getElementById("dictionary-list").appendChild(div)
+         document.getElementById("dictionary-list").appendChild(div)
     }
     
 
     for (const i in move){
+        if (dictionaryFilter!="move") continue
+
+
         const div = document.createElement("div")
 
         let icon = `<span><img src="img/icons/${move[ i ].type }.svg"></span>`
 
         div.dataset.dictionaryMove = i
 
-        if (!dictionaryItems.includes(i)) dictionaryItems.push(i)
+        if (!dictionaryItems.includes(move[i])) dictionaryItems.push(move[i])
 
+        if (document.getElementById("dictionary-search").value!="" && !searchedDictionary.includes(move[i])) continue
 
         div.innerHTML = ` ${icon} ${format(i)} `
 
-        if (dictionaryFilter=="move" || searchedDictionary.includes(i)) document.getElementById("dictionary-list").appendChild(div)
+        document.getElementById("dictionary-list").appendChild(div)
     }
     
 
@@ -95,6 +159,9 @@ function updateDictionary(){
 
     
     for (const i in pkmn){
+        if (dictionaryFilter!="pokemon") continue
+
+
         const div = document.createElement("div")
         if (pkmn[i].hidden) continue
 
@@ -105,23 +172,33 @@ function updateDictionary(){
 
         div.dataset.dictionaryPkmn = i
 
-        if (!dictionaryItems.includes(i)) dictionaryItems.push(i)
+        if (!dictionaryItems.includes(pkmn[i])) dictionaryItems.push(pkmn[i])
 
+        if (document.getElementById("dictionary-search").value!="" && !searchedDictionary.includes(pkmn[i])) continue
 
         div.innerHTML = ` ${icon} ${format(i)} `
 
-        if (dictionaryFilter=="pokemon" || searchedDictionary.includes(i)) document.getElementById("dictionary-list").appendChild(div)
+        document.getElementById("dictionary-list").appendChild(div)
     }
     
 
 
 fuseDictionary = new Fuse(dictionaryItems, {
-  threshold: 0.2
+  keys: [ 
+    { name: 'name', getFn: obj => obj.id }, 
+    'type', 
+    'hiddenAbility.id', 
+    'split', 
+    'tagObtainedIn', 
+    'tagCaught', 
+    'tagShiny',
+    `affectedBy`
+  ],
+  threshold: 0.1,
+  useExtendedSearch: true,
+  ignoreLocation: true,
+  minMatchCharLength: 1
 })
-
-
-
-    
 }
 
 
@@ -133,286 +210,130 @@ document.addEventListener("click", e => {
     }
 
 
-
     if (el.dataset.dictionaryAbility !== undefined) {
-
-        document.getElementById("tooltipTop").style.display = `none`
-        document.getElementById("tooltipTitle").innerHTML = format(el.dataset.dictionaryAbility)
-        document.getElementById("tooltipMid").innerHTML = `Common Ability<br>${ability[el.dataset.dictionaryAbility].info()}`
-        if (ability[el.dataset.dictionaryAbility].rarity===2) document.getElementById("tooltipMid").innerHTML = `Uncommon Ability<br>${ability[el.dataset.dictionaryAbility].info()}`
-        if (ability[el.dataset.dictionaryAbility].rarity===3) document.getElementById("tooltipMid").innerHTML = `Rare Ability<br>${ability[el.dataset.dictionaryAbility].info()}`
-        
-        if (ability[el.dataset.dictionaryAbility].type){
-
-        let signatureText = ""
-        const signatureArray = []
-        for (const e in pkmn){
-            if (pkmn[e].hiddenAbility?.id == el.dataset.dictionaryAbility) signatureArray.push(e)
-        }
-        if (signatureArray.length>0) signatureText = `<br><br>Additionally, appears as the Hidden ability of ${joinWithAnd(signatureArray)}`
-        
-
-        document.getElementById("tooltipBottom").innerHTML = `
-        Learnable by ${joinWithAnd(ability[el.dataset.dictionaryAbility].type)} types ${signatureText}
-        `
-        } else {
-
-        const signatureArray = []
-        for (const e in pkmn){
-            if (pkmn[e].hiddenAbility?.id == el.dataset.dictionaryAbility) signatureArray.push(e)
-        }
-
-        if (signatureArray.length>0) {
-        document.getElementById("tooltipBottom").innerHTML = `
-        This ability can only appear as the Hidden Ability of ${joinWithAnd(signatureArray)}
-        `
-        } else{
-        document.getElementById("tooltipBottom").innerHTML = `
-        This ability is currently unobtainable :(
-        ` 
-        }
-
-        }
-
-        openTooltip()
-
-
+        tooltipData("dictionaryAbility", el.dataset.dictionaryAbility)
     }
-
-
-
 
     if (el.dataset.dictionaryMove !== undefined) {
-
-
-
-        document.getElementById("tooltipTop").style.display = `inline`
-        document.getElementById("tooltipTitle").style.display = `inline`
-        document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${format(move[el.dataset.dictionaryMove].type)}.png">`
-        document.getElementById("tooltipTitle").innerHTML = format(el.dataset.dictionaryMove)
-        document.getElementById("tooltipMid").style.display = "inline"
-
-
-        const affectedAbilities = []
-        if (move[el.dataset.dictionaryMove].affectedBy!==undefined) affectedAbilities.push(move[el.dataset.dictionaryMove].affectedBy)
-        if (move[el.dataset.dictionaryMove].hitEffect) affectedAbilities.push(ability.sereneGrace.id)
-        if (move[el.dataset.dictionaryMove].hitEffect && (move[el.dataset.dictionaryMove].power>0 && move[el.dataset.dictionaryMove].unaffectedBySheerForce!=true) ) affectedAbilities.push(ability.sheerForce.id)
-        if (move[el.dataset.dictionaryMove].multihit && move[el.dataset.dictionaryMove].multihit[1] > move[el.dataset.dictionaryMove].multihit[0]) affectedAbilities.push(ability.skillLink.id)
-        if (move[el.dataset.dictionaryMove].power <= 60 && move[el.dataset.dictionaryMove].power!=0) affectedAbilities.push(ability.technician.id)
-            
-        let affectedText = ""
-        if (affectedAbilities.length>0) affectedText =`<br>Affected by ${joinWithAnd(affectedAbilities)}`
-
-
-        document.getElementById("tooltipMid").innerHTML = `${move[el.dataset.dictionaryMove].power} Power, ${format(move[el.dataset.dictionaryMove].split)}${affectedText}`
-        if (move[el.dataset.dictionaryMove].info != undefined) document.getElementById("tooltipMid").innerHTML += `<br>${move[el.dataset.dictionaryMove].info()}`
-        
-        
-        
-        
-        
-        if (move[el.dataset.dictionaryMove].moveset) {
-
-        let rarity = `(Common)`
-        if (move[el.dataset.dictionaryMove].rarity == 2) rarity = `(Uncommon)`
-        if (move[el.dataset.dictionaryMove].rarity == 3) rarity = `(Rare)`
-
-        document.getElementById("tooltipBottom").innerHTML = `
-        Learnable by ${joinWithAnd(move[el.dataset.dictionaryMove].moveset)} types ${rarity}
-        `
-        } else{
-
-        const signatureArray = []
-        for (const e in pkmn){
-            if (pkmn[e].signature?.id == el.dataset.dictionaryMove) signatureArray.push(e)
-        }
-
-
-
-        document.getElementById("tooltipBottom").innerHTML = `
-        This move can only appear as the Signature Move of ${joinWithAnd(signatureArray)}
-        `
-        }
-
-        
-        
-    
-        openTooltip()
-
-
+        tooltipData("dictionaryMove", el.dataset.dictionaryMove)
     }
-
-
 
     if (el.dataset.dictionaryPkmn !== undefined) {
-
-        document.getElementById("tooltipTop").style.display = `inline`
-        document.getElementById("tooltipTitle").style.display = `none`
-        document.getElementById("tooltipTop").innerHTML = `<div style="cursor:help" data-pkmn="${el.dataset.dictionaryPkmn}"><img src="img/pkmn/sprite/${el.dataset.dictionaryPkmn}.png"></div>`
-        if (pkmn[el.dataset.dictionaryPkmn].shiny) document.getElementById("tooltipTop").innerHTML = `<div style="cursor:help" data-pkmn="${el.dataset.dictionaryPkmn}"><img src="img/pkmn/shiny/${el.dataset.dictionaryPkmn}.png"></div>`
-        if (pkmn[el.dataset.dictionaryPkmn].caught == 0) document.getElementById("tooltipTop").innerHTML = `<div><img style="filter:brightness(0)" src="img/pkmn/sprite/${el.dataset.dictionaryPkmn}.png"></div>`
-        document.getElementById("tooltipTitle").innerHTML = format(el.dataset.dictionaryPkmn)
-        document.getElementById("tooltipMid").style.display = "inline"
-
-
-
-        let wildSpawn = ""
-        let eventSpawn = ""
-        let encounterSpawn = ""
-
-        for (const i in areas){
-            if (areas[i].type=="wild") {
-                if (areas[i].spawns.common.includes(pkmn[el.dataset.dictionaryPkmn]) || areas[i].spawns.uncommon.includes(pkmn[el.dataset.dictionaryPkmn]) || areas[i].spawns.rare.includes(pkmn[el.dataset.dictionaryPkmn])){
-                    wildSpawn = areas[i].id
-                }
-            }
-
-
-
-            if (areas[i].type=="event" && areas[i].uncatchable != true){
-                if (areas[i].spawns?.common?.includes(pkmn[el.dataset.dictionaryPkmn]) || areas[i].spawns?.uncommon?.includes(pkmn[el.dataset.dictionaryPkmn]) || areas[i].spawns?.rare?.includes(pkmn[el.dataset.dictionaryPkmn])){
-                    eventSpawn = areas[i].id
-                }
-            }
-
-
-            if (areas[i].encounter) {
-                if ( areas[i].team.slot1 == pkmn[el.dataset.dictionaryPkmn] || areas[i].team.reward == [pkmn[el.dataset.dictionaryPkmn]]) encounterSpawn = areas[i].id
-            }
-        }
-
-
-        let parkSpawn = ""
-
-
-        
-
-
-
-
-        let spawnLocation = ""
-        if (wildSpawn != "") spawnLocation += `<span>Found in the wild area ${getAreaName(wildSpawn, areas[wildSpawn])} (Rotation ${areas[wildSpawn].rotation})</span>`
-        if ( wildlifePoolCommon.includes(el.dataset.dictionaryPkmn) || wildlifePoolUncommon.includes(el.dataset.dictionaryPkmn) || wildlifePoolRare.includes(el.dataset.dictionaryPkmn) ) spawnLocation += `<span>Found randomly in the Wildlife Park wild area</span>`
-        if ( exclusiveFrontierPkmn.includes(pkmn[el.dataset.dictionaryPkmn]) ) spawnLocation += `<span>Obtained as a random reward in the Battle Frontier</span>`
-        if (encounterSpawn != "") spawnLocation += `<span>Obtained in the event ${getAreaName(encounterSpawn, areas[encounterSpawn])} (Rotation ${areas[encounterSpawn].rotation})</span>`
-        if (eventSpawn != "") spawnLocation += `<span>Found in the event ${getAreaName(eventSpawn, areas[eventSpawn])} (Rotation ${areas[eventSpawn].rotation})</span>`
-
-
-
-        if (spawnLocation == "") spawnLocation = `This Pokemon cannot be caught on its current stage`
-
-        document.getElementById("tooltipMid").innerHTML = `
-        <span style="display:flex; flex-direction:column">${spawnLocation}<span>
-        `
-
-
-
-        document.getElementById("tooltipBottom").innerHTML = `
-        <div>Abilities</div>
-        <div style="width:100%; height:100%; position:relative; display:flex;justify-content:start;align-items:center;flex-direction:column; max-height:25vh; overflow-y:scroll; padding-top:0.5rem;">${getAbilityPoolByTier(pkmn[el.dataset.dictionaryPkmn])}</div>
-        
-        `
-
-
-        openTooltip()
-
-
-
+        tooltipData("dictionaryPkmn", el.dataset.dictionaryPkmn)
     }
-
-
-
-
-
-
 
     if (el.dataset.dictionaryItem !== undefined) {
-
-
-
-        document.getElementById("tooltipTop").style.display = `inline`
-        document.getElementById("tooltipTitle").style.display = `inline`
-        document.getElementById("tooltipTitle").innerHTML = format(el.dataset.dictionaryItem)
-        document.getElementById("tooltipMid").style.display = "inline"
-
-        if (item[el.dataset.dictionaryItem].type !== "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/${el.dataset.dictionaryItem}.png">`
-        if (item[el.dataset.dictionaryItem].type == "tm") document.getElementById("tooltipTop").innerHTML = `<img src="img/items/tm${format(move[item[el.dataset.dictionaryItem].move].type)}.png">`
-
-
-
-
-
-        document.getElementById("tooltipMid").innerHTML = `${item[el.dataset.dictionaryItem].info()}<br>(You have ${item[el.dataset.dictionaryItem].got})`
-
-
-
-
-        let obtainText = ""
-
-
-        for (const i in areas){
-            if (areas[i].type=="wild") {
-            if (areas[i].drops?.common?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.uncommon?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.rare?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Can be dropped in the wild area ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
-
-            }
-            }
-
-            if (areas[i].type=="event") {
-            if (areas[i].drops?.common?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.uncommon?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.rare?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Can be dropped in the event area ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
-
-            }
-            }
-
-            if (areas[i].type=="dungeon") {
-            if (areas[i].drops?.common?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.uncommon?.includes(item[el.dataset.dictionaryItem]) || areas[i].drops?.rare?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Can be dropped in the dungeon area ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
-
-            }
-            }
-
-
-            if (areas[i].encounter) {
-            if (areas[i].reward?.includes(item[el.dataset.dictionaryItem])){
-                obtainText += `<span>Reward from the event ${getAreaName(i, areas[i])} (Rotation ${areas[i].rotation})</span>`
-
-            }
-            }
-        }
-
-        if ([item.hpUp.id, item.protein.id, item.iron.id, item.calcium.id, item.zinc.id, item.carbos.id, item.timeCandy.id].includes(el.dataset.dictionaryItem)) obtainText += `<span>Obtained via Export Reward</span>`
-
-        for (const i in spiralingRewards) if (spiralingRewards[i].item==el.dataset.dictionaryItem) obtainText += `<span>Reward from Spiraling Tower</span>`
-
-
-        for (const i in shop) {
-            if (shop[i].icon == el.dataset.dictionaryItem) obtainText += `<span>Can be bought in the Poke-Mart</span>`
-        }
-
-
-
-        if (obtainText=="") obtainText += `<span>This item is currently unobtainable</span>`
-
-
-        
-        
-        document.getElementById("tooltipBottom").innerHTML = `<span style="display:flex; flex-direction:column">${obtainText}<span>`
-
-        
-     
-    
-        openTooltip()
-
-
+        tooltipData("dictionaryItem", el.dataset.dictionaryItem)
     }
-
-    
-
 
 
 
 })
+
+
+
+
+
+
+
+function setSearchTags() {
+    for (const e in pkmn){
+        if (pkmn[e].caught>0) pkmn[e].tagCaught = "caught"
+        if (pkmn[e].shiny) pkmn[e].tagShiny = "shiny"
+        
+        for (const i in areas){
+            if (areas[i].type=="wild") {
+                if (areas[i].spawns.common.includes(pkmn[e]) || areas[i].spawns.uncommon.includes(pkmn[e]) || areas[i].spawns.rare.includes(pkmn[e])){
+                    pkmn[e].tagObtainedIn = "wild"
+                }
+            }
+            if (areas[i].type=="event" && areas[i].uncatchable != true){
+                if (areas[i].spawns?.common?.includes(pkmn[e]) || areas[i].spawns?.uncommon?.includes(pkmn[e]) || areas[i].spawns?.rare?.includes(pkmn[e])){
+                    pkmn[e].tagObtainedIn = "event"
+                }
+            }
+            if (areas[i].encounter) {
+                if ( areas[i].team.slot1 == pkmn[e] || areas[i].reward?.includes(pkmn[e])) {
+                    pkmn[e].tagObtainedIn = "event"
+                }
+            }
+        }
+        
+        if ( wildlifePoolCommon.includes(e) || wildlifePoolUncommon.includes(e) || wildlifePoolRare.includes(e) ) pkmn[e].tagObtainedIn = "park"
+        if ( exclusiveFrontierPkmn.includes(pkmn[e]) ) pkmn[e].tagObtainedIn = "frontier"
+        if (pkmn[e].pokerus) pkmn[e].tagPokerus = "pokerus"
+    }
+
+    
+    
+
+    //only required for unobtainable pokes
+    for (const e in pkmn){
+        if (pkmn[e].tagObtainedIn == undefined) {
+            const family = getEvolutionFamily(pkmn[e]);
+            const familyIsObtainable = Array.from(family).some(member => member.tagObtainedIn !== undefined);
+            
+            if (!familyIsObtainable) {
+                pkmn[e].tagObtainedIn = "unobtainable";
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

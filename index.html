@@ -228,14 +228,13 @@
         <div id="dictionary-header">
 
         <div id="dictionary-filters">
-            <div data-i18n="dictionary.filter.pokemon" onclick='dictionaryFilter="pokemon"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Pokemon</div>
-            <div data-i18n="dictionary.filter.abilities" onclick='dictionaryFilter="ability"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Abilities</div>
-            <div data-i18n="dictionary.filter.moves" onclick='dictionaryFilter="move"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Moves</div>
-            <div data-i18n="dictionary.filter.items" onclick='dictionaryFilter="item"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Items</div>
+            <div onclick='dictionaryFilter="pokemon"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Pokemon</div>
+            <div onclick='dictionaryFilter="ability"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Abilities</div>
+            <div onclick='dictionaryFilter="move"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Moves</div>
+            <div onclick='dictionaryFilter="item"; document.getElementById("dictionary-search").value=""; searchedDictionary = [] ;  updateDictionary() '>Items</div>
         </div>
 
-        <input id="dictionary-search" type="text" placeholder="Search Pokemon, Ability, Move, Item..." data-i18n-placeholder="dictionary.search.placeholder">
-
+        <div style="width: 100%;" data-help="searchDictionary"><input style="cursor: help;" id="dictionary-search" type="text" placeholder="Right Click/Long Press to see keywords"></div>
 
         </div>
 
@@ -386,6 +385,12 @@
               <select id="pokedex-sort-filter">
                 <option value="default" data-i18n="pokedex.sort.label">sort</option>
                 <option value="level" data-i18n="pokedex.sort.level">level</option>
+                <option value="hpTotal">hp Total</option>
+                <option value="atkTotal">atk Total</option>
+                <option value="defTotal">def Total</option>
+                <option value="satkTotal">satk Total</option>
+                <option value="sdefTotal">sdef Total</option>
+                <option value="speTotal">spe Total</option>
                 <option value="hpBst" data-i18n="pokedex.sort.hpBst">hp BST</option>
                 <option value="atkBst" data-i18n="pokedex.sort.atkBst">atk BST</option>
                 <option value="defBst" data-i18n="pokedex.sort.defBst">def BST</option>
@@ -406,8 +411,9 @@
             </div>
 
 
-            <div class="pokedex-search">
-            <input id="pokedex-search" type="text" placeholder="Search ability, move..." data-i18n-placeholder="pokedex.search.placeholder">
+
+            <div class="pokedex-search" dataHelp="searchPokedex">
+            <input style="cursor: help;" id="pokedex-search" type="text" placeholder="Right Click to see keywords" data-i18n-placeholder="pokedex.search.placeholder">
             <div style="background: rgb(90, 133, 113); color: white; cursor: default;" id="pokedex-total" data-i18n="pokedex.total.caught">caught</div>
             </div>
             
@@ -450,21 +456,20 @@
                 <option value="oled">oled</option>
             </select></div>
 
-            <div><span data-i18n="settings.hideGot">Hide non-new Pokemon got in summary</span>: <select id="settings-hide-got">
+            <div><span data-i18n="settings.hideGot" data-help="settingsNewPkmn">Hide non-new Pokemon got in summary</span>: <select id="settings-hide-got">
                 <option value="false" data-i18n="settings.hideGot.disabled">disabled</option>
                 <option value="true" data-i18n="settings.hideGot.enabled">enabled</option>
+            </select></div>
+
+            <div data-help="settingsAlternateWild" style="cursor: help;">Substract 1 to current Wild Area rotation: <select id="settings-alternate-rotation">
+                <option value="false">disabled</option>
+                <option value="true">enabled</option>
             </select></div>
 
             <div><span data-i18n="settings.language">Language</span>: <select id="settings-language">
                 <option value="fr">Français</option>
                 <option value="en">English</option>
             </select></div>
-
-
-            <!--<div>Tutorials: <select id="settings-tutorial">
-                <option value="enabled">enabled</option>
-                <option value="disabled">disabled</option>
-            </select></div>-->
 
             <div onclick='document.getElementById("tooltipTop").style.display = `none`
         document.getElementById("tooltipTitle").innerHTML = `Credits`
@@ -692,6 +697,7 @@
             <div class="genetics-overview-data"><span data-i18n="genetics.inheritDef">% to inherit sample's Defense Iv's</span><div></div><span id="genetics-data-def">5%</span></div>
             <div class="genetics-overview-data"><span data-i18n="genetics.inheritSdef">% to inherit sample's S. Defense Iv's</span><div></div><span id="genetics-data-sdef">5%</span></div>
             <div class="genetics-overview-data"><span data-i18n="genetics.inheritSpe">% to inherit sample's Speed Iv's</span><div></div><span id="genetics-data-spe">5%</span></div>
+
             <div id="genetics-warning">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="28" d="M12 10l4 7h-8Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="28;0"/></path><path d="M12 10l4 7h-8Z" opacity="0"><animate attributeName="d" begin="0.4s" dur="0.8s" keyTimes="0;0.25;1" repeatCount="indefinite" values="M12 10l4 7h-8Z;M12 4l9.25 16h-18.5Z;M12 4l9.25 16h-18.5Z"/><animate attributeName="opacity" begin="0.4s" dur="0.8s" keyTimes="0;0.1;0.75;1" repeatCount="indefinite" values="0;1;1;0"/></path></g></svg>
                 <span data-i18n="genetics.warningHighPower">Warning, power cost too high! Only 5 out of 6 maximum IV's per stat will be inherited!</span>
@@ -916,11 +922,7 @@
 
     <div id="area-end" style="display: none;">
 
-    <div class="pkmn-leave-exit" onClick=' saved.autoRefight = false; afkSeconds = 0; storedAfkSeconds = 0
-    if (saved.tutorial && saved.tutorialStep === "battleEnd") {saved.tutorialStep = "none"; openTutorial()}
-    voidAnimation("area-end","tooltipBoxAppear 0.2s reverse 1 ease-in");
-    setTimeout(() => {document.getElementById("area-end").style.display = "none"}, 150);
-    saveGame()'>
+    <div class="pkmn-leave-exit" onClick='exitCombat()'>
         <svg style="margin-right: 0.35rem;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h11.175q.4 0 .763.15t.637.425l2.85 2.85q.275.275.425.638t.15.762V19q0 .825-.587 1.413T19 21zm7-3q1.25 0 2.125-.875T15 15t-.875-2.125T12 12t-2.125.875T9 15t.875 2.125T12 18m-5-8h7q.425 0 .713-.288T15 9V7q0-.425-.288-.712T14 6H7q-.425 0-.712.288T6 7v2q0 .425.288.713T7 10"/></svg>
         Save and exit
     </div>
@@ -930,9 +932,14 @@
         Fight Again
     </div>
 
-    <div id="area-refight"  onClick='    afkSeconds = 0; autoRefight();'>
+    <div id="area-refight" class="leave-button"  onClick='    afkSeconds = 0; autoRefight();'>
     <svg style="margin-right:0.3rem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 14 14"><path fill="currentColor" fill-rule="evenodd" d="M10.797 2.482a.61.61 0 0 1 0 .866L9.44 4.705h.924c1.393 0 2.305.572 2.845 1.343c.515.736.651 1.593.651 2.153c0 .561-.136 1.418-.651 2.154c-.54.77-1.452 1.342-2.845 1.342c-.948 0-1.695-.48-2.295-1.08c-.584-.584-1.093-1.347-1.56-2.046l-.019-.03c-.49-.734-.936-1.4-1.425-1.889c-.481-.48-.935-.721-1.429-.721c-1.01 0-1.54.39-1.84.82c-.327.466-.43 1.05-.43 1.45s.103.985.43 1.451c.3.43.83.82 1.84.82c.512 0 .982-.259 1.482-.775a.613.613 0 0 1 .88.852c-.612.632-1.379 1.148-2.362 1.148c-1.393 0-2.305-.571-2.845-1.342C.276 9.619.14 8.762.14 8.2s.137-1.418.651-2.153c.54-.77 1.452-1.343 2.845-1.343c.948 0 1.695.48 2.295 1.08c.584.585 1.093 1.348 1.56 2.047l.019.03c.49.734.936 1.4 1.425 1.889c.481.48.935.721 1.429.721c1.01 0 1.54-.39 1.84-.82c.327-.466.43-1.05.43-1.45s-.103-.986-.43-1.451c-.3-.43-.83-.82-1.84-.82H7.961a.613.613 0 0 1-.433-1.046L9.93 2.482a.61.61 0 0 1 .866 0" clip-rule="evenodd"/></svg>
     Auto-Refight <span> (Requires an <img src="img/items/autoRefightTicket.png"> Auto-Refight Ticket)</span>
+    </div>
+
+
+    <div id="battle-summary" class="leave-button"  onClick='battleSummary();'>
+    <svg style="margin-right:0.3rem" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-miterlimit="5.759" d="M3 3v16a2 2 0 0 0 2 2h16"/><path stroke-miterlimit="5.759" d="m7 14l4-4l4 4l6-6"/><path d="M18 8h3v3"/></g></svg>        Battle Summary
     </div>
     
     <div class="area-end-category" id="area-end-moves-title" style="display: none;"></div>
@@ -1389,6 +1396,7 @@
     <script src="scripts/explore.js"></script>
     <script src="scripts/shop.js"></script>
     <script src="scripts/dictionarySearch.js"></script>
+    <script src="scripts/tooltip.js"></script>
 
     <script src="scripts/save.js"></script>
 </body>

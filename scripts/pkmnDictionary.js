@@ -1604,7 +1604,7 @@ pkmn.voltorb = {
         spe: 100,
     },
     evolve: function() { return { 1: { pkmn: pkmn.electrode, level: evolutionLevel2 } } },
-    hiddenAbility: ability.voltage,
+    hiddenAbility: ability.hyperconductor,
     signature : move.electroBall
 }
 
@@ -1618,7 +1618,7 @@ pkmn.electrode = {
         sdef: 80,
         spe: 150,
     },
-    hiddenAbility: ability.voltage,
+    hiddenAbility: ability.hyperconductor,
     signature : move.electroBall
 }
 
@@ -1883,33 +1883,7 @@ pkmn.kingler = {
     signature : move.crabhammer
 }
 
-// 105 Hitmonlee
-pkmn.hitmonlee = {
-    type: ["fighting"],
-    bst: {
-        hp: 50,
-        atk: 120,
-        def: 53,
-        satk: 35,
-        sdef: 110,
-        spe: 87,
-    },
-    hiddenAbility: ability.technician,
-}
 
-// 106 Hitmonchan
-pkmn.hitmonchan = {
-    type: ["fighting"],
-    bst: {
-        hp: 50,
-        atk: 105,
-        def: 79,
-        satk: 35,
-        sdef: 110,
-        spe: 76,
-    },
-    hiddenAbility: ability.ironFist,
-}
 
 // 107 Lickitung → Lickilicky
 pkmn.lickitung = {
@@ -3472,7 +3446,8 @@ pkmn.unownA = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.adaptability,
 }
 
 pkmn.unownB = {
@@ -3484,7 +3459,8 @@ pkmn.unownB = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.beastBoost,
 }
 pkmn.unownC = {
     type: ["psychic"],
@@ -3495,7 +3471,8 @@ pkmn.unownC = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.climaTact,
 }
 pkmn.unownD = {
     type: ["psychic"],
@@ -3506,7 +3483,8 @@ pkmn.unownD = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.dancer,
 }
 pkmn.unownE = {
     type: ["psychic"],
@@ -3517,7 +3495,8 @@ pkmn.unownE = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.espilate,
 }
 pkmn.unownF = {
     type: ["psychic"],
@@ -3528,7 +3507,8 @@ pkmn.unownF = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.filter,
 }
 pkmn.unownG = {
     type: ["psychic"],
@@ -3539,7 +3519,8 @@ pkmn.unownG = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.gorillaTactics,
 }
 pkmn.unownH = {
     type: ["psychic"],
@@ -3550,7 +3531,8 @@ pkmn.unownH = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.hugePower,
 }
 pkmn.unownI = {
     type: ["psychic"],
@@ -3561,7 +3543,8 @@ pkmn.unownI = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.imposter,
 }
 pkmn.unownJ = {
     type: ["psychic"],
@@ -3572,7 +3555,8 @@ pkmn.unownJ = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.justified,
 }
 pkmn.unownK = {
     type: ["psychic"],
@@ -3594,7 +3578,8 @@ pkmn.unownL = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.libero,
 }
 pkmn.unownM = {
     type: ["psychic"],
@@ -3605,7 +3590,8 @@ pkmn.unownM = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.magicGuard,
 }
 pkmn.unownN = {
     type: ["psychic"],
@@ -3616,7 +3602,8 @@ pkmn.unownN = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.noGuard,
 }
 pkmn.unownO = {
     type: ["psychic"],
@@ -3627,7 +3614,8 @@ pkmn.unownO = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.ownTempo,
 }
 pkmn.unownP = {
     type: ["psychic"],
@@ -3638,7 +3626,8 @@ pkmn.unownP = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.parentalBond,
 }
 pkmn.unownQ = {
     type: ["psychic"],
@@ -3649,7 +3638,8 @@ pkmn.unownQ = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.quarkDrive,
 }
 pkmn.unownR = {
     type: ["psychic"],
@@ -3660,7 +3650,8 @@ pkmn.unownR = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.reckless,
 }
 pkmn.unownS = {
     type: ["psychic"],
@@ -3671,7 +3662,8 @@ pkmn.unownS = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.simple,
 }
 pkmn.unownT = {
     type: ["psychic"],
@@ -3682,7 +3674,8 @@ pkmn.unownT = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.technician,
 }
 pkmn.unownU = {
     type: ["psychic"],
@@ -3693,7 +3686,8 @@ pkmn.unownU = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.unburden,
 }
 
 
@@ -3706,20 +3700,22 @@ pkmn.unownV = {
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.voltAbsorb,
 }
 
 
 pkmn.unownW = {
     type: ["psychic"],
     bst: {
-        hp: 48,
+        hp: 1,
         atk: 72,
         def: 48,
         satk: 72,
         sdef: 48,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.wonderGuard,
 }
 
 
@@ -3760,6 +3756,7 @@ pkmn.unownZ = {
         spe: 48,
     }
 }
+
 pkmn.unownExclamation = {
     type: ["psychic"],
     bst: {
@@ -3769,8 +3766,10 @@ pkmn.unownExclamation = {
         satk: 100,
         sdef: 120,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.angerPoint,
 }
+
 pkmn.unownQuestion = {
     type: ["psychic"],
     bst: {
@@ -3780,8 +3779,10 @@ pkmn.unownQuestion = {
         satk: 100,
         sdef: 120,
         spe: 48,
-    }
+    },
+    hiddenAbility: ability.unaware,
 }
+
 // 202 Wobbuffet
 
 pkmn.wynaut = {
@@ -4454,6 +4455,34 @@ pkmn.hitmontop = {
     hiddenAbility: ability.technician,
 }
 
+// 105 Hitmonlee
+pkmn.hitmonlee = {
+    type: ["fighting"],
+    bst: {
+        hp: 50,
+        atk: 120,
+        def: 53,
+        satk: 35,
+        sdef: 110,
+        spe: 87,
+    },
+    hiddenAbility: ability.technician,
+}
+
+// 106 Hitmonchan
+pkmn.hitmonchan = {
+    type: ["fighting"],
+    bst: {
+        hp: 50,
+        atk: 105,
+        def: 79,
+        satk: 35,
+        sdef: 110,
+        spe: 76,
+    },
+    hiddenAbility: ability.ironFist,
+}
+
 // 241 Miltank
 pkmn.miltank = {
     type: ["normal"],
@@ -4661,7 +4690,7 @@ pkmn.treecko = {
         spe: 70,
     },
     evolve: function() { return { 1: { pkmn: pkmn.grovyle, level: evolutionLevel1 } } },
-    hiddenAbility: ability.unburden,
+    hiddenAbility: ability.tintedLens,
 }
 
 pkmn.grovyle = {
@@ -4675,7 +4704,7 @@ pkmn.grovyle = {
         spe: 95,
     },
     evolve: function() { return { 1: { pkmn: pkmn.sceptile, level: evolutionLevel2 } } },
-    hiddenAbility: ability.unburden,
+    hiddenAbility: ability.tintedLens,
 }
 
 pkmn.sceptile = {
@@ -4689,7 +4718,7 @@ pkmn.sceptile = {
         spe: 120,
     },
     evolve: function() { return { 1: { pkmn: pkmn.megaSceptile, item: item.sceptilite } } },
-    hiddenAbility: ability.unburden,
+    hiddenAbility: ability.tintedLens,
 }
 
 pkmn.megaSceptile = {
@@ -4701,7 +4730,8 @@ pkmn.megaSceptile = {
         satk: 155,
         sdef: 85,
         spe: 155,
-    }
+    },
+    hiddenAbility: ability.tintedLens,
 }
 
 // 255 Torchic → Combusken → Blaziken
@@ -4716,7 +4746,8 @@ pkmn.torchic = {
         spe: 45,
     },
     evolve: function() { return { 1: { pkmn: pkmn.combusken, level: evolutionLevel1 } } },
-    signature : move.blazeKick
+    signature : move.blazeKick,
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.combusken = {
@@ -4730,7 +4761,8 @@ pkmn.combusken = {
         spe: 55,
     },
     evolve: function() { return { 1: { pkmn: pkmn.blaziken, level: evolutionLevel2 } } },
-    signature : move.blazeKick
+    signature : move.blazeKick,
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.blaziken = {
@@ -4744,7 +4776,8 @@ pkmn.blaziken = {
         spe: 80,
     },
     evolve: function() { return { 1: { pkmn: pkmn.megaBlaziken, item: item.blazikenite } } },
-    signature : move.blazeKick
+    signature : move.blazeKick,
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.megaBlaziken = {
@@ -4757,7 +4790,8 @@ pkmn.megaBlaziken = {
         sdef: 80,
         spe: 100,
     },
-    signature : move.blazeKick
+    signature : move.blazeKick,
+    hiddenAbility: ability.speedBoost,
 }
 
 // 258 Mudkip → Marshtomp → Swampert
@@ -4919,7 +4953,7 @@ pkmn.beautifly = {
         sdef: 50,
         spe: 65,
     },
-    hiddenAbility: ability.rivalry,
+    hiddenAbility: ability.galeWings,
 }
 
 pkmn.cascoon = {
@@ -5324,6 +5358,7 @@ pkmn.nincada = {
         return { 1: { pkmn: pkmn.ninjask, level: evolutionLevel1 },
                  2: { pkmn: pkmn.shedinja, item: item.oddRock } }
     },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.ninjask = {
@@ -5335,7 +5370,8 @@ pkmn.ninjask = {
         satk: 50,
         sdef: 50,
         spe: 160,
-    }
+    },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.shedinja = {
@@ -5347,7 +5383,8 @@ pkmn.shedinja = {
         satk: 30,
         sdef: 30,
         spe: 40,
-    }
+    },
+    hiddenAbility: ability.wonderGuard,
 }
 
 // 293 Whismur → Loudred → Exploud
@@ -5502,7 +5539,8 @@ pkmn.castform = {
         sdef: 70,
         spe: 70,
     },
-    signature : move.weatherBall
+    signature : move.weatherBall,
+    hiddenAbility: ability.climaTact,
 }
 
 pkmn.kecleon = {
@@ -6116,7 +6154,7 @@ pkmn.duskull = {
         spe: 25,
     },
     evolve: function() { return { 1: { pkmn: pkmn.dusclops, level: evolutionLevel2 } } },
-    hiddenAbility: ability.levitate,
+    hiddenAbility: ability.intangible,
 }
 
 pkmn.dusclops = {
@@ -6129,7 +6167,21 @@ pkmn.dusclops = {
         sdef: 130,
         spe: 25,
     },
-    hiddenAbility: ability.levitate,
+    evolve: function() { return { 1: { pkmn: pkmn.dusknoir, item: item.oddRock } } },
+    hiddenAbility: ability.intangible,
+}
+
+pkmn.dusknoir = {
+    type: ["ghost"],
+    bst: {
+        hp: 45,
+        atk: 100,
+        def: 135,
+        satk: 65,
+        sdef: 135,
+        spe: 45,
+    },
+    hiddenAbility: ability.intangible,
 }
 
 // 337 Lunatone
@@ -6268,7 +6320,7 @@ pkmn.surskit = {
         spe: 65,
     },
     evolve: function() { return { 1: { pkmn: pkmn.masquerain, level: evolutionLevel1 } } },
-    hiddenAbility: ability.rainDish,
+    hiddenAbility: ability.simple,
     signature : move.quiverDance
 }
 
@@ -6282,7 +6334,7 @@ pkmn.masquerain = {
         sdef: 82,
         spe: 80,
     },
-    hiddenAbility: ability.intimidate,
+    hiddenAbility: ability.galeWings,
     signature : move.quiverDance
 }
 
@@ -6297,7 +6349,8 @@ pkmn.tropius = {
         satk: 72,
         sdef: 87,
         spe: 51,
-    }
+    },
+    hiddenAbility: ability.galeWings,
 }
 
 // 359 Chimecho
@@ -6970,7 +7023,7 @@ pkmn.starly = {
         spe: 60,
     },
     evolve: function() { return { 1: { pkmn: pkmn.staravia, level: evolutionLevel1 } } },
-    hiddenAbility: ability.intimidate,
+    hiddenAbility: ability.reckless,
     signature : move.braveBird
 }
 
@@ -6985,7 +7038,7 @@ pkmn.staravia = {
         spe: 80,
     },
     evolve: function() { return { 1: { pkmn: pkmn.staraptor, level: evolutionLevel2 } } },
-    hiddenAbility: ability.intimidate,
+    hiddenAbility: ability.reckless,
     signature : move.braveBird
 }
 
@@ -6999,7 +7052,7 @@ pkmn.staraptor = {
         sdef: 60,
         spe: 100,
     },
-    hiddenAbility: ability.intimidate,
+    hiddenAbility: ability.reckless,
     signature : move.braveBird
 }
 
@@ -7247,7 +7300,8 @@ pkmn.pachirisu = {
         satk: 45,
         sdef: 90,
         spe: 95,
-    }
+    },
+    hiddenAbility: ability.simple,
 }
 
 // 417 Buizel → Floatzel
@@ -7376,6 +7430,7 @@ pkmn.buneary = {
         spe: 85,
     },
     evolve: function() { return { 1: { pkmn: pkmn.lopunny, level: evolutionLevel2 } } },
+    hiddenAbility: ability.scrappy,
 }
 
 pkmn.lopunny = {
@@ -7389,6 +7444,7 @@ pkmn.lopunny = {
         spe: 105,
     },
     evolve: function() { return { 1: { pkmn: pkmn.megaLopunny, item: item.lopunnite } } },
+    hiddenAbility: ability.scrappy,
 }
 
 pkmn.megaLopunny = {
@@ -7400,7 +7456,8 @@ pkmn.megaLopunny = {
         satk: 54,
         sdef: 96,
         spe: 135,
-    }
+    },
+    hiddenAbility: ability.scrappy,
 }
 
 // 425 Buizel → Floatzel
@@ -7957,18 +8014,7 @@ pkmn.probopass = {
 
 
 
-pkmn.dusknoir = {
-    type: ["ghost"],
-    bst: {
-        hp: 45,
-        atk: 100,
-        def: 135,
-        satk: 65,
-        sdef: 135,
-        spe: 45,
-    },
-    hiddenAbility: ability.levitate,
-}
+
 
 // 478 Froslass
 // (ya está en 361)
@@ -9014,6 +9060,7 @@ pkmn.venipede = {
     spe: 57,
   },
   evolve: function() { return { 1: { pkmn: pkmn.whirlipede, level: evolutionLevel1 } } },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.whirlipede = {
@@ -9027,6 +9074,7 @@ pkmn.whirlipede = {
     spe: 47,
   },
   evolve: function() { return { 1: { pkmn: pkmn.scolipede, level: evolutionLevel2 } } },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.scolipede = {
@@ -9039,6 +9087,7 @@ pkmn.scolipede = {
     sdef: 69,
     spe: 112,
   },
+    hiddenAbility: ability.speedBoost,
 }
 
 // 544 Cottonee → Whimsicott
@@ -9966,6 +10015,7 @@ pkmn.litwick = {
     spe: 20,
   },
   evolve: function() { return { 1: { pkmn: pkmn.lampent, level: evolutionLevel3 } } },
+    hiddenAbility: ability.flashPyro,
 }
 
 pkmn.lampent = {
@@ -9979,6 +10029,7 @@ pkmn.lampent = {
     spe: 55,
   },
   evolve: function() { return { 1: { pkmn: pkmn.chandelure, item: item.fireStone } } },
+    hiddenAbility: ability.flashPyro,
 }
 
 pkmn.chandelure = {
@@ -9991,6 +10042,7 @@ pkmn.chandelure = {
     sdef: 90,
     spe: 80,
   },
+    hiddenAbility: ability.flashPyro,
 }
 
 // 608 Axew → Fraxure → Haxorus
@@ -10117,6 +10169,7 @@ pkmn.stunfisk = {
     sdef: 99,
     spe: 32,
   },
+    hiddenAbility: ability.simple,
 }
 
 // 618 Mienshao
@@ -10258,6 +10311,7 @@ pkmn.rufflet = {
     spe: 60,
   },
   evolve: function() { return { 1: { pkmn: pkmn.braviary, level: evolutionLevel3 } } },
+    hiddenAbility: ability.galeWings,
 }
 
 pkmn.braviary = {
@@ -10270,6 +10324,7 @@ pkmn.braviary = {
     sdef: 75,
     spe: 80,
   },
+    hiddenAbility: ability.galeWings,
 }
 
 // 627 Vullaby → Mandibuzz
@@ -10447,6 +10502,7 @@ pkmn.tornadus = {
     sdef: 80,
     spe: 111,
   },
+    hiddenAbility: ability.climaTact,
 }
 
 pkmn.tornadusTherian = {
@@ -10472,6 +10528,7 @@ pkmn.thundurus = {
     sdef: 80,
     spe: 111,
   },
+    hiddenAbility: ability.climaTact,
 }
 
 pkmn.thundurusTherian = {
@@ -10498,7 +10555,7 @@ pkmn.landorus = {
     sdef: 80,
     spe: 101,
   },
-    hiddenAbility: ability.levitate,
+    hiddenAbility: ability.climaTact,
     signature : move.sandsearStorm
 }
 
@@ -10803,6 +10860,7 @@ pkmn.fletchling = {
     spe: 62,
   },
   evolve: function() { return { 1: { pkmn: pkmn.fletchinder, level: evolutionLevel1 } } },
+    hiddenAbility: ability.galeWings,
 }
 
 pkmn.fletchinder = {
@@ -10816,6 +10874,7 @@ pkmn.fletchinder = {
     spe: 84,
   },
   evolve: function() { return { 1: { pkmn: pkmn.talonflame, level: evolutionLevel2 } } },
+    hiddenAbility: ability.galeWings,
 }
 
 pkmn.talonflame = {
@@ -10828,6 +10887,7 @@ pkmn.talonflame = {
     sdef: 69,
     spe: 126,
   },
+    hiddenAbility: ability.galeWings,
 }
 
 // 665 Scatterbug → Spewpa → Vivillon
@@ -12873,7 +12933,8 @@ pkmn.lycanrocMidnight = {
         satk: 55,
         sdef: 75,
         spe: 82,
-    }
+    },
+    hiddenAbility: ability.moody,
 }
 
 pkmn.lycanrocDusk = {
@@ -13117,6 +13178,7 @@ pkmn.turtonator = {
     sdef: 85,
     spe: 36,
   },
+    hiddenAbility: ability.moody,
 }
 
 // 778 Togedemaru
@@ -13673,7 +13735,8 @@ pkmn.scorbunny = {
     spe: 69,
   },
   evolve: function() { return { 1: { pkmn: pkmn.raboot, level: evolutionLevel1 } } },
-    signature : move.pyroBall
+    signature : move.pyroBall,
+    hiddenAbility: ability.libero,
 }
 
 pkmn.raboot = {
@@ -13687,7 +13750,8 @@ pkmn.raboot = {
     spe: 94,
   },
   evolve: function() { return { 1: { pkmn: pkmn.cinderace, level: evolutionLevel2 } } },
-    signature : move.pyroBall
+    signature : move.pyroBall,
+    hiddenAbility: ability.libero,
 }
 
 pkmn.cinderace = {
@@ -13700,7 +13764,8 @@ pkmn.cinderace = {
     sdef: 75,
     spe: 119,
   },
-    signature : move.pyroBall
+    signature : move.pyroBall,
+    hiddenAbility: ability.libero,
 }
 
 // 816 Sobble → Drizzile → Inteleon
@@ -13773,7 +13838,7 @@ pkmn.greedent = {
 
 // 821 Rookidee → Corvisquire → Corviknight
 pkmn.rookidee = {
-  type: ["flying","normal"],
+  type: ["flying"],
   bst: {
     hp: 38,
     atk: 47,
@@ -13786,7 +13851,7 @@ pkmn.rookidee = {
 }
 
 pkmn.corvisquire = {
-  type: ["flying","normal"],
+  type: ["flying"],
   bst: {
     hp: 68,
     atk: 67,
@@ -14527,6 +14592,7 @@ pkmn.eiscue = {
     sdef: 90,
     spe: 50,
   },
+    hiddenAbility: ability.simple,
 }
 
 // 881 Indeedee
@@ -14553,6 +14619,7 @@ pkmn.morpeko = {
     sdef: 58,
     spe: 97,
   },
+    hiddenAbility: ability.moody,
 }
 
 // 883 Cufant → Copperajah
@@ -15709,7 +15776,8 @@ pkmn.nymble = {
     sdef: 25,
     spe: 45,
   },
-  evolve: function() { return { 1: { pkmn: pkmn.lokix, level: evolutionLevel1 } } }
+  evolve: function() { return { 1: { pkmn: pkmn.lokix, level: evolutionLevel1 } } },
+    hiddenAbility: ability.tintedLens,
 }
 
 pkmn.lokix = {
@@ -15721,7 +15789,8 @@ pkmn.lokix = {
     satk: 52,
     sdef: 55,
     spe: 92,
-  }
+  },
+    hiddenAbility: ability.tintedLens,
 }
 
 // 922 Pawmi → Pawmo → Pawmot
@@ -16120,7 +16189,8 @@ pkmn.capsakid = {
     sdef: 40,
     spe: 50,
   },
-  evolve: function() { return { 1: { pkmn: pkmn.scovillain, level: evolutionLevel1 } } }
+  evolve: function() { return { 1: { pkmn: pkmn.scovillain, level: evolutionLevel1 } } },
+    hiddenAbility: ability.contrary,
 }
 
 pkmn.scovillain = {
@@ -16132,7 +16202,8 @@ pkmn.scovillain = {
     satk: 108,
     sdef: 65,
     spe: 75,
-  }
+  },
+    hiddenAbility: ability.contrary,
 }
 
 // 953 Rellor → Rabsca
@@ -16171,7 +16242,8 @@ pkmn.flittle = {
     sdef: 30,
     spe: 75,
   },
-  evolve: function() { return { 1: { pkmn: pkmn.espathra, level: evolutionLevel1 } } }
+  evolve: function() { return { 1: { pkmn: pkmn.espathra, level: evolutionLevel1 } } },
+    hiddenAbility: ability.speedBoost,
 }
 
 pkmn.espathra = {
@@ -16183,7 +16255,8 @@ pkmn.espathra = {
     satk: 101,
     sdef: 60,
     spe: 105,
-  }
+  },
+    hiddenAbility: ability.speedBoost,
 }
 
 // 958 Tinkatink → Tinkatuff → Tinkaton
@@ -16307,7 +16380,8 @@ pkmn.varoom = {
     sdef: 45,
     spe: 47,
   },
-  evolve: function() { return { 1: { pkmn: pkmn.revavroom, level: evolutionLevel1 } } }
+  evolve: function() { return { 1: { pkmn: pkmn.revavroom, level: evolutionLevel1 } } },
+    hiddenAbility: ability.hyperconductor,
 }
 
 pkmn.revavroom = {
@@ -16319,7 +16393,8 @@ pkmn.revavroom = {
     satk: 54,
     sdef: 67,
     spe: 90,
-  }
+  },
+    hiddenAbility: ability.hyperconductor,
 }
 
 // 968 Cyclizar
@@ -16345,7 +16420,8 @@ pkmn.orthworm = {
     satk: 60,
     sdef: 55,
     spe: 65,
-  }
+  },
+    hiddenAbility: ability.simple,
 }
 
 // 970 Glimmet → Glimmora
@@ -16749,7 +16825,7 @@ ribbon.souvenir ={
 }
 
 ribbon.tower1 ={
-    name: `Endurance Ribbon I`,
+    name: `Endurance Ribbon`,
     description: `Awarded for reaching floor 30 in the Spiraling Tower`
 }
 
